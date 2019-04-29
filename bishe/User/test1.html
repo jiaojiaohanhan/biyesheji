@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--<button>-</button><span>0</span><button>+</button>-->
+    <div>
+        <input type="radio" name="plant" value="草莓">草莓
+        <input type="radio" name="plant" value="橘子">橘子
+        <input type="radio" name="plant" value="石榴">石榴
+        <input type="radio" name="plant" value="柠檬">柠檬
+    <br>
+        <input type="radio" name="plant" value="猕猴桃">猕猴桃
+        <input type="radio" name="plant" value="苹果">苹果
+        <input type="radio" name="plant" value="白菜">白菜
+        <input type="radio" name="plant" value="菠菜">菠菜
+    <br>
+        <input type="radio" name="plant" value="黄瓜">黄瓜
+        <input type="radio" name="plant" value="番茄">番茄
+        <input type="radio" name="plant" value="茄子">茄子
+        <input type="radio" name="plant" value="豌豆">豌豆
+    </div>
+    <div>
+        <input type="checkbox" name="plant" value="草莓">草莓
+        <input type="checkbox" name="plant" value="橘子">橘子
+        <input type="checkbox" name="plant" value="石榴">石榴
+        <input type="checkbox" name="plant" value="柠檬">柠檬
+        <br>
+        <input type="checkbox" name="plant" value="猕猴桃">猕猴桃
+        <input type="checkbox" name="plant" value="苹果">苹果
+        <input type="checkbox" name="plant" value="白菜">白菜
+        <input type="checkbox" name="plant" value="菠菜">菠菜
+        <br>
+        <input type="checkbox" name="plant" value="黄瓜">黄瓜
+        <input type="checkbox" name="plant" value="番茄">番茄
+        <input type="checkbox" name="plant" value="茄子">茄子
+        <input type="checkbox" name="plant" value="豌豆">豌豆
+    </div>
+    <button>submit</button>
+    <script src="jquery-2.1.4.min.js"></script>
+    <!--<script>-->
+        <!--$("button").eq(0).on("click",function(){-->
+            <!--var num = parseInt($("span").text());-->
+            <!--num&#45;&#45;;-->
+            <!--$("span").text(num);-->
+        <!--});-->
+        <!--$("button").eq(1).on("click",function(){-->
+            <!--var num = parseInt($("span").text());-->
+            <!--num++;-->
+            <!--$("span").text(num);-->
+        <!--})-->
+    <!--</script>-->
+    <script>
+        $("button").on("click",function(){
+             var vals = [];
+             $('input:checkbox:checked').each(function (index, item) {
+                       vals.push($(this).val());
+             });
+            document.write(`${vals[0]},${vals[1]},${vals[2]}`);
+        })
+    </script>
+</body>
+</html>
