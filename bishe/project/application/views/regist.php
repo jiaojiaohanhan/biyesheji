@@ -107,7 +107,7 @@
                         <span>
 								<i>验证码</i>
 								<input type="text" name="Verify" placeholder=" " required="">
-                            <span style="font-size: 12px;float: right;"><button id="getNum" style="background-color: #a4dd25;color: #fff">获取验证码</button></span>
+                                <span style="font-size: 12px;float: right;"><button id="getNum" style="background-color: #a4dd25;color: #fff">获取验证码</button></span>
                                 <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25"></span>
 							</span>
                         <span>

@@ -148,40 +148,50 @@ class My_contro extends CI_Controller {
         $this->load->model("user_model");
         $phone = $this->input->get("number");
         if($phone!="") {
-            $this->load->model("user_model");
             $result = $this->user_model->get_by_phone($phone);
             if ($result) {
                 echo "fail";
             } else {
                 echo "success";
             }
-            header('content-type:application:json;charset=utf8');
-            header('Access-Control-Allow-Origin:*');
-            header('Access-Control-Allow-Methods:GET');
-            header('Access-Control-Allow-Headers:x-requested-with,content-type');
         }
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //注册微信校验
     public function check_wechat(){
         $this->load->model("user_model");
         $wechat = $this->input->get("wechat");
         if($wechat!="") {
-            $this->load->model("user_model");
             $result = $this->user_model->get_by_wechat($wechat);
             if ($result) {
                 echo "fail";
             } else {
                 echo "success";
             }
-            header('content-type:application:json;charset=utf8');
-            header('Access-Control-Allow-Origin:*');
-            header('Access-Control-Allow-Methods:GET');
-            header('Access-Control-Allow-Headers:x-requested-with,content-type');
         }
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
-    //管理人员登录
+    //管理人员界面
     public function manager_login(){
-        $this->load->view("manager_login");
+        $this->load->view("managerLogin");
+    }
+    //关于我们
+    public function about(){
+        $this->load->view("about");
+    }
+    //我们的服务
+    public function services(){
+        $this->load->view("services");
+    }
+    //陈列室
+    public function gallery(){
+        $this->load->view("gallery");
     }
     //联系我们
     public function contact_us(){

@@ -50,33 +50,65 @@ class My_contro2 extends CI_Controller{
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //操作地块
-    public function field_activity1(){
+    public function field_activity(){
         $this->load->model("field_model");
         $id = $this->input->get("id");
-        $row = $this->field_model->field_activity1($id);
+        $row = $this->field_model->field_activity($id);
         echo $row;
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
-    public function field_activity2(){
+    public function check_tools1(){
         $this->load->model("field_model");
-        $id = $this->input->get("id");
-        $row = $this->field_model->field_activity2($id);
-        echo $row;
+        $row = $this->field_model->check_tools();
+        if($row->manure==0){
+            echo "有机肥数量不足，请稍后再选"." ";
+        }
+        if($row->hoe==0){
+            echo "锄头数量不足，请稍后再选"." ";
+        }
+        if($row->shovel==0){
+            echo "铲子数量不足，请稍后再选"." ";
+        }
+        if($row->bucket==0){
+            echo "水桶数量不足，请稍后再选";
+        }
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
-    public function field_tools(){
+    public function check_tools2(){
+        $this->load->model("field_model");
+        $row = $this->field_model->check_tools();
+        if($row->basket==0){
+            echo "篮子数量不足，请稍后再选"." ";
+        }
+        if($row->gloves==0){
+            echo "手套数量不足，请稍后再选";
+        }
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function field_tools1(){
         $this->load->model("field_model");
         $arr = $this->input->get("arr");
         $id = $this->input->get("id");
-        foreach($arr as $the_arr){
-            $this->field_model->field_tools($the_arr,$id);
-        }
+        $this->field_model->field_tools1($arr,$id);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function field_tools2(){
+        $this->load->model("field_model");
+        $arr = $this->input->get("arr");
+        $id = $this->input->get("id");
+        $this->field_model->field_tools2($arr,$id);
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
@@ -127,7 +159,8 @@ class My_contro2 extends CI_Controller{
         $field_id = $this->input->get("field_id");
         $plant_names = $this->input->get("plant_names");
         $the_sur = $this->input->get("the_sur");
-        $rows = $this->field_model->user_field($user_id,$field_id,$plant_names,$the_sur);
+        $money = $this->input->get("money");
+        $rows = $this->field_model->user_field($user_id,$field_id,$plant_names,$the_sur,$money);
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');

@@ -8,4 +8,9 @@ class Test_model extends CI_Model {
         ));
         return $query->row();
     }
+    public function test(){
+        $query = $this->db->insert("test",array(
+            "name" => "hahaha",
+        ));
+    }
 }

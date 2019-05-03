@@ -10,6 +10,11 @@
     <script type="application/x-javascript">
         addEventListener("load", function() {
             setTimeout(hideURLbar, 0);
+            var storage=window.localStorage;
+            if(storage.length==0){
+                alert("您还没有登录，请先登录");
+                window.location = "My_contro/login";
+            }
         }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
     </script>
@@ -90,12 +95,16 @@
                                <div style="margin: 20px auto;text-align:center">
                                    <input id="field_btn_1" type="button" style="display:inline-block;width: 20rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
                                    <input id="field_btn_2" type="button" style="display:inline-block;width: 20rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
+                                   <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                </div>`
                             );
+                            $("#back").on("click",function(){
+                                window.location.reload();
+                            })
                         },"text").then(
                             function(){
                                 $("#field_img_1,#field_btn_1").on("click",function(){
-                                    $.get("http://localhost/bishe/project/My_contro2/field_activity1",{
+                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
                                         id:id
                                     },function(res){
                                         if(parseInt(res)==1){
@@ -121,14 +130,32 @@
                                                           <input type="checkbox" id="bucket" value="bucket" />
                                                       </div>
                                                       <input id="btn-yes1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back1" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                                  <div>
                                             `);
+                                            $("#btn-back1").on("click",function(){
+                                                window.location.reload();
+                                            });
+                                            $.get("http://localhost/bishe/project/My_contro2/check_tools1",{
+
+                                            },function(res){
+                                                if(res!=""){
+                                                    var arr = res.split(" ");
+                                                    var msg = ``;
+                                                    for(var i=0;i<arr.length;i++){
+                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                    }
+                                                    alert(msg);
+                                                }
+                                            },"text");
                                             $("#btn-yes1").on("click",function(){
                                                 var arr = [];
                                                 $("input[type='checkbox']:checked").each(function (index, item) {
                                                     arr.push($(this).val());
                                                 });
-                                                $.get("http://localhost/bishe/project/My_contro2/field_tools",{
+                                                $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
                                                     arr:arr,
                                                     id:id
                                                 },function(res){
@@ -140,7 +167,7 @@
                                     })
                                 });
                                 $("#field_img_2,#field_btn_2").on("click",function(){
-                                    $.get("http://localhost/bishe/project/My_contro2/field_activity2",{
+                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
                                         id:id
                                     },function(res){
                                         if(parseInt(res)==1){
@@ -157,14 +184,32 @@
                                                           <input type="checkbox" id="gloves" value="gloves" />
                                                       </div>
                                                       <input id="btn-yes2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back2" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                                  <div>
                                             `);
+                                            $("#btn-back2").on("click",function(){
+                                                window.location.reload();
+                                            });
+                                            $.get("http://localhost/bishe/project/My_contro2/check_tools2",{
+
+                                            },function(res){
+                                                if(res!=""){
+                                                    var arr = res.split(" ");
+                                                    var msg = ``;
+                                                    for(var i=0;i<arr.length;i++){
+                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                    }
+                                                    alert(msg);
+                                                }
+                                            },"text");
                                             $("#btn-yes2").on("click",function(){
                                                 var arr = [];
                                                 $("input[type='checkbox']:checked").each(function (index, item) {
                                                     arr.push($(this).val());
                                                 });
-                                                $.get("http://localhost/bishe/project/My_contro2/field_tools",{
+                                                $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
                                                     arr:arr,
                                                     id:id
                                                 },function(res){

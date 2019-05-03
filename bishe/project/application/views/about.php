@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Contact Us</title>
+    <title>About Us</title>
     <base href="<?php echo site_url();?>">
     <!-- custom-theme -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +15,6 @@
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <!-- //js -->
-    <!--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js"></script>-->
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=	5029b5c8db53f6b21261383fcc8df088"></script>
     <!-- font-awesome-icons -->
     <link href="css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome-icons -->
@@ -34,7 +32,10 @@
             </div>
             <div class="agile_social_icons_banner">
                 <ul class="agileits_social_list">
-                    <li><a href="My_contro/index" class="w3_agile_user"><i class="fa fa-home" aria-hidden="true"></i> 返回主页</a></li>
+                    <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="w3_agile_vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts_menu">
@@ -50,10 +51,10 @@
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="regist.html">Regist</a></li>
                                 <li><a href="login.html">Login</a></li>
-                                <li><a href="about.html">About Us</a></li>
+                                <li class="active"><a href="about.html">About Us</a></li>
                                 <li><a href="services.html">Services</a></li>
                                 <li><a href="gallery.html">Gallery</a></li>
-                                <li class="active"><a href="contact.html">Contact Us</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -75,7 +76,7 @@
             </div>
             <section>
                 <div class="modal-body">
-                    <img src="images/4.jpg" alt=" " class="img-responsive" />
+                    <img src="../../images/4.jpg" alt=" " class="img-responsive" />
                     <p>Ut enim ad minima veniam, quis nostrum
                         exercitationem ullam corporis suscipit laboriosam,
                         nisi ut aliquid ex ea commodi consequatur? Quis autem
@@ -96,151 +97,170 @@
         <div class="w3layouts_breadcrumbs_left">
             <ul>
                 <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>/</span></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</li>
+                <li><i class="fa fa-info-circle" aria-hidden="true"></i>About</li>
             </ul>
         </div>
         <div class="w3layouts_breadcrumbs_right">
-            <h2>Contact Us</h2>
+            <h2>About Us</h2>
         </div>
         <div class="clearfix"> </div>
     </div>
 </div>
 <!-- //breadcrumbs -->
-<!-- contact -->
+<!-- about -->
 <div class="welcome">
     <div class="container">
-        <h3 class="agileits_w3layouts_head">Get in<span> touch</span> with us</h3>
+        <h3 class="agileits_w3layouts_head">Why <span>Choose</span> Us</h3>
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>
         <p class="agile_para">Morbi viverra lacus commodo felis semper, eu iaculis lectus nulla at sapien blandit sollicitudin.</p>
         <div class="w3ls_news_grids">
-            <div class="col-md-8 w3_agile_mail_left">
-                <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                    <form action="#" method="post">
-							<span>
-								<i>Name</i>
-								<input type="text" name="Name" placeholder=" " required="">
-							</span>
-							<span>
-								<i>Email</i>
-								<input type="email" name="Email" placeholder=" " required="">
-							</span>
-							<span>
-								<i>Subject</i>
-								<input type="text" name="Subject" placeholder=" " required="">
-							</span>
-							<span>
-								<i>Message</i>
-								<textarea name="Message" placeholder=" " required=""></textarea>
-							</span>
-                        <div class="w3_submit">
-                            <input type="submit" value="Submit Now">
-                        </div>
-                    </form>
-                </div>
+            <div class="col-md-6 w3_agile_about_grid_left">
+                <h3>Pellentesque a ligula nec dui ornare pulvinar in non sem condimentum erat</h3>
+                <p><i>In eleifend nisl fermentum bibendum euismod. Pellentesque ac mi quis tortor
+                        consequat scelerisque.</i> Sed eros urna, rhoncus nec tortor quis, pretium vestibulum
+                    purus. Nunc quis augue nibh. Proin non enim non nulla scelerisque scelerisque
+                    vitae non est. Quisque iaculis leo at lacus malesuada mattis.</p>
             </div>
-            <div class="col-md-4 w3_agile_mail_right">
-                <div class="w3_agileits_mail_right_grid">
-                    <h4>About Plantation</h4>
-                    <p>Donec libero lectus, feugiat vel elit nec, mattis tempor mi ante.</p>
-                    <h5>Follow Us On</h5>
-                    <ul class="agileits_social_list">
-                        <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="w3_agile_vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
-                    </ul>
-                    <div class="w3_agileits_mail_right_grid_pos">
-                        <img src="images/12.jpg" alt=" " class="img-responsive" />
-                    </div>
+            <div class="col-md-6 w3_agile_about_grid_right">
+                <div class="skillbar" data-percent="78">
+                    <span class="skillbar-title" style="background: #f1703a;">Seeds</span>
+                    <p class="skillbar-bar" style="background: #f88c5e;"></p>
+                    <span class="skill-bar-percent"></span>
                 </div>
-                <div class="w3_agileits_mail_right_grid_main">
-                    <div class="w3layouts_mail_grid_left">
-                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
-                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        </div>
-                        <div class="w3layouts_mail_grid_left2">
-                            <h3>Mail Us</h3>
-                            <a href="mailto:info@example.com">info@example.com</a>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                    <div class="w3layouts_mail_grid_left">
-                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        </div>
-                        <div class="w3layouts_mail_grid_left2">
-                            <h3>Address</h3>
-                            <p>My Company 8907 Ukraine.</p>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
-                    <div class="w3layouts_mail_grid_left">
-                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
-                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-                        </div>
-                        <div class="w3layouts_mail_grid_left2">
-                            <h3>Phone</h3>
-                            <p>+(0121) 121 121</p>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
+                <!-- End Skill Bar -->
+
+                <div class="skillbar" data-percent="54">
+                    <span class="skillbar-title" style="background: #2980b9;">Growth</span>
+                    <p class="skillbar-bar" style="background: #3498db;"></p>
+                    <span class="skill-bar-percent"></span>
                 </div>
+                <!-- End Skill Bar -->
+
+                <div class="skillbar" data-percent="76">
+                    <span class="skillbar-title" style="background: #a0d034;">Economy</span>
+                    <p class="skillbar-bar" style="background: #b2ec2f;"></p>
+                    <span class="skill-bar-percent"></span>
+                </div>
+                <!-- End Skill Bar -->
+
+                <div class="skillbar" data-percent="80">
+                    <span class="skillbar-title" style="background: #e7cc2c;">Planting</span>
+                    <p class="skillbar-bar" style="background: #f5d410;"></p>
+                    <span class="skill-bar-percent"></span>
+                </div>
+                <!-- End Skill Bar -->
             </div>
             <div class="clearfix"> </div>
         </div>
     </div>
 </div>
-<div id="map"></div>
-<!-- //contact -->
-<script type="text/javascript">
-    //高德地图开发方案
-    //         window.onLoad  = function(){
-    //             var map = new AMap.Map('map');
-    //         }
-    //         var url = 'https://webapi.amap.com/maps?v=1.4.14&key=5029b5c8db53f6b21261383fcc8df088&callback=onLoad';
-    //         var jsapi = document.createElement('script');
-    //         jsapi.charset = 'utf-8';
-    //         jsapi.src = url;
-    //         document.head.appendChild(jsapi);
-    mapObj = new AMap.Map('map',{
-        center:[126.62918508052827,45.72265629095427], //经纬度
-        zoom: 16 //缩放程度
-    });
-    mapObj.plugin('AMap.Geolocation', function () {
-        geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            maximumAge: 0,           //定位结果缓存0毫秒，默认：0
-            convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-            showButton: true,        //显示定位按钮，默认：true
-            buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
-            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
-            showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
-            panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
-            zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+<!-- //about -->
+<!-- skills -->
+<script src="js/skill.bars.jquery.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('.skillbar').skillBars({
+            from: 0,
+            speed: 4000,
+            interval: 100,
+            decimals: 0,
         });
-        mapObj.addControl(geolocation);
-    //    geolocation.getCurrentPosition();//浏览器定位
-        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+
     });
-    //    定位标记
-    var marker;
-    var icon = new AMap.Icon({
-        image: "http://vdata.amap.com/icons/b18/1/2.png",
-        size: new AMap.Size(24, 24)
-    });
-    marker = new AMap.Marker({
-        offset: new AMap.Pixel(10,20),
-        zIndex: 101,
-        icon:icon,
-        map: mapObj
-    });
-    marker.setTitle("“一米阳光”家庭绿色小菜园");
 </script>
+<!-- //skills -->
+<!-- about-bottom -->
+<div class="about-bottom">
+    <div class="container">
+        <h3><span>Agriculture</span> not only gives riches to a nation, but the
+            only riches she can call her own</h3>
+        <div class="agileits_w3layouts_learn_more agileits_learn_more hvr-radial-out">
+            <a href="#" data-toggle="modal" data-target="#myModal">Read More</a>
+        </div>
+    </div>
+</div>
+<!-- //about-bottom -->
+<!-- team -->
+<div class="welcome">
+    <div class="container">
+        <h3 class="agileits_w3layouts_head">Meet Our <span>Amazing</span> Team</h3>
+        <div class="w3_agile_image">
+            <img src="images/1.png" alt=" " class="img-responsive" />
+        </div>
+        <p class="agile_para">Morbi viverra lacus commodo felis semper, eu iaculis lectus nulla at sapien blandit sollicitudin.</p>
+        <div class="w3ls_news_grids w3_agileits_team_grids">
+            <div class="col-md-3 w3_agileits_team_grid">
+                <div class="w3layouts_news_grid">
+                    <img src="images/10.jpg" alt=" " class="img-responsive" />
+                    <div class="w3layouts_news_grid_pos">
+                        <div class="wthree_text agileinfo_about_text">
+                            <ul class="agileits_social_list">
+                                <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h4>Andria Carl</h4>
+                <p>Field Manager</p>
+            </div>
+            <div class="col-md-3 w3_agileits_team_grid">
+                <div class="w3layouts_news_grid">
+                    <img src="images/11.jpg" alt=" " class="img-responsive" />
+                    <div class="w3layouts_news_grid_pos">
+                        <div class="wthree_text agileinfo_about_text">
+                            <ul class="agileits_social_list">
+                                <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h4>Laura Doe</h4>
+                <p>Farmer</p>
+            </div>
+            <div class="col-md-3 w3_agileits_team_grid">
+                <div class="w3layouts_news_grid">
+                    <img src="images/12.jpg" alt=" " class="img-responsive" />
+                    <div class="w3layouts_news_grid_pos">
+                        <div class="wthree_text agileinfo_about_text">
+                            <ul class="agileits_social_list">
+                                <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h4>Rosy Paul</h4>
+                <p>Co-Founder</p>
+            </div>
+            <div class="col-md-3 w3_agileits_team_grid">
+                <div class="w3layouts_news_grid">
+                    <img src="images/13.jpg" alt=" " class="img-responsive" />
+                    <div class="w3layouts_news_grid_pos">
+                        <div class="wthree_text agileinfo_about_text">
+                            <ul class="agileits_social_list">
+                                <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h4>Christopher Lii</h4>
+                <p>Senior Staff</p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!-- //team -->
 <!-- footer -->
 <div class="footer">
     <div class="container">

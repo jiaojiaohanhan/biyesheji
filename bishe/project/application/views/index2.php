@@ -58,7 +58,7 @@
                 <ul class="agileits_social_list">
                     <li><a href="My_contro/login" class="w3_agile_user"><i class="fa fa-user" aria-hidden="true"></i> 登录</a></li>
                     <li><a href="My_contro/register" class="pencil-square-o"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 注册</a></li>
-                    <li><a href="My_contro/manager_login" class="the-fa-users"><i class="fa fa-users" aria-hidden="true"></i> 管理人员登录</a></li>
+                    <li><a href="My_contro/manager_login" class="the-fa-users"><i class="fa fa-users" aria-hidden="true"></i> 管理人员界面</a></li>
                 </ul>
 <!--                <ul class="agileits_social_list" style="display: none">-->
 <!--                    <li><a id="exit" href="My_contro/index" target="_blank" class="w3_agile_user"><i class="fa fa-home" aria-hidden="true"></i> 退出</a></li>-->
@@ -74,13 +74,13 @@
                     <div class="shy-menu-panel">
                         <nav class="menu menu--horatio link-effect-8" id="link-effect-8">
                             <ul class="w3layouts_menu__list">
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li><a href="regist.html">Regist</a></li>
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="services.html">Services</a></li>
-                                <li><a href="gallery.html">Gallery</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li class="active"><a href="My_contro/index">Home</a></li>
+                                <li><a href="My_contro/register">Regist</a></li>
+                                <li><a href="My_contro/login">Login</a></li>
+                                <li><a href="My_contro/about">About Us</a></li>
+                                <li><a href="My_contro/services">Services</a></li>
+                                <li><a href="My_contro/gallery">Gallery</a></li>
+                                <li><a href="My_contro/contact_us">Contact Us</a></li>
                             </ul>
                         </nav>
                     </div>

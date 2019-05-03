@@ -17,7 +17,7 @@
             });
 
             setTimeout(hideURLbar, 0);
-            index = document.getElementById("index").innerHTML;
+            index = <?php echo $index;?>;
         }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
     </script>
@@ -81,7 +81,6 @@
         <div class="w3_agileits_banner_main_grid">
             <div class="w3_agile_logo">
                 <h1><a href="index.html"><span>G</span>erminate<i>Grow healthy products</i></a></h1>
-                <p id="index" style="display: none"><?php echo $index;?></p>
             </div>
             <div class="agile_social_icons_banner">
                 <ul class="agileits_social_list">
@@ -244,23 +243,22 @@
                 $("#choose_plant").prepend(`
                          <div>
                          第${i + 1}列:
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="草莓" checked>草莓
-                                <input type="radio" name="plant${i + 1}" value="橘子">橘子
-                                <input type="radio" name="plant${i + 1}" value="石榴">石榴
-                                <input type="radio" name="plant${i + 1}" value="柠檬">柠檬
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="苹果">苹果
-                                <input type="radio" name="plant${i + 1}" value="白菜">白菜
-                                <input type="radio" name="plant${i + 1}" value="菠菜">菠菜
-                                <input type="radio" name="plant${i + 1}" value="猕猴桃">猕猴桃
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="黄瓜">黄瓜
-                                <input type="radio" name="plant${i + 1}" value="番茄">番茄
-                                <input type="radio" name="plant${i + 1}" value="茄子">茄子
-                                <input type="radio" name="plant${i + 1}" value="豌豆">豌豆
+                             <select>
+                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
+                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
+                                 <option name="plant${i + 1}" value="石榴">石榴</option>
+                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
+                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
+                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
+                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
+                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
+                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
+                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
+                                 <option name="plant${i + 1}" value="茄子">茄子</option>
+                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
+                            </select>
                          </div>
-                    `)
+                `)
             }
             $("#field2 button").eq(0).on("click", function () {
                 num = parseInt($("#field2 span").text());
@@ -276,23 +274,22 @@
                         $("#choose_plant").prepend(`
                          <div>
                          第${i + 1}列:
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="草莓" checked>草莓
-                                <input type="radio" name="plant${i + 1}" value="橘子">橘子
-                                <input type="radio" name="plant${i + 1}" value="石榴">石榴
-                                <input type="radio" name="plant${i + 1}" value="柠檬">柠檬
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="苹果">苹果
-                                <input type="radio" name="plant${i + 1}" value="白菜">白菜
-                                <input type="radio" name="plant${i + 1}" value="菠菜">菠菜
-                                <input type="radio" name="plant${i + 1}" value="猕猴桃">猕猴桃
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="黄瓜">黄瓜
-                                <input type="radio" name="plant${i + 1}" value="番茄">番茄
-                                <input type="radio" name="plant${i + 1}" value="茄子">茄子
-                                <input type="radio" name="plant${i + 1}" value="豌豆">豌豆
+                             <select>
+                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
+                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
+                                 <option name="plant${i + 1}" value="石榴">石榴</option>
+                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
+                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
+                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
+                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
+                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
+                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
+                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
+                                 <option name="plant${i + 1}" value="茄子">茄子</option>
+                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
+                            </select>
                          </div>
-                    `)
+                       `)
                     }
                 }
             });
@@ -305,23 +302,22 @@
                         $("#choose_plant").prepend(`
                          <div>
                          第${i + 1}列:
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="草莓" checked>草莓
-                                <input type="radio" name="plant${i + 1}" value="橘子">橘子
-                                <input type="radio" name="plant${i + 1}" value="石榴">石榴
-                                <input type="radio" name="plant${i + 1}" value="柠檬">柠檬
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="苹果">苹果
-                                <input type="radio" name="plant${i + 1}" value="白菜">白菜
-                                <input type="radio" name="plant${i + 1}" value="菠菜">菠菜
-                                <input type="radio" name="plant${i + 1}" value="猕猴桃">猕猴桃
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="黄瓜">黄瓜
-                                <input type="radio" name="plant${i + 1}" value="番茄">番茄
-                                <input type="radio" name="plant${i + 1}" value="茄子">茄子
-                                <input type="radio" name="plant${i + 1}" value="豌豆">豌豆
+                             <select>
+                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
+                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
+                                 <option name="plant${i + 1}" value="石榴">石榴</option>
+                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
+                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
+                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
+                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
+                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
+                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
+                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
+                                 <option name="plant${i + 1}" value="茄子">茄子</option>
+                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
+                            </select>
                          </div>
-                    `)
+                       `)
                     }
                 } else {
                     num++;
@@ -332,23 +328,22 @@
                         $("#choose_plant").prepend(`
                          <div>
                          第${i + 1}列:
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="草莓" checked>草莓
-                                <input type="radio" name="plant${i + 1}" value="橘子">橘子
-                                <input type="radio" name="plant${i + 1}" value="石榴">石榴
-                                <input type="radio" name="plant${i + 1}" value="柠檬">柠檬
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="苹果">苹果
-                                <input type="radio" name="plant${i + 1}" value="白菜">白菜
-                                <input type="radio" name="plant${i + 1}" value="菠菜">菠菜
-                                <input type="radio" name="plant${i + 1}" value="猕猴桃">猕猴桃
-                            <br>
-                                <input type="radio" name="plant${i + 1}" value="黄瓜">黄瓜
-                                <input type="radio" name="plant${i + 1}" value="番茄">番茄
-                                <input type="radio" name="plant${i + 1}" value="茄子">茄子
-                                <input type="radio" name="plant${i + 1}" value="豌豆">豌豆
+                             <select>
+                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
+                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
+                                 <option name="plant${i + 1}" value="石榴">石榴</option>
+                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
+                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
+                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
+                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
+                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
+                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
+                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
+                                 <option name="plant${i + 1}" value="茄子">茄子</option>
+                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
+                            </select>
                          </div>
-                    `)
+                       `)
                     }
                 }
             });
@@ -360,7 +355,7 @@
                 $("div[name=choose4]").remove();
                 that.css("display","inline");
                 for(var i=0;i<num;i++){
-                    vals.push($(`input[name=plant${i+1}]:checked`).val());
+                    vals.push($(`option[name=plant${i+1}]:selected`).val());
                 }
                 $("#field2").append(`
                 <div name="choose1">您选择的是${vals}</div>
@@ -411,7 +406,8 @@
                     user_id:user_id,
                     field_id:index,
                     plant_names:vals,
-                    the_sur:(sur-vals.length)
+                    the_sur:(sur-vals.length),
+                    money:price
                 }, function(res) {},"text");
                 alert("支付成功");
                 window.location = "My_contro/index";
