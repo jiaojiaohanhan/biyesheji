@@ -39,12 +39,22 @@
                         var list = $(".agileits_social_list");
                         list[0].style.display = "none";
                         list[1].style.display = "block";
+                    }else {
+                        storage.clear();
                     }
                 },
                 error: function(data) {
 
                 }
             });
+            $.get("http://localhost/bishe/project/My_contro/user_info",{
+                id:storage.key(0)
+            }, function(res) {
+                var arr = res.split(" ");
+                $("#exit").append(`
+                    <img style="width:2rem;height:2rem;border-radius:50%" src="uploads/${arr[1]}">用户${arr[0]}(点击退出)
+                `);
+            },"text")
         })
     </script>
     <!-- //js -->
@@ -66,7 +76,7 @@
     <div class="container">
         <div class="w3_agileits_banner_main_grid">
             <div class="w3_agile_logo">
-                <h1><a href="index.html"><span>G</span>erminate<i>Grow healthy products</i></a></h1>
+                <h1><a href="index.html"><span>S</span>unshine<i>Grow healthy products</i></a></h1>
                 <p id="user_token" style="display: none"><?php echo $token;?></p>
                 <p id="user_id" style="display: none"><?php echo $id;?></p>
                 <p id="user_name" style="display: none"><?php echo $username;?></p>
@@ -78,7 +88,7 @@
                     <li><a href="My_contro/manager_login" class="the-fa-users"><i class="fa fa-users" aria-hidden="true"></i> 管理人员界面</a></li>
                 </ul>
                 <ul class="agileits_social_list" style="display: none">
-                    <li><a id="exit" href="My_contro/index2" class="w3_agile_user"><i class="fa fa-home" aria-hidden="true"></i> 退出</a></li>
+                    <li><a id="exit" href="My_contro/index2" class="w3_agile_user"></a></li>
                 </ul>
             </div>
             <div class="agileits_w3layouts_menu">
@@ -113,9 +123,9 @@
                     sollicitudin. Nunc tortor lorem, viverra sed diam ut, blandit efficitur leo.</p>
                 <ul>
                     <li><a href="#" class="w3l_contact" data-toggle="modal" data-target="#myModal">地块预览</a></li>
-                    <li><a href="My_contro2/choose_field" target="_blank" class="w3l_contact">地块选订</a></li>
-                    <li><a href="My_contro2/my_field" target="_blank" class="w3l_contact">我的地块</a></li>
-                    <li><a href="My_contro/contact_us" target="_blank" class="w3l_contact">联系我们</a></li>
+                    <li><a href="My_contro2/choose_field" class="w3l_contact">地块选订</a></li>
+                    <li><a href="My_contro2/my_field" class="w3l_contact">我的地块</a></li>
+                    <li><a href="My_contro/contact_us" class="w3l_contact">联系我们</a></li>
                     <!--<li><a href="#" class="w3ls_more" data-toggle="modal" data-target="#myModal">地块选订</a></li>-->
                 </ul>
             </div>

@@ -2,6 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Manager_model extends CI_Model {
+    public function __construct()
+    {
+        parent::__construct();
+        ini_set("date.timezone","Asia/Shanghai");
+    }
     public function manager_save($identity,$name,$password){
         $query = $this->db->insert("manager",array(
             "name" => $name,
@@ -32,6 +37,14 @@ class Manager_model extends CI_Model {
             "number" => $number,
             "password" => $password,
             "type" => "2"
+        ));
+        return $query->row();
+    }
+    public function manager_login3($number,$password){
+        $query = $this->db->get_where("manager",array(
+            "number" => $number,
+            "password" => $password,
+            "type" => "3"
         ));
         return $query->row();
     }
@@ -158,6 +171,20 @@ class Manager_model extends CI_Model {
                 $this->db->set("gloves", "gloves+1", FALSE);
                 $this->db->update("tools");
             }
+        }else if($name=="barbecue"){
+            $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
+            if($num<10000) {
+                $this->db->where(array("id" => 1));
+                $this->db->set("barbecue", "barbecue+1", FALSE);
+                $this->db->update("tools");
+            }
+        }else if($name=="charcoal"){
+            $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
+            if($num<10000) {
+                $this->db->where(array("id" => 1));
+                $this->db->set("charcoal", "charcoal+1", FALSE);
+                $this->db->update("tools");
+            }
         }
     }
     public function tool_sub($name){
@@ -201,6 +228,20 @@ class Manager_model extends CI_Model {
             if($num>0) {
                 $this->db->where(array("id" => 1));
                 $this->db->set("gloves", "gloves-1", FALSE);
+                $this->db->update("tools");
+            }
+        }else if($name=="barbecue"){
+            $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
+            if($num>0) {
+                $this->db->where(array("id" => 1));
+                $this->db->set("barbecue", "barbecue-1", FALSE);
+                $this->db->update("tools");
+            }
+        }else if($name=="charcoal"){
+            $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
+            if($num>0) {
+                $this->db->where(array("id" => 1));
+                $this->db->set("charcoal", "charcoal-1", FALSE);
                 $this->db->update("tools");
             }
         }

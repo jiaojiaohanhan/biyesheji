@@ -58,23 +58,17 @@ class My_contro3 extends CI_Controller {
         $password = md5(md5($password));
         $row = $this->manager_model->manager_login($identity,$password);
         if($row){
-            $message = "";
             $this->load->view("fieldManager2",array(
-                "message" => $message
+                "message" => ""
             ));
         }else{
-            echo "用户不存在或密码不正确";
+            $this->load->view("managerLogin",array(
+                "msg" => "用户不存在或密码不正确"
+            ));
         }
     }
-    public function main_login2()
-    {
-        $message = "";
-        $this->load->view("fieldManager2",array(
-            "message" => $message
-        ));
-    }
     //普通地块管理人员登录
-    public function login2()
+    public function login1()
     {
         $this->load->model("manager_model");
         $number = $this->input->post("Number");
@@ -84,11 +78,33 @@ class My_contro3 extends CI_Controller {
         if($row){
             $this->load->view("fieldManager1");
         }else{
-            echo "用户不存在或密码不正确";
+            $this->load->view("managerLogin",array(
+                "msg" => "用户不存在或密码不正确"
+            ));
         }
     }
-    public function login3()
+    public function login2()
     {
         $this->load->view("fieldManager1");
+    }
+    //特殊地块管理人员登录
+    public function login3()
+    {
+        $this->load->model("manager_model");
+        $number = $this->input->post("Number");
+        $password = $this->input->post("Password");
+        $password = md5(md5($password));
+        $row = $this->manager_model->manager_login3($number,$password);
+        if($row){
+            $this->load->view("fieldManager3");
+        }else{
+            $this->load->view("managerLogin",array(
+                "msg" => "用户不存在或密码不正确"
+            ));
+        }
+    }
+    public function login4()
+    {
+        $this->load->view("fieldManager3");
     }
 }

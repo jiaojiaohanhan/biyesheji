@@ -10,11 +10,6 @@
     <script type="application/x-javascript">
         addEventListener("load", function() {
             setTimeout(hideURLbar, 0);
-            var storage=window.localStorage;
-            if(storage.length==0){
-                alert("您还没有登录，请先登录");
-                window.location = "My_contro/login";
-            }
         }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
     </script>
@@ -23,6 +18,36 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        window.onload = function() {
+            var storage=window.localStorage;
+            if(storage.length==0){
+                alert("您还没有登录，请先登录");
+                window.location = "My_contro/login";
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/bishe/project/My_contro/check_login",
+                data: {id: storage.key(0)},
+                dataType: "text",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", storage.getItem(storage.key(0)));
+                },
+                success: function (data) {
+                    if (data == "success") {
+
+                    } else {
+                        storage.clear();
+                        alert("您的登录状态异常，请重新登录");
+                        window.location = "My_contro/login"
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+    </script>
     <!-- font-awesome-icons -->
     <link href="css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome-icons -->

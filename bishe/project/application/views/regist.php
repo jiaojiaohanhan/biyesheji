@@ -89,10 +89,16 @@
         <div class="w3ls_news_grids user_form">
             <div class="col-md-8 w3_agile_mail_left">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                    <form action="http://localhost/bishe/project/My_contro/regist" method="post">
-							<span>
+                    <form action="http://localhost/bishe/project/My_contro/regist" method="post" enctype="multipart/form-data">
+                        <span>
 								<i>姓名</i>
 								<input type="text" name="Name" placeholder=" " required="">
+							</span>
+                        <span>
+								<i>头像</i>
+								<input type="file" name="Userfile" placeholder="请上传您的头像" required="" onchange="GetExtensionFileName(this.value)">
+                                <input type="text" name="Filename" id="Filename" style="display: none">
+                                <span id="alert6" style="font-size: 12px;float: right;color: #a4dd25"></span>
 							</span>
                         <span>
 								<i>微信号</i>
@@ -131,9 +137,6 @@
 </div>
 
 <!-- //contact -->
-<script type="text/javascript">
-
-</script>
 <!-- footer -->
 <div class="footer">
     <div class="container">
@@ -191,7 +194,30 @@
 <!-- //footer -->
 <!-- validate -->
 <script>
-    var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$flag5 = false;
+    function GetExtensionFileName(pathfilename) {
+        var reg = /(\\+)/g;
+        var pString = pathfilename.replace(reg, "#");          //用正则表达式来将\或\\替换成#
+        var arr = pString.split("#");  // 以“#”为分隔符，将字符分解为数组 例如 D Program Files bg.png
+        var lastString = arr[arr.length - 1];            //取最后一个字符
+        var arr2 = lastString.split(".");                  //   再以"."作为分隔符
+        $("#Filename").val(arr2[arr2.length - 1]);                   //将后缀名返回出来
+        var $filename = $("#Filename").val();
+        if($filename!="gif"&&$filename!="jpg"&&$filename!="jpeg"&&$filename!="png"&&$filename!="svg"){
+            $("#alert6").text("您上传的文件不是图片文件").css("color","red");
+            $flag6 = false;
+        }else {
+            $("#alert6").text("");
+            $flag6 = true;
+        }
+        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true&&$flag6==true){
+            $(".w3_submit [type='submit']").removeAttr("disabled")
+        }else {
+            $(".w3_submit [type='submit']").attr("disabled","disabled")
+        }
+    }
+</script>
+<script>
+    var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$flag5 = false,$flag6 = true;
     $("[name='Phone']").on('input propertychange',function () {
         var $phone = $(this).val();
         if(!(/^1[34578]\d{9}$/.test($phone))){
@@ -212,7 +238,7 @@
                 }
             },"text")
         }
-        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true&&$flag6==true){
             $(".w3_submit [type='submit']").removeAttr("disabled")
         }else {
             $(".w3_submit [type='submit']").attr("disabled","disabled")
@@ -231,7 +257,7 @@
                 $flag5 = false;
             }
         },"text")
-        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true&&$flag6==true){
             $(".w3_submit [type='submit']").removeAttr("disabled")
         }else {
             $(".w3_submit [type='submit']").attr("disabled","disabled")
@@ -254,7 +280,7 @@
             $("#alert3").text("");
             $flag3 = true;
         }
-        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true&&$flag6==true){
             $(".w3_submit [type='submit']").removeAttr("disabled")
         }else {
             $(".w3_submit [type='submit']").attr("disabled","disabled")
@@ -270,7 +296,7 @@
             $("#alert3").text("");
             $flag3 = true;
         }
-        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+        if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true&&$flag6==true){
             $(".w3_submit [type='submit']").removeAttr("disabled")
         }else {
             $(".w3_submit [type='submit']").attr("disabled","disabled")
@@ -322,7 +348,7 @@
                         // 否则提示用户错误信息
                         alert(res.data);
                     }
-                    if ($flag1 == true && $flag2 == true && $flag3 == true && $flag4 == true&&$flag5 == true) {
+                    if ($flag1 == true && $flag2 == true && $flag3 == true && $flag4 == true&&$flag5 == true&&$flag6==true) {
                         $(".w3_submit [type='submit']").removeAttr("disabled")
                     } else {
                         $(".w3_submit [type='submit']").attr("disabled", "disabled")

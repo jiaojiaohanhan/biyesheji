@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>javascript获取上传文件的后缀名</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<script type="text/javascript">
+    function GetExtensionFileName(pathfilename) {
+        var reg = /(\\+)/g;
+        var pString = pathfilename.replace(reg, "#");          //用正则表达式来将\或\\替换成#
+        var arr = pString.split("#");  // 以“#”为分隔符，将字符分解为数组 例如 D Program Files bg.png
+        var lastString = arr[arr.length - 1];            //取最后一个字符
+        var arr2 = lastString.split(".");                  //   再以"."作为分隔符
+        return arr2[arr2.length - 1];                   //将后缀名返回出来
+    }
+    function Test() {
+        var filePath = "";    //     D:\\Program Files\\bg.png
+        filePath = document.getElementById("file1").value;
+        if (filePath == "") {
+            alert("未选择文件");
+            return;
+        }
+        alert("文件后缀名为：" + GetExtensionFileName(filePath));
+    }</script>
+<input type="file" id="file1" />
+<input type="button" value="获取文件后缀名" onclick="Test()" />
+</body>
+</html>

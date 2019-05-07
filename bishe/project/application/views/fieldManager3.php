@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>login</title>
+    <title>field</title>
     <base href="<?php echo site_url();?>">
     <!-- custom-theme -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +10,6 @@
     <script type="application/x-javascript">
         addEventListener("load", function() {
             setTimeout(hideURLbar, 0);
-            $(".agileits_w3layouts_head span").eq(0).addClass("active").siblings().removeClass("active");
-            $(".agileits_mail_grid_right1 form").eq(0).show().siblings().hide();
         }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
     </script>
@@ -20,14 +18,6 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            var $msg = "<?php echo $msg;?>";
-            if($msg!=""){
-                alert($msg);
-            }
-        })
-    </script>
     <!-- font-awesome-icons -->
     <link href="css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome-icons -->
@@ -48,29 +38,6 @@
                     <li><a href="My_contro/index" class="w3_agile_user"><i class="fa fa-home" aria-hidden="true"></i> 返回主页</a></li>
                 </ul>
             </div>
-            <div class="agileits_w3layouts_menu">
-                <div class="shy-menu">
-                    <a class="shy-menu-hamburger">
-                        <span class="layer top"></span>
-                        <span class="layer mid"></span>
-                        <span class="layer btm"></span>
-                    </a>
-                    <div class="shy-menu-panel">
-                        <nav class="menu menu--horatio link-effect-8" id="link-effect-8">
-                            <ul class="w3layouts_menu__list">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="regist.html">Regist</a></li>
-                                <li class="active"><a href="login.html">Login</a></li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="services.html">Services</a></li>
-                                <li><a href="gallery.html">Gallery</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-            </div>
             <div class="clearfix"> </div>
         </div>
     </div>
@@ -82,11 +49,11 @@
         <div class="w3layouts_breadcrumbs_left">
             <ul>
                 <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>/</span></li>
-                <li><i class="fa fa-user" aria-hidden="true"></i>Login</li>
+                <li><i class="fa fa-plus-square-o" aria-hidden="true"></i>Field</li>
             </ul>
         </div>
         <div class="w3layouts_breadcrumbs_right">
-            <h2>Login</h2>
+            <h2>Field</h2>
         </div>
         <div class="clearfix"> </div>
     </div>
@@ -95,44 +62,22 @@
 <!-- contact -->
 <div class="welcome">
     <div class="container">
-        <h3 class="agileits_w3layouts_head"><span>手机登录</span>/<span>微信登录</span></h3>
+        <h3 class="agileits_w3layouts_head"><span>地块查看</span></h3>
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>
-        <p class="agile_para">请 填 写 有 关 您 的 信 息</p>
-        <div class="w3ls_news_grids user_form" >
-            <div class="col-md-8 w3_agile_mail_left">
-                <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                    <form action="http://localhost/bishe/project/My_contro/login_phone" method="post">
-                        <span>
-								<i>手机号</i>
-								<input type="text" name="Phone" placeholder=" " required="">
-							</span>
-                        <span>
-								<i>密码</i>
-								<input type="password" name="Password" placeholder=" " required="">
-							</span>
-                        <div class="w3_submit">
-                            <input type="submit" value="现 在 登 录">
-                            <input type="button" value="忘记/修改密码">
-                        </div>
-                    </form>
-                    <form action="http://localhost/bishe/project/My_contro/login_wechat" method="post">
-                        <span>
-                                    <i>微信号</i>
-                                    <input type="text" name="Wechat" placeholder=" " required="">
-                                </span>
-                        <span>
-                                    <i>密码</i>
-                                    <input type="password" name="Password" placeholder=" " required="">
-                                </span>
-                        <div class="w3_submit">
-                            <input type="submit" value="现 在 登 录">
-                            <input type="button" value="忘记/修改密码">
-                        </div>
-                    </form>
+        <p class="agile_para">请 选 择 您 想 查 看 的 地 块</p>
+        <div class="w3ls_news_grids user_field" >
+            <section>
+                <div class="modal-body">
+                    <div id="field" style="position: relative;height:800px;width: 100%;">
+                        <div style="position: absolute;left:25%;top:250px;height:150px;line-height:150px;width: 55%;background-color: #5a0099;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=4">公共区域</a></div>
+                        <div style="position: absolute;left:0;top:400px;height:200px;line-height:200px;width: 45%;background-color: #2b542c;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=5">游戏区</a></div>
+                        <div style="position: absolute;left:45%;top:400px;height:200px;line-height:200px;width: 35%;background-color: #c7254e;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=6">烧烤区</a></div>
+                        <input id="back" type="button" style="margin-left:100%;margin-top:53%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </div>
@@ -196,14 +141,17 @@
     </div>
 </div>
 <!-- //footer -->
-<!-- menu -->
 <script>
-    $(".agileits_w3layouts_head span").on("click",function () {
-        $(this).addClass("active").siblings().removeClass("active");
-        var $idx = $(this).index();
-        $(".agileits_mail_grid_right1 form").eq($idx).show().siblings().hide();
+    $("#field div").on("mouseover",function(){
+        $(this).css({"border":"4px #a0d034 solid"});
+    }).on("mouseout",function(){
+        $(this).css({"border":""});
+    });
+    $("#back").on("click",function(){
+        window.location = "My_contro/manager_login";
     })
 </script>
+<!-- menu -->
 <script>
     $(function() {
 

@@ -10,10 +10,16 @@ class My_contro4 extends CI_Controller {
             "index" => $index
         ));
     }
-    public function the_field_info(){
+    public function the_field2(){
+        $index = $this->input->get("index");
+        $this->load->view("theFieldManager2",array(
+            "index" => $index
+        ));
+    }
+    public function the_field_info1(){
         $this->load->model("field_model");
         $field_id = $this->input->get("field_id");
-        $rows = $this->field_model->the_field_info($field_id);
+        $rows = $this->field_model->the_field_info1($field_id);
         foreach($rows as $row){
             echo $row->user_id." ";
             echo $row->plant_name." ";
@@ -43,6 +49,22 @@ class My_contro4 extends CI_Controller {
         echo $row->can_harvest." ";
         echo $row->harvest." ";
         echo $row->id;
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function the_field_info3(){
+        $this->load->model("field_model");
+        $field_id = $this->input->get("field_id");
+        $rows = $this->field_model->the_field_info3($field_id);
+        foreach($rows as $row){
+            echo $row->user_id."_";
+            echo $row->tools."_";
+            echo $row->datetime2."_";
+            echo $row->datetime."_";
+//            echo $row->id." ";
+        }
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
@@ -227,7 +249,9 @@ class My_contro4 extends CI_Controller {
         echo $row->shovel." ";
         echo $row->bucket." ";
         echo $row->basket." ";
-        echo $row->gloves;
+        echo $row->gloves." ";
+        echo $row->barbecue." ";
+        echo $row->charcoal;
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');

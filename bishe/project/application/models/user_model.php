@@ -2,12 +2,18 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
-    public function user_save($name,$wechat,$phone,$password){
+    public function __construct()
+    {
+        parent::__construct();
+        ini_set("date.timezone","Asia/Shanghai");
+    }
+    public function user_save($name,$wechat,$phone,$password,$img_name){
         $query = $this->db->insert("user",array(
             "username" => $name,
             "password" => $password,
             "wechat" => $wechat,
             "phone" => $phone,
+            "image" => $img_name
         ));
 //        return $query->row();
     }

@@ -19,9 +19,12 @@
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script>
-        window.onload = function(){
-
-        }
+        $(document).ready(function(){
+            var $msg = "<?php echo $msg;?>";
+            if($msg!=""){
+                alert($msg);
+            }
+        })
     </script>
     <!-- font-awesome-icons -->
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -197,7 +200,7 @@
         $("#field").append(`
             <div style="width: 60%;margin: 0 auto">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                        <form action="http://localhost/bishe/project/My_contro3/login2" method="post">
+                        <form action="http://localhost/bishe/project/My_contro3/login1" method="post">
                             <span>
                                     <i>工号</i>
                                     <input type="text" name="Number" placeholder=" " required="">
@@ -375,7 +378,7 @@
         $("#field").append(`
             <div style="width: 60%;margin: 0 auto">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                        <form action="http://localhost/bishe/project/My_contro/login_phone" method="post">
+                        <form action="http://localhost/bishe/project/My_contro3/login3" method="post">
                             <span>
                                     <i>工号</i>
                                     <input type="text" name="Number" placeholder=" " required="">

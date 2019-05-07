@@ -10,11 +10,6 @@
     <script type="application/x-javascript">
         addEventListener("load", function() {
             setTimeout(hideURLbar, 0);
-            var storage=window.localStorage;
-            if(storage.length==0){
-                alert("您还没有登录，请先登录");
-                window.location = "My_contro/login";
-            }
         }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
     </script>
@@ -22,9 +17,36 @@
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
+    <script type="text/javascript" src="js/laydate.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script>
         window.onload = function(){
+            var storage=window.localStorage;
+            if(storage.length==0){
+                alert("您还没有登录，请先登录");
+                window.location = "My_contro/login";
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/bishe/project/My_contro/check_login",
+                data: {id:storage.key(0)},
+                dataType:"text",
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", storage.getItem(storage.key(0)));
+                },
+                success: function(data) {
+                    if(data=="success"){
+
+                    }else {
+                        storage.clear();
+                        alert("您的登录状态异常，请重新登录");
+                        window.location = "My_contro/login"
+                    }
+                },
+                error: function(data) {
+
+                }
+            });
             var user_id = localStorage.key(0);
             $.get("http://localhost/bishe/project/My_contro2/my_field_info",{
                 user_id:user_id
@@ -129,10 +151,26 @@
                                                           <label for="bucket">水桶</label>
                                                           <input type="checkbox" id="bucket" value="bucket" />
                                                       </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
                                                       <input id="btn-yes1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
                                                       <input id="btn-back1" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                                  <div>
                                             `);
+                                            //前后若干天可选，这里以30天为例
+                                            laydate.render({
+                                                elem: '#date'
+                                                ,min: 1
+                                                ,max: 30
+                                            });
+                                            //限定可选时间
+                                            laydate.render({
+                                                elem: '#time'
+                                                ,type: 'time'
+                                                ,min: '08:30:00'
+                                                ,max: '18:30:00'
+                                                ,btns: ['clear', 'confirm']
+                                            });
                                             $("#btn-back1").on("click",function(){
                                                 window.location.reload();
                                             });
@@ -151,17 +189,33 @@
                                                 }
                                             },"text");
                                             $("#btn-yes1").on("click",function(){
-                                                var arr = [];
+                                                var arr = [],tools = "";
                                                 $("input[type='checkbox']:checked").each(function (index, item) {
                                                     arr.push($(this).val());
                                                 });
-                                                $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
-                                                    arr:arr,
-                                                    id:id
-                                                },function(res){
-                                                    alert("您已经选好了工具，祝您活动愉快");
-                                                    window.location = "My_contro2/my_field";
-                                                },"text")
+                                                tools = arr.join(",");
+                                                var date = $("#date").val();
+                                                var time = $("#time").val();
+                                                var arr1 = date.split("-");
+                                                var arr2 = time.split(":");
+                                                if(date!=""&&time!=""){
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
+                                                        arr:arr,
+                                                        tools:tools,
+                                                        id:id
+                                                    },function(res){
+                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                            id:id,
+                                                            arr1:arr1,
+                                                            arr2:arr2
+                                                        },function(res){
+                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                            window.location = "My_contro2/my_field";
+                                                        },"text");
+                                                    },"text")
+                                                }else {
+                                                    alert("您还没有选好时间，请选择时间");
+                                                }
                                             })
                                         }
                                     })
@@ -183,10 +237,26 @@
                                                           <label for="gloves">手套</label>
                                                           <input type="checkbox" id="gloves" value="gloves" />
                                                       </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
                                                       <input id="btn-yes2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
                                                       <input id="btn-back2" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                                  <div>
                                             `);
+                                            //前后若干天可选，这里以30天为例
+                                            laydate.render({
+                                                elem: '#date'
+                                                ,min: 1
+                                                ,max: 30
+                                            });
+                                            //限定可选时间
+                                            laydate.render({
+                                                elem: '#time'
+                                                ,type: 'time'
+                                                ,min: '08:30:00'
+                                                ,max: '18:30:00'
+                                                ,btns: ['clear', 'confirm']
+                                            });
                                             $("#btn-back2").on("click",function(){
                                                 window.location.reload();
                                             });
@@ -205,17 +275,33 @@
                                                 }
                                             },"text");
                                             $("#btn-yes2").on("click",function(){
-                                                var arr = [];
+                                                var arr = [],tools = "";
                                                 $("input[type='checkbox']:checked").each(function (index, item) {
                                                     arr.push($(this).val());
                                                 });
-                                                $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
-                                                    arr:arr,
-                                                    id:id
-                                                },function(res){
-                                                    alert("您已经选好了工具，祝您活动愉快");
-                                                    window.location = "My_contro2/my_field";
-                                                },"text")
+                                                tools = arr.join(",");
+                                                var date = $("#date").val();
+                                                var time = $("#time").val();
+                                                var arr1 = date.split("-");
+                                                var arr2 = time.split(":");
+                                                if(date!=""&&time!=""){
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
+                                                        arr:arr,
+                                                        tools:tools,
+                                                        id:id
+                                                    },function(res){
+                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                            id:id,
+                                                            arr1:arr1,
+                                                            arr2:arr2
+                                                        },function(res){
+                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                            window.location = "My_contro2/my_field";
+                                                        },"text");
+                                                    },"text")
+                                                }else {
+                                                    alert("您还没有选好时间，请选择时间");
+                                                }
                                             })
                                         }
                                     })

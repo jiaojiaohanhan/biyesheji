@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once('unit/ZhenziSmsClient.php');
 
 class My_contro extends CI_Controller {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper(array("form", "url"));
+    }
     //主页
     public function index(){
         $this->load->view("index",array(
@@ -21,7 +26,9 @@ class My_contro extends CI_Controller {
     }
     //登录页面
     public function login(){
-        $this->load->view("login");
+        $this->load->view("login",array(
+            "msg" => ""
+        ));
     }
     //注册
     public function regist()
@@ -32,7 +39,17 @@ class My_contro extends CI_Controller {
         $password = md5(md5($password));
         $wechat = $this->input->post("Wechat");
         $phone= $this->input->post("Phone");
-        $row = $this->user_model->user_save($username,$wechat,$phone,$password);
+        $file_name= $this->input->post("Filename");
+        $img_name = $username."_".$phone.".".$file_name;
+        $config["upload_path"] = "./uploads/";
+        $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+        $config["max_size"] = 0;
+        $config["max_width"] = 0;
+        $config["max_height"] = 0;
+        $config["file_name"] = $img_name;
+        $this->load->library("upload", $config);
+        $this->upload->do_upload("Userfile");
+        $row = $this->user_model->user_save($username,$wechat,$phone,$password,$img_name);
         redirect("My_contro/login");
     }
     //手机登录
@@ -71,7 +88,9 @@ class My_contro extends CI_Controller {
                 "username" => $username
             ));
         }else{
-            echo "用户不存在或密码不正确";
+            $this->load->view("login",array(
+                "msg" => "用户不存在或密码不正确"
+            ));
         }
     }
     //微信登录
@@ -110,7 +129,9 @@ class My_contro extends CI_Controller {
                 "username" => $username
             ));
         }else{
-            echo "用户不存在或密码不正确";
+            $this->load->view("login",array(
+                "msg" => "用户不存在或密码不正确"
+            ));
         }
     }
     //登录校验
@@ -127,6 +148,18 @@ class My_contro extends CI_Controller {
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET,POST');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    //用户信息
+    public function user_info(){
+        $this->load->model("user_model");
+        $id = $this->input->get("id");
+        $row = $this->user_model->get_by_id($id);
+        echo $row->username." ";
+        echo $row->image;
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //验证码短信
@@ -179,7 +212,9 @@ class My_contro extends CI_Controller {
     }
     //管理人员界面
     public function manager_login(){
-        $this->load->view("managerLogin");
+        $this->load->view("managerLogin",array(
+            "msg" => ""
+        ));
     }
     //关于我们
     public function about(){

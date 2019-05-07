@@ -1,4 +1,4 @@
 RewriteEngine on
-RewriteCond $1 !^(index\.php|images|js|css|fonts|unit)
+RewriteCond $1 !^(index\.php|images|js|css|fonts|unit|uploads|upload)
 RewriteRule ^(.*)$ index.php/$1 [L]
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

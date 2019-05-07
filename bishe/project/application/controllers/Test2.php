@@ -1,30 +1,71 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+class Test2 extends CI_Controller
+{
 
-class Test2 extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-        ignore_user_abort(true);
-        set_time_limit(0);
+        $this->load->helper(array('form', 'url'));
     }
-    public function write_txt()
+
+    public function index()
     {
-        $this->load->model("test_model");
-        $this->test_model->test();
+        $this->load->view('upload_form', array('error' => ' ' ));
     }
-    public function do_cron()
+
+    public function index2()
     {
-        sleep(3);//以秒计数
-        self::write_txt();
+        $this->load->view('test');
     }
-    public function write()
+
+    public function do_upload()
     {
-        while (1)
+        $config['upload_path']      = './uploads/';
+        $config['allowed_types']    = '*';
+        $config['max_size']     = 0;
+        $config['max_width']        = 0;
+        $config['max_height']       = 0;
+
+        $this->load->library('upload', $config);
+//        $this->upload->initialize($config);
+
+        if ( ! $this->upload->do_upload('userfile'))
         {
-            self::do_cron();
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('upload_form', $error);
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+
+            $this->load->view('upload_success', $data);
         }
     }
+    public function do_upload2()
+    {
+        $config['upload_path']      = './uploads/';
+        $config['allowed_types']    = '*';
+        $config['max_size']     = 0;
+        $config['max_width']        = 0;
+        $config['max_height']       = 0;
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('userfile');
+//        $this->upload->initialize($config);
+
+//        if ( ! $this->upload->do_upload('userfile'))
+//        {
+//            $error = array('error' => $this->upload->display_errors());
+//
+//            $this->load->view('test', $error);
+//        }
+//        else
+//        {
+//            $data = array('upload_data' => $this->upload->data());
+//
+//            $this->load->view('test2', $data);
+//        }
+    }
 }
-?>

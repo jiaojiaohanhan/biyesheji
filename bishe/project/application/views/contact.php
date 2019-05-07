@@ -14,6 +14,31 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script>
+//        window.onload = function() {
+//            $.ajax({
+//                type: "POST",
+//                url: "http://localhost/bishe/project/My_contro/check_login",
+//                data: {id: storage.key(0)},
+//                dataType: "text",
+//                beforeSend: function (request) {
+//                    request.setRequestHeader("Authorization", storage.getItem(storage.key(0)));
+//                },
+//                success: function (data) {
+//                    if (data == "success") {
+//
+//                    } else {
+//                        storage.clear();
+//                        alert("您的登录状态异常，请重新登录");
+//                        window.location = "My_contro/login"
+//                    }
+//                },
+//                error: function (data) {
+//
+//                }
+//            });
+//        }
+    </script>
     <!-- //js -->
     <!--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js"></script>-->
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=	5029b5c8db53f6b21261383fcc8df088"></script>

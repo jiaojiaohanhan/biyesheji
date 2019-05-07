@@ -97,8 +97,9 @@ class My_contro2 extends CI_Controller{
     public function field_tools1(){
         $this->load->model("field_model");
         $arr = $this->input->get("arr");
+        $tools = $this->input->get("tools");
         $id = $this->input->get("id");
-        $this->field_model->field_tools1($arr,$id);
+        $this->field_model->field_tools1($arr,$tools,$id);
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
@@ -107,8 +108,32 @@ class My_contro2 extends CI_Controller{
     public function field_tools2(){
         $this->load->model("field_model");
         $arr = $this->input->get("arr");
+        $tools = $this->input->get("tools");
         $id = $this->input->get("id");
-        $this->field_model->field_tools2($arr,$id);
+        $this->field_model->field_tools2($arr,$tools,$id);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function field_datetime(){
+        $this->load->model("field_model");
+        $id = $this->input->get("id");
+        $date = $this->input->get("arr1");
+        $time = $this->input->get("arr2");
+        $this->field_model->field_datetime($id,$date,$time);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function field_datetime2(){
+        $this->load->model("field_model");
+        $field_id = $this->input->get("index");
+        $date = $this->input->get("arr1");
+        $time = $this->input->get("arr2");
+        $row = $this->field_model->field_datetime2($field_id,$date,$time);
+        print_r($row);
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
@@ -119,8 +144,18 @@ class My_contro2 extends CI_Controller{
         $this->load->model("field_model");
         $index = $this->input->get("index");
         $row = $this->field_model->field_info($index);
-        $json = json_encode(array("sur"=>$row->sur));
-        echo $json;
+        echo $row->sur." ";
+        echo $row->sum;
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function field_info2(){
+        $this->load->model("field_model");
+        $index = $this->input->get("index");
+        $row = $this->field_model->field_info2($index);
+        echo $row;
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');
@@ -161,6 +196,43 @@ class My_contro2 extends CI_Controller{
         $the_sur = $this->input->get("the_sur");
         $money = $this->input->get("money");
         $rows = $this->field_model->user_field($user_id,$field_id,$plant_names,$the_sur,$money);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function pay_field2(){
+        $this->load->model("field_model");
+        $user_id = $this->input->get("user_id");
+        $field_id = $this->input->get("field_id");
+        $plant_names = $this->input->get("plant_names");
+        $money = $this->input->get("money");
+        $rows = $this->field_model->user_field2($user_id,$field_id,$plant_names,$money);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function pay_field3(){
+        $this->load->model("field_model");
+        $user_id = $this->input->get("user_id");
+        $field_id = $this->input->get("field_id");
+        $row = $this->field_model->user_field3($user_id,$field_id);
+        print_r($row);
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    public function pay_field4(){
+        $this->load->model("field_model");
+        $user_id = $this->input->get("user_id");
+        $field_id = $this->input->get("field_id");
+        $tools = $this->input->get("tools");
+        $money = $this->input->get("money");
+        $date = $this->input->get("arr1");
+        $time = $this->input->get("arr2");
+        $this->field_model->user_field4($user_id,$field_id,$tools,$money,$date,$time);
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET');

@@ -149,6 +149,7 @@
                                             </div>
                                         </form>
                                     </div>
+                                    <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                                 </div>
                                 `);
                                 $("[name='theId']").val($theId);
@@ -211,13 +212,16 @@
                                         $("[name='submit1']").attr("disabled","disabled")
                                     }
                                 });
+                                $("#the_back").on("click",function(){
+                                    window.location.reload();
+                                })
                             }else{
                                 var $theId = $(this).attr("value");
                                 $.get("http://localhost/bishe/project/My_contro4/worker_delete",{
                                     id:$theId
                                 },function(res){
                                     alert(res);
-                                    window.location = "My_contro3/main_login2";
+                                    window.location.reload();
                                 },"text")
                             }
                         });
@@ -259,6 +263,7 @@
                                             </div>
                                         </form>
                                     </div>
+                                    <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                                 </div>
                         `);
                         var $flag1 = false,$flag2 = false,$flag3 = false;
@@ -341,9 +346,12 @@
                                 })
                             }
                         });
+                        $("#the_back").on("click",function(){
+                            window.location.reload();
+                        })
                     });
                     $("#back").on("click",function(){
-                        window.location = "My_contro3/main_login2";
+                        window.location.reload();
                     })
                 },"text")
             });
@@ -525,10 +533,12 @@
                                 <th>水桶数量</th>
                                 <th>篮子数量</th>
                                 <th>手套数量</th>
+                                <th>烧烤架数量</th>
+                                <th>木炭数量</th>
                             </tr>`;
                     cont+=`<tr>`;
                     for(var i=0;i<arr.length;i++){
-                        cont+=(`<td>可直接在下面输入新值<input value="${arr[i]}"></td>`);
+                        cont+=(`<td>可直接在下面输入新值<input size="18" value="${arr[i]}"></td>`);
                     }
                     cont+=`</tr>`;
                     cont+=`<tr>`;
@@ -557,17 +567,25 @@
                              <button id="gloves" style="background-color:#a0d034;color:#fff">减一</button>
                              <button value="gloves" style="background-color:#a0d034;color:#fff">加一</button>
                         </td>
+                        <td>
+                             <button id="barbecue" style="background-color:#a0d034;color:#fff">减一</button>
+                             <button value="barbecue" style="background-color:#a0d034;color:#fff">加一</button>
+                        </td>
+                        <td>
+                             <button id="charcoal" style="background-color:#a0d034;color:#fff">减一</button>
+                             <button value="charcoal" style="background-color:#a0d034;color:#fff">加一</button>
+                        </td>
                     `);
                     cont+=`</tr>`;
-                    $("#field").append(`
-                        <table id="field-info" style="margin: 0 auto"></table>
-                        <input id="yes" type="button" style="margin-left:99%;width:6rem;background-color:#a0d034;color:#fff" value="确定">
-                        <input id="back" type="button" style="margin-left:99%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
+                    $("#field").css("left","-6.5rem").append(`
+                        <table id="field-info" style="margin: 0 auto 10px"></table>
+                        <input id="yes" type="button" style="margin-left:105%;margin-bottom:5px;width:6rem;background-color:#a0d034;color:#fff" value="确定">
+                        <input id="back" type="button" style="margin-left:105%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                     `);
                     $("#field-info").html(cont);
                     $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
                     $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
-                    $("#field-info button").css("width","5.5rem").each(function(){
+                    $("#field-info button").css("width","5rem").each(function(){
                         $(this).on("click",function(){
                             if($(this).attr("id")==undefined){
                                 var name = $(this).attr("value");
@@ -606,10 +624,22 @@
                                                 $("#field-info td input").eq(4).val(++basket);
                                             }
                                             break;
-                                        default:
+                                        case "gloves":
                                             var gloves = $("#field-info td input").eq(5).val();
                                             if(gloves!=10000) {
                                                 $("#field-info td input").eq(5).val(++gloves);
+                                            }
+                                            break;
+                                        case "barbecue":
+                                            var barbecue = $("#field-info td input").eq(6).val();
+                                            if(barbecue!=10000) {
+                                                $("#field-info td input").eq(6).val(++barbecue);
+                                            }
+                                            break;
+                                        default:
+                                            var charcoal = $("#field-info td input").eq(7).val();
+                                            if(charcoal!=10000) {
+                                                $("#field-info td input").eq(7).val(++charcoal);
                                             }
                                     }
                                 },"text")
@@ -650,10 +680,22 @@
                                                 $("#field-info td input").eq(4).val(--basket);
                                             }
                                             break;
-                                        default:
+                                        case "gloves":
                                             var gloves = $("#field-info td input").eq(5).val();
                                             if(gloves!=0) {
                                                 $("#field-info td input").eq(5).val(--gloves);
+                                            }
+                                            break;
+                                        case "barbecue":
+                                            var barbecue = $("#field-info td input").eq(6).val();
+                                            if(barbecue!=0) {
+                                                $("#field-info td input").eq(6).val(--barbecue);
+                                            }
+                                            break;
+                                        default:
+                                            var charcoal = $("#field-info td input").eq(7).val();
+                                            if(charcoal!=0) {
+                                                $("#field-info td input").eq(7).val(--charcoal);
                                             }
                                     }
                                 },"text")
@@ -662,7 +704,7 @@
                     });
                     $("#yes").on("click",function(){
                         var arr= [];
-                        for(var i=0;i<6;i++){
+                        for(var i=0;i<8;i++){
                             var arr2 = [];
                             switch(i)
                             {
@@ -686,9 +728,17 @@
                                     arr2[0] = "basket";
                                     arr2[1] = $("#field-info td input").eq(4).val();
                                     break;
-                                default:
+                                case 5:
                                     arr2[0] = "gloves";
                                     arr2[1] = $("#field-info td input").eq(5).val();
+                                    break;
+                                case 6:
+                                    arr2[0] = "barbecue";
+                                    arr2[1] = $("#field-info td input").eq(6).val();
+                                    break;
+                                default:
+                                    arr2[0] = "charcoal";
+                                    arr2[1] = $("#field-info td input").eq(7).val();
                             }
                             if(arr2[1]<0){
                                 arr2[1]=0
@@ -705,14 +755,14 @@
 
                             },function(res){
                                 var arr2 = res.split(" ");
-                                for(var i=0;i<6;i++){
+                                for(var i=0;i<8;i++){
                                     $("#field-info td input").eq(i).val(arr2[i])
                                 }
                             },"text")
                         },"text")
                     });
                     $("#back").on("click",function(){
-                        window.location = "My_contro3/main_login2";
+                        window.location.reload();
                     })
                 },"text")
             });

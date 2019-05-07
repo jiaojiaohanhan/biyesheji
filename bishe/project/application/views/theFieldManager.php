@@ -21,7 +21,7 @@
     <script>
         window.onload = function(){
             var index = <?php echo $index;?>;
-            $.get("http://localhost/bishe/project/My_contro4/the_field_info",{
+            $.get("http://localhost/bishe/project/My_contro4/the_field_info1",{
                 field_id:index
             }, function(res) {
                 var arr = res.split(" ");
@@ -38,9 +38,6 @@
                             </tr>`;
                 for(var i=0;i<arr.length-1;i+=9){
                     cont+=`<tr>`;
-                    if(arr[i]>3){
-                        arr[i]-=3
-                    }
                     cont+=(`<td>${arr[i]}</td>`);
                     cont+=(`<td>${arr[i+1]}</td>`);
                     if(arr[i+2]==0){
@@ -139,7 +136,7 @@
                                                     })
                                                 });
                                             }
-                                        })
+                                        },"text")
                                     });
                                     $("#field_img_2,#field_btn_2").on("click",function(){
                                         $.get("http://localhost/bishe/project/My_contro4/field_action2",{
@@ -327,7 +324,7 @@
 <!-- //footer -->
 <script>
     $("#back").on("click",function(){
-        window.location = "My_contro3/login3";
+        window.location = "My_contro3/login2";
     })
 </script>
 <!-- menu -->
