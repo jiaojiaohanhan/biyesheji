@@ -122,6 +122,7 @@ class My_contro4 extends CI_Controller {
             echo $row->name." ";
             echo $row->type." ";
             echo $row->identity." ";
+            echo $row->phone." ";
             echo $row->number." ";
             echo $row->password." ";
             echo $row->salary." ";
@@ -134,15 +135,13 @@ class My_contro4 extends CI_Controller {
         $type = $this->input->post("Type");
         $password = $this->input->post("Password");
         $password = md5(md5($password));
+        $phone = $this->input->post("Phone");
         $number = $this->input->post("Number");
         $salary = $this->input->post("Salary");
         $id = $this->input->post("theId");
-        $row = $this->manager_model->worker_change($identity,$username,$type,$password,$number,$salary,$id);
+        $row = $this->manager_model->worker_change($identity,$username,$type,$password,$phone,$number,$salary,$id);
         if($row==1){
-            $message = "修改成功";
-            $this->load->view("fieldManager2",array(
-                "message" => $message
-            ));
+            echo "修改成功";
         }else{
             echo "fail";
         }
@@ -162,14 +161,12 @@ class My_contro4 extends CI_Controller {
         $type = $this->input->post("Type");
         $password = $this->input->post("Password");
         $password = md5(md5($password));
+        $phone = $this->input->post("Phone");
         $number = $this->input->post("Number");
         $salary = $this->input->post("Salary");
-        $row = $this->manager_model->worker_add($identity,$username,$type,$password,$number,$salary);
+        $row = $this->manager_model->worker_add($identity,$username,$type,$password,$phone,$number,$salary);
         if($row==1){
-            $message = "添加成功";
-            $this->load->view("fieldManager2",array(
-                "message" => $message
-            ));
+            echo "添加成功";
         }else{
             echo "fail";
         }

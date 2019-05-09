@@ -173,13 +173,14 @@
                                 <th>工作人员姓名</th>
                                 <th>工作人员类型</th>
                                 <th>工作人员身份证号码</th>
+                                <th>工作人员手机号码</th>
                                 <th>工作人员工号</th>
                                 <th>工作人员登录密码(加密后)</th>
                                 <th>工作人员薪水</th>
                                 <th>修改</th>
                                 <th>删除</th>
                             </tr>`;
-                    for(var i=0;i<arr.length-1;i+=7){
+                    for(var i=0;i<arr.length-1;i+=8){
                         cont+=`<tr>`;
                         cont+=(`<td>${arr[i]}</td>`);
                         cont+=(`<td>${arr[i+1]}</td>`);
@@ -187,8 +188,9 @@
                         cont+=(`<td>${arr[i+3]}</td>`);
                         cont+=(`<td>${arr[i+4]}</td>`);
                         cont+=(`<td>${arr[i+5]}</td>`);
-                        cont+=(`<td><button id="${arr[i+6]}" style="background-color:#a0d034;color:#fff">修改</button></td>`);
-                        cont+=(`<td><button value="${arr[i+6]}" style="background-color:#f00;color:#fff">删除</button></td>`);
+                        cont+=(`<td>${arr[i+6]}</td>`);
+                        cont+=(`<td><button id="${arr[i+7]}" style="background-color:#a0d034;color:#fff">修改</button></td>`);
+                        cont+=(`<td><button value="${arr[i+7]}" style="background-color:#f00;color:#fff">删除</button></td>`);
                         cont+=`</tr>`;
                     }
                     $("#field").append(`
@@ -207,7 +209,7 @@
                                 $("#field").append(`
                                 <div style="width: 60%;margin: 0 auto">
                                     <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                                        <form action="http://localhost/bishe/project/My_contro4/worker_change" method="post">
+                                        <div id="form">
                                             <span>
                                                     <i>员工身份证号</i>
                                                     <input type="text" name="ID" placeholder=" " required="">
@@ -229,6 +231,11 @@
                                                     <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
                                             </span>
                                             <span>
+                                                    <i>员工手机号</i>
+                                                    <input type="text" name="Phone" placeholder=" " required="">
+                                                    <span id="alert5" style="font-size: 12px;float: right;color: #a4dd25"></span>
+                                            </span>
+                                            <span>
                                                     <i>员工工号</i>
                                                     <input type="text" name="Number" placeholder=" " required="">
                                                     <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
@@ -242,15 +249,15 @@
                                             </span>
                                             <br>
                                             <div class="w3_submit">
-                                                <input name="submit1" type="submit" value="提 交" disabled="disabled">
+                                                <input name="submit1" type="button" value="提 交" disabled="disabled">
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                     <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                                 </div>
                                 `);
                                 $("[name='theId']").val($theId);
-                                var $flag1 = false,$flag2 = false,$flag3 = false;
+                                var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false;
                                 var aCity={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"};
                                 $("[name='ID']").on('input propertychange',function () {
                                     var $id = $(this).val();
@@ -273,7 +280,7 @@
                                     if($id.length==18){
                                         $flag1 = true;
                                     }
-                                    if($flag1==true&&$flag2==true&&$flag3==true){
+                                    if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                         $("[name='submit1']").removeAttr("disabled")
                                     }else {
                                         $("[name='submit1']").attr("disabled","disabled")
@@ -288,7 +295,22 @@
                                         $("#alert3").text("最小6位，最大16位").css("color","#a4dd25");
                                         $flag2 = true;
                                     }
-                                    if($flag1==true&&$flag2==true&&$flag3==true){
+                                    if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                                        $("[name='submit1']").removeAttr("disabled")
+                                    }else {
+                                        $("[name='submit1']").attr("disabled","disabled")
+                                    }
+                                });
+                                $("[name='Phone']").on('input propertychange',function () {
+                                    var $phone = $(this).val();
+                                    if(!(/^1[34578]\d{9}$/.test($phone))){
+                                        $("#alert5").text("手机号码有误，请重填").css("color","red");
+                                        $flag4 = false;
+                                    }else {
+                                        $("#alert5").text("11位的手机号码").css("color","#a4dd25");
+                                        $flag4 = true;
+                                    }
+                                    if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                         $("[name='submit1']").removeAttr("disabled")
                                     }else {
                                         $("[name='submit1']").attr("disabled","disabled")
@@ -303,14 +325,29 @@
                                         $("#alert4").text("最小6位，最大16位").css("color","#a4dd25");
                                         $flag3 = true;
                                     }
-                                    if($flag1==true&&$flag2==true&&$flag3==true){
+                                    if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                         $("[name='submit1']").removeAttr("disabled")
                                     }else {
                                         $("[name='submit1']").attr("disabled","disabled")
                                     }
                                 });
+                                $("[name='submit1']").on("click",function(){
+                                    $.post("http://localhost/bishe/project/My_contro4/worker_change",{
+                                        ID:$("[name='ID']").val(),
+                                        Name:$("[name='Name']").val(),
+                                        Type:$("[name='Type']").val(),
+                                        Password:$("[name='Password']").val(),
+                                        Phone:$("[name='Phone']").val(),
+                                        Number:$("[name='Number']").val(),
+                                        Salary:$("[name='Salary']").val(),
+                                        theId:$("[name='theId']").val()
+                                    },function(res){
+                                        alert(res);
+                                        window.location.reload();
+                                    },"text")
+                                });
                                 $("#the_back").on("click",function(){
-                                    window.location.reload();
+                                    window.location.reload()
                                 })
                             }else{
                                 var $theId = $(this).attr("value");
@@ -328,7 +365,7 @@
                         $("#field").append(`
                                 <div style="width: 60%;margin: 0 auto">
                                     <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                                        <form action="http://localhost/bishe/project/My_contro4/worker_add" method="post">
+                                        <div id="form">
                                             <span>
                                                     <i>员工身份证号</i>
                                                     <input type="text" name="ID" placeholder=" " required="">
@@ -350,6 +387,11 @@
                                                     <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
                                             </span>
                                             <span>
+                                                    <i>员工手机号</i>
+                                                    <input type="text" name="Phone" placeholder=" " required="">
+                                                    <span id="alert5" style="font-size: 12px;float: right;color: #a4dd25"></span>
+                                            </span>
+                                            <span>
                                                     <i>员工工号</i>
                                                     <input type="text" name="Number" placeholder=" " required="">
                                                     <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
@@ -360,14 +402,14 @@
                                             </span>
                                             <br>
                                             <div class="w3_submit">
-                                                <input name="submit1" type="submit" value="提 交" disabled="disabled">
+                                                <input name="submit1" type="button" value="提 交" disabled="disabled">
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                     <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                                 </div>
                         `);
-                        var $flag1 = false,$flag2 = false,$flag3 = false;
+                        var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false;
                         var aCity={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"};
                         $("[name='ID']").on('input propertychange',function () {
                             var $id = $(this).val();
@@ -400,7 +442,7 @@
                                     }
                                 },"text")
                             }
-                            if($flag1==true&&$flag2==true&&$flag3==true){
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                 $("[name='submit1']").removeAttr("disabled")
                             }else {
                                 $("[name='submit1']").attr("disabled","disabled")
@@ -415,7 +457,22 @@
                                 $("#alert3").text("最小6位，最大16位").css("color","#a4dd25");
                                 $flag2 = true;
                             }
-                            if($flag1==true&&$flag2==true&&$flag3==true){
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                                $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
+                        $("[name='Phone']").on('input propertychange',function () {
+                            var $phone = $(this).val();
+                            if(!(/^1[34578]\d{9}$/.test($phone))){
+                                $("#alert5").text("手机号码有误，请重填").css("color","red");
+                                $flag4 = false;
+                            }else {
+                                $("#alert5").text("11位的手机号码").css("color","#a4dd25");
+                                $flag4 = true;
+                            }
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                 $("[name='submit1']").removeAttr("disabled")
                             }else {
                                 $("[name='submit1']").attr("disabled","disabled")
@@ -438,17 +495,30 @@
                                         $flag3 = false;
                                     }
                                 },"text").then(function(){
-                                    if($flag1==true&&$flag2==true&&$flag3==true){
+                                    if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
                                         $("[name='submit1']").removeAttr("disabled")
                                     }else {
                                         $("[name='submit1']").attr("disabled","disabled")
                                     }
-                                    console.log($flag1,$flag2,$flag3)
                                 })
                             }
                         });
+                        $("[name='submit1']").on("click",function(){
+                            $.post("http://localhost/bishe/project/My_contro4/worker_add",{
+                                ID:$("[name='ID']").val(),
+                                Name:$("[name='Name']").val(),
+                                Type:$("[name='Type']").val(),
+                                Password:$("[name='Password']").val(),
+                                Phone:$("[name='Phone']").val(),
+                                Number:$("[name='Number']").val(),
+                                Salary:$("[name='Salary']").val()
+                            },function(res){
+                                alert(res);
+                                window.location.reload();
+                            },"text")
+                        });
                         $("#the_back").on("click",function(){
-                            window.location.reload();
+                            window.location.reload()
                         })
                     });
                     $("#back").on("click",function(){

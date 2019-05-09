@@ -94,12 +94,13 @@ class Manager_model extends CI_Model {
         $query = $this->db->get("manager");
         return  $query->result();
     }
-    public function worker_change($identity,$username,$type,$password,$number,$salary,$id){
+    public function worker_change($identity,$username,$type,$password,$phone,$number,$salary,$id){
         $data = array(
             "identity" => $identity,
             "name" => $username,
             "password" => $password,
             "type" => $type,
+            "phone" => $phone,
             "number" => $number,
             "salary" => $salary
         );
@@ -113,12 +114,13 @@ class Manager_model extends CI_Model {
         $this->db->delete("manager");
         return $this->db->affected_rows();
     }
-    public function worker_add($identity,$username,$type,$password,$number,$salary){
+    public function worker_add($identity,$username,$type,$password,$phone,$number,$salary){
         $data = array(
             "identity" => $identity,
             "name" => $username,
             "password" => $password,
             "type" => $type,
+            "phone" => $phone,
             "number" => $number,
             "salary" => $salary
         );

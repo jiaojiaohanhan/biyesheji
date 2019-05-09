@@ -126,6 +126,7 @@
                         },"text").then(
                             function(){
                                 $("#field_img_1,#field_btn_1").on("click",function(){
+                                    $("#field").css("height","auto");
                                     $.get("http://localhost/bishe/project/My_contro2/field_activity",{
                                         id:id
                                     },function(res){
