@@ -55,6 +55,15 @@ class User_model extends CI_Model {
         $query2= $this->db->get('user');
         return $query2->row();
     }
+    public function change_password($phone,$wechat,$password){
+        $this->db->update("user",array(
+            "password" => $password
+        ),array(
+            "phone" => $phone,
+            "wechat" => $wechat
+        ));
+        return $this->db->affected_rows();
+    }
     public function get_by_phone($phone){
         return $this->db->get_where("user",array("phone" => $phone))->row();
     }
@@ -63,5 +72,11 @@ class User_model extends CI_Model {
     }
     public function get_by_id($id){
         return $this->db->get_where("user",array("id" => $id))->row();
+    }
+    public function user_email($name,$email){
+        $this->db->insert("user2",array(
+            "name" => $name,
+            "email" => $email,
+        ));
     }
 }

@@ -205,6 +205,124 @@
     })
 </script>
 <script>
+    $("input[type='button']").on("click",function(){
+        $("form").hide();
+        $(".agileits_mail_grid_right1").append(`
+            <form action="http://localhost/bishe/project/My_contro/change_password" method="post">
+                        <span>
+                                    <i>手机号</i>
+                                    <input type="text" name="Phone" placeholder=" " required="">
+                                    <span id="alert1" style="font-size: 12px;float: right;color: #a4dd25">您的的手机号码</span>
+                                </span>
+                        <span>
+                        <span>
+                                    <i>微信号</i>
+                                    <input type="text" name="Wechat" placeholder=" " required="">
+                                    <span id="alert2" style="font-size: 12px;float: right;color: #a4dd25">您的微信号码</span>
+                                </span>
+                        <span>
+                                    <i>密码</i>
+                                    <input type="password" name="Password" placeholder=" " required="">
+                                    <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25">您的新密码</span>
+                                </span>
+                        <span>
+                                    <i>确认密码</i>
+                                    <input type="password" name="Re_password" placeholder=" " required="">
+                                    <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">确认您的新密码</span>
+                                </span>
+                        <br>
+                        <div class="w3_submit">
+                            <input type="submit" value="确 认" disabled>
+                        </div>
+            </form>
+        `);
+        var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$pass="";
+        $("[name='Phone']").on('input propertychange',function () {
+            var $phone = $(this).val();
+            if(!(/^1[34578]\d{9}$/.test($phone))){
+                $("#alert1").text("手机号码有误，请重填").css("color","red");
+            }else {
+                $("#alert1").text("11位的手机号码").css("color","#a4dd25");
+            }
+            if($phone.length==11){
+                $.get("http://localhost/bishe/project/My_contro/check_phone",{
+                    number:$phone
+                }, function(res) {
+                    if (res =="success"){
+                        $("#alert1").text("手机号未注册或为空").css("color","red");
+                        $flag1 = false;
+                    }else{
+                        $("#alert1").text("您的的手机号码").css("color","#a4dd25");
+                        $flag1 = true;
+                    }
+                },"text")
+            }
+            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                $(".w3_submit [type='submit']").removeAttr("disabled")
+            }else {
+                $(".w3_submit [type='submit']").attr("disabled","disabled")
+            }
+        });
+        $("[name='Wechat']").on('input propertychange',function () {
+            var $wechat = $(this).val();
+            $.get("http://localhost/bishe/project/My_contro/check_wechat",{
+                wechat:$wechat
+            }, function(res) {
+                if (res =="success"){
+                    $("#alert2").text("微信号未注册或为空").css("color","red");
+                    $flag2 = false;
+                }else{
+                    $("#alert2").text("您的微信号码").css("color","#a4dd25");
+                    $flag2 = true;
+                }
+            },"text");
+            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                $(".w3_submit [type='submit']").removeAttr("disabled")
+            }else {
+                $(".w3_submit [type='submit']").attr("disabled","disabled")
+            }
+        });
+        $("[name='Password']").on('input propertychange',function () {
+            $pass = $(this).val();
+            if(!(/^[\w_-]{6,16}$/.test($pass))){
+                $("#alert3").text("最小6位，最大16位").css("color","red");
+                $flag3 = false;
+            }else {
+                $("#alert3").text("").css("color","#a4dd25");
+                $flag3 = true;
+            }
+            var $repass = $("[name='Re_password']").val();
+            if($pass!=$repass){
+                $("#alert4").text("两次输入的密码不一致").css("color","red");
+                $flag4 = false;
+            }else {
+                $("#alert4").text("");
+                $flag4 = true;
+            }
+            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                $(".w3_submit [type='submit']").removeAttr("disabled")
+            }else {
+                $(".w3_submit [type='submit']").attr("disabled","disabled")
+            }
+        });
+        $("[name='Re_password']").on('input propertychange',function () {
+            var $repass = $(this).val();
+            if($pass!=$repass){
+                $("#alert4").text("两次输入的密码不一致").css("color","red");
+                $flag4 = false;
+            }else {
+                $("#alert4").text("");
+                $flag4 = true;
+            }
+            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true){
+                $(".w3_submit [type='submit']").removeAttr("disabled")
+            }else {
+                $(".w3_submit [type='submit']").attr("disabled","disabled")
+            }
+        });
+    })
+</script>
+<script>
     $(function() {
 
         initDropDowns($("div.shy-menu"));

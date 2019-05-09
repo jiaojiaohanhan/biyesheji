@@ -451,10 +451,10 @@
         </div>
         <p class="agile_para agileits_para">Morbi viverra lacus commodo felis semper, eu iaculis lectus nulla at sapien blandit sollicitudin.</p>
         <div class="w3ls_news_grids w3ls_newsletter_grids">
-            <form action="#" method="post">
-                <input name="Your Name" placeholder="Your Name" type="text" required="">
-                <input name="Your Email" placeholder="Your Email" type="email" required="">
-                <input type="submit" value="Subscribe">
+            <form action="http://localhost/bishe/project/My_contro/send_email2" method="post">
+                <input name="yourName" placeholder="Your Name" type="text" required="">
+                <input name="yourEmail" placeholder="Your Email" type="email" required="">
+                <input type="submit" value="Subscribe" disabled>
             </form>
         </div>
     </div>
@@ -520,6 +520,17 @@
         $(this).css({"border":"4px #fff solid"});
     }).on("mouseout",function(){
         $(this).css({"border":""});
+    })
+</script>
+<script>
+    var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    $("input[name='yourEmail']").on("blur",function(){
+        if(!reg.test($(this).val()))
+        {
+            alert("邮箱格式不对");
+        }else {
+            $("input[type='submit']").removeAttr("disabled")
+        }
     })
 </script>
 <!-- stats -->

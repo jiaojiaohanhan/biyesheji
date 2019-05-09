@@ -42,37 +42,126 @@
             );
             $("#field_img_1,#field_btn_1").on("click",function(){
                 $("#field").html("").css("height","auto");
-                $.get("http://localhost/bishe/project/My_contro4/money",{
+                $("#field").append(`
+                    <div style="margin: 0 auto;text-align: center">
+                             <img id="field_img_1" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/pay.jpg">
+                             <img id="field_img_2" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/income.jpg">
+                             <img id="field_img_3" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/money.png">
+                    </div>
+                    <div style="margin: 20px auto;text-align:center">
+                             <input id="field_btn_6" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看支出">
+                             <input id="field_btn_7" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看收入">
+                             <input id="field_btn_8" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="总览">
+                             <input id="the_back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                    </div>`
+                );
+                $("#the_back").on("click",function(){
+                    window.location.reload();
+                });
+                $("#field_img_1,#field_btn_6").on("click",function() {
+                    $("#field").html("").css("height", "auto");
+                    $.get("http://localhost/bishe/project/My_contro4/pay",{
 
-                },function(res){
-                    var arr = res.split(" ");
-                    var cont = `<tr>
+                    },function(res){
+                        var arr = res.split(" ");
+                        var cont = `<tr>
+                                <th>农资工具费用</th>
+                                <th>工人工资支出</th>
+                            </tr>`;
+                        cont+=`<tr>`;
+                        for(var i=0;i<arr.length;i++){
+                            cont+=(`<td>${arr[i]}</td>`);
+                        }
+                        cont+=`</tr>`;
+                        $("#field").append(`
+                            <table id="field-info" style="margin: 0 auto"></table>
+                            <input id="sum" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="合计">
+                            <br>
+                            <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                        `);
+                        $("#field-info").html(cont);
+                        $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#sum").on("click",function(){
+                            var sum = parseInt(arr[0])+parseInt(arr[1]);
+                            alert("合计支出为"+sum);
+                        });
+                        $("#back").on("click",function(){
+                            window.location.reload();
+                        })
+                    },"text");
+                });
+                $("#field_img_2,#field_btn_7").on("click",function(){
+                    $("#field").html("").css("height","auto");
+                    $.get("http://localhost/bishe/project/My_contro4/income",{
+
+                    },function(res){
+                        var arr = res.split(" ");
+                        var cont = `<tr>
                                 <th>地块名称</th>
                                 <th>用户姓名</th>
                                 <th>用户手机</th>
                                 <th>用户微信</th>
                                 <th>消费</th>
                             </tr>`;
-                    for(var i=0;i<arr.length-1;i+=5){
-                        cont+=`<tr>`;
-                        cont+=(`<td>${arr[i]}</td>`);
-                        cont+=(`<td>${arr[i+1]}</td>`);
-                        cont+=(`<td>${arr[i+2]}</td>`);
-                        cont+=(`<td>${arr[i+3]}</td>`);
-                        cont+=(`<td>${arr[i+4]}</td>`);
-                        cont+=`</tr>`;
-                    }
-                    $("#field").append(`
+                        for(var i=0;i<arr.length-1;i+=5){
+                            cont+=`<tr>`;
+                            cont+=(`<td>${arr[i]}</td>`);
+                            cont+=(`<td>${arr[i+1]}</td>`);
+                            cont+=(`<td>${arr[i+2]}</td>`);
+                            cont+=(`<td>${arr[i+3]}</td>`);
+                            cont+=(`<td>${arr[i+4]}</td>`);
+                            cont+=`</tr>`;
+                        }
+                        $("#field").append(`
                         <table id="field-info" style="margin: 0 auto"></table>
+                        <input id="sum" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="合计">
+                        <br>
                         <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                     `);
-                    $("#field-info").html(cont);
-                    $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
-                    $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
-                    $("#back").on("click",function(){
-                        window.location.reload();
-                    })
-                },"text");
+                        $("#field-info").html(cont);
+                        $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#sum").on("click",function(){
+                            var sum = 0;
+                            for(var i=0;i<arr.length-1;i+=5){
+                                sum+=parseInt(arr[i+4])
+                            }
+                            alert("合计收入为"+sum);
+                        });
+                        $("#back").on("click",function(){
+                            window.location.reload();
+                        })
+                    },"text");
+                });
+                $("#field_img_3,#field_btn_9").on("click",function() {
+                    $("#field").html("").css("height", "auto");
+                    $.get("http://localhost/bishe/project/My_contro4/money",{
+
+                    },function(res){
+                        var arr = res.split(" ");
+                        var cont = `<tr>
+                                <th>总支出</th>
+                                <th>总收入</th>
+                                <th>总利润</th>
+                            </tr>`;
+                        cont+=`<tr>`;
+                        for(var i=0;i<arr.length;i++){
+                            cont+=(`<td>${arr[i]}</td>`);
+                        }
+                        cont+=`</tr>`;
+                        $("#field").append(`
+                            <table id="field-info" style="margin: 0 auto"></table>
+                            <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                        `);
+                        $("#field-info").html(cont);
+                        $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                        $("#back").on("click",function(){
+                            window.location.reload();
+                        })
+                    },"text");
+                });
             });
             $("#field_img_2,#field_btn_2").on("click",function(){
                 $("#field").html("").css("height","auto");
@@ -85,17 +174,21 @@
                                 <th>工作人员类型</th>
                                 <th>工作人员身份证号码</th>
                                 <th>工作人员工号</th>
+                                <th>工作人员登录密码(加密后)</th>
+                                <th>工作人员薪水</th>
                                 <th>修改</th>
                                 <th>删除</th>
                             </tr>`;
-                    for(var i=0;i<arr.length-1;i+=5){
+                    for(var i=0;i<arr.length-1;i+=7){
                         cont+=`<tr>`;
                         cont+=(`<td>${arr[i]}</td>`);
                         cont+=(`<td>${arr[i+1]}</td>`);
                         cont+=(`<td>${arr[i+2]}</td>`);
                         cont+=(`<td>${arr[i+3]}</td>`);
-                        cont+=(`<td><button id="${arr[i+4]}" style="background-color:#a0d034;color:#fff">修改</button></td>`);
-                        cont+=(`<td><button value="${arr[i+4]}" style="background-color:#f00;color:#fff">删除</button></td>`);
+                        cont+=(`<td>${arr[i+4]}</td>`);
+                        cont+=(`<td>${arr[i+5]}</td>`);
+                        cont+=(`<td><button id="${arr[i+6]}" style="background-color:#a0d034;color:#fff">修改</button></td>`);
+                        cont+=(`<td><button value="${arr[i+6]}" style="background-color:#f00;color:#fff">删除</button></td>`);
                         cont+=`</tr>`;
                     }
                     $("#field").append(`
@@ -104,8 +197,8 @@
                         <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                     `);
                     $("#field-info").html(cont);
-                    $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
-                    $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+                    $("#field-info th").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
+                    $("#field-info td").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
                     $("#field-info button").each(function(){
                         $(this).on("click",function(){
                             if($(this).attr("id")!=undefined){
@@ -139,6 +232,10 @@
                                                     <i>员工工号</i>
                                                     <input type="text" name="Number" placeholder=" " required="">
                                                     <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
+                                            </span>
+                                            <span>
+                                                    <i>员工薪水</i>
+                                                    <input type="text" name="Salary" placeholder=" " required="">
                                             </span>
                                             <span style="display: none">
                                                     <input type="text" name="theId" placeholder=" " required="">
@@ -256,6 +353,10 @@
                                                     <i>员工工号</i>
                                                     <input type="text" name="Number" placeholder=" " required="">
                                                     <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
+                                            </span>
+                                            <span>
+                                                    <i>员工薪水</i>
+                                                    <input type="text" name="Salary" placeholder=" " required="">
                                             </span>
                                             <br>
                                             <div class="w3_submit">

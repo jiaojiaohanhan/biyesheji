@@ -15,29 +15,30 @@
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script>
-//        window.onload = function() {
-//            $.ajax({
-//                type: "POST",
-//                url: "http://localhost/bishe/project/My_contro/check_login",
-//                data: {id: storage.key(0)},
-//                dataType: "text",
-//                beforeSend: function (request) {
-//                    request.setRequestHeader("Authorization", storage.getItem(storage.key(0)));
-//                },
-//                success: function (data) {
-//                    if (data == "success") {
-//
-//                    } else {
-//                        storage.clear();
-//                        alert("您的登录状态异常，请重新登录");
-//                        window.location = "My_contro/login"
-//                    }
-//                },
-//                error: function (data) {
-//
-//                }
-//            });
-//        }
+        window.onload = function() {
+            var storage=window.localStorage;
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/bishe/project/My_contro/check_login",
+                data: {id: storage.key(0)},
+                dataType: "text",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", storage.getItem(storage.key(0)));
+                },
+                success: function (data) {
+                    if (data == "success") {
+
+                    } else {
+                        storage.clear();
+                        alert("您的登录状态异常，请重新登录");
+                        window.location = "My_contro/login"
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
     </script>
     <!-- //js -->
     <!--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js"></script>-->
@@ -142,22 +143,22 @@
         <div class="w3ls_news_grids">
             <div class="col-md-8 w3_agile_mail_left">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
-                    <form action="#" method="post">
+                    <form action="http://localhost/bishe/project/My_contro/send_email" method="post">
 							<span>
 								<i>Name</i>
-								<input type="text" name="Name" placeholder=" " required="">
+								<input type="text" name="Name" placeholder="请填写您的用户名" required="">
 							</span>
 							<span>
 								<i>Email</i>
-								<input type="email" name="Email" placeholder=" " required="">
+								<input type="email" name="Email" placeholder="870303709@qq.com" required="" readonly="readonly" value="870303709@qq.com">
 							</span>
 							<span>
 								<i>Subject</i>
-								<input type="text" name="Subject" placeholder=" " required="">
+								<input type="text" name="Subject" placeholder="请填写您的手机号或微信号" required="">
 							</span>
 							<span>
 								<i>Message</i>
-								<textarea name="Message" placeholder=" " required=""></textarea>
+								<textarea name="Message" placeholder="" required=""></textarea>
 							</span>
                         <div class="w3_submit">
                             <input type="submit" value="Submit Now">

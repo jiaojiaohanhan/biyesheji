@@ -16,6 +16,7 @@
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script>
 //        window.onload = function() {
+//            var storage=window.localStorage;
 //            $.ajax({
 //                type: "POST",
 //                url: "http://localhost/bishe/project/My_contro/check_login",

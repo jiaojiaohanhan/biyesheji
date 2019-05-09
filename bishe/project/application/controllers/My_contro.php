@@ -1,12 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once('unit/ZhenziSmsClient.php');
+require_once('unit/Smtp.class.php');
 
 class My_contro extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
         $this->load->helper(array("form", "url"));
+        $this->load->model("user_model");
+        header('content-type:application:json;charset=utf8');
+        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Methods:GET,POST');
+        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //主页
     public function index(){
@@ -33,7 +39,6 @@ class My_contro extends CI_Controller {
     //注册
     public function regist()
     {
-        $this->load->model("user_model");
         $username = $this->input->post("Name");
         $password = $this->input->post("Password");
         $password = md5(md5($password));
@@ -55,7 +60,6 @@ class My_contro extends CI_Controller {
     //手机登录
     public function login_phone()
     {
-        $this->load->model("user_model");
         $phone = $this->input->post("Phone");
         $password = $this->input->post("Password");
         $password = md5(md5($password));
@@ -96,7 +100,6 @@ class My_contro extends CI_Controller {
     //微信登录
     public function login_wechat()
     {
-        $this->load->model("user_model");
         $wechat = $this->input->post("Wechat");
         $password = $this->input->post("Password");
         $password = md5(md5($password));
@@ -136,7 +139,6 @@ class My_contro extends CI_Controller {
     }
     //登录校验
     public function check_login(){
-        $this->load->model("user_model");
         $id = $this->input->post("id");
         $token = $_SERVER["HTTP_AUTHORIZATION"];
         $row = $this->user_model->get_by_id($id);
@@ -145,22 +147,13 @@ class My_contro extends CI_Controller {
         }else{
             echo "fail";
         };
-        header('content-type:application:json;charset=utf8');
-        header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Methods:GET,POST');
-        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //用户信息
     public function user_info(){
-        $this->load->model("user_model");
         $id = $this->input->get("id");
         $row = $this->user_model->get_by_id($id);
         echo $row->username." ";
         echo $row->image;
-        header('content-type:application:json;charset=utf8');
-        header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Methods:GET');
-        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //验证码短信
     public function SMS()
@@ -171,14 +164,9 @@ class My_contro extends CI_Controller {
         $result = $client->send($phone, "您的验证码为".$message."，有效时间为5分钟");
         $json = json_decode($result);
         echo $json;
-        header('content-type:application:json;charset=utf8');
-        header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Methods:GET');
-        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //注册手机校验
     public function check_phone(){
-        $this->load->model("user_model");
         $phone = $this->input->get("number");
         if($phone!="") {
             $result = $this->user_model->get_by_phone($phone);
@@ -188,14 +176,9 @@ class My_contro extends CI_Controller {
                 echo "success";
             }
         }
-        header('content-type:application:json;charset=utf8');
-        header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Methods:GET');
-        header('Access-Control-Allow-Headers:x-requested-with,content-type');
     }
     //注册微信校验
     public function check_wechat(){
-        $this->load->model("user_model");
         $wechat = $this->input->get("wechat");
         if($wechat!="") {
             $result = $this->user_model->get_by_wechat($wechat);
@@ -205,10 +188,33 @@ class My_contro extends CI_Controller {
                 echo "success";
             }
         }
-        header('content-type:application:json;charset=utf8');
-        header('Access-Control-Allow-Origin:*');
-        header('Access-Control-Allow-Methods:GET');
-        header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+    //用户修改密码
+    public function change_password(){
+        $phone = $this->input->post("Phone");
+        $wechat = $this->input->post("Wechat");
+        $password = $this->input->post("Re_password");
+        $password = md5(md5($password));
+        $row = $this->user_model->change_password($phone,$wechat,$password);
+        if($row==1){
+            echo "<!DOCTYPE html>";
+            echo "<html lang='en'>";
+            echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />";
+            echo "<div style='width:300px; margin:36px auto;'>";
+            echo "修改成功!";
+            echo "<a href='login'>点此返回</a>";
+            echo "</div>";
+            echo "</html>";
+        }else{
+            echo "<!DOCTYPE html>";
+            echo "<html lang='en'>";
+            echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />";
+            echo "<div style='width:300px; margin:36px auto;'>";
+            echo "修改出现问题，请重新修改!";
+            echo "<a href='login'>点此返回</a>";
+            echo "</div>";
+            echo "</html>";
+        }
     }
     //管理人员界面
     public function manager_login(){
@@ -231,5 +237,52 @@ class My_contro extends CI_Controller {
     //联系我们
     public function contact_us(){
         $this->load->view("contact");
+    }
+    //发送邮件
+    public function send_email(){
+        $name = $this->input->post("Name");
+        $email = $this->input->post("Email");//发送给谁
+        $subject = $this->input->post("Subject");//邮件主题
+        $message = $this->input->post("Message");//邮件内容
+        //******************** 配置信息 ********************************
+        $smtpserver = "smtp.163.com";//SMTP服务器
+        $smtpserverport =25;//SMTP服务器端口
+        $smtpusermail = "15774603281@163.com";//SMTP服务器的用户邮箱
+        $smtpuser = "15774603281@163.com";//SMTP服务器的用户帐号，注：部分邮箱只需@前面的用户名
+        $smtppass = "123456jh";//SMTP服务器的授权码
+        $mailtype = "TXT";//邮件格式（HTML/TXT）,TXT为文本邮件
+        //************************ 配置信息 ****************************
+        $smtp = new Smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.
+        $smtp->debug = false;//是否显示发送的调试信息
+        $state = $smtp->sendmail($email, $smtpusermail, $subject, $name.$message, $mailtype);
+        echo "<!DOCTYPE html>";
+        echo "<html lang='en'>";
+        echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />";
+        echo "<div style='width:300px; margin:36px auto;'>";
+        if($state==""){
+            echo "对不起，邮件发送失败！请检查邮箱填写是否有误。";
+            echo "<a href='index'>点此返回</a>";
+            echo "</div>";
+            echo "</html>";
+            exit();
+        }
+        echo "邮件发送成功！！";
+        echo "<a href='index'>点此返回</a>";
+        echo "</div>";
+        echo "</html>";
+    }
+    public function send_email2(){
+        $name = $this->input->post("yourName");
+        $email = $this->input->post("yourEmail");//发送给谁
+        $this->user_model->user_email($name,$email);
+        echo "<!DOCTYPE html>";
+        echo "<html lang='en'>";
+        echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />";
+        echo "<div style='width:300px; margin:36px auto;'>";
+        echo "<div style='width:300px; margin:36px auto;'>";
+        echo "订阅简讯成功！！";
+        echo "<a href='index'>点此返回</a>";
+        echo "</div>";
+        echo "</html>";
     }
 }

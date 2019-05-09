@@ -124,8 +124,9 @@
                         <span>
 								<i>确认密码</i>
 								<input type="password" name="Re_password" placeholder=" " required="">
-                                <span id="alert3" style="font-size: 12px;float: left;color: #a4dd25"></span>
+                                <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25"></span>
 							</span>
+                        <br>
                         <div class="w3_submit">
                             <input type="submit" disabled="disabled" value="现 在 注 册">
                         </div>

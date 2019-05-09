@@ -108,15 +108,15 @@
                         }, function(res) {
                             arr = res.split("");
                             $("#field-info").hide();
-                            $("#field").css("height","500px");
+                            $("#field").css("height","300px");
                             $("#field").append(
                                 `<div style="margin: 0 auto;text-align: center">
-                                   <img id="field_img_1" style="display:inline-block;width: 20rem;height: 20rem;border-radius: 50%;cursor: pointer" src="images/work.png">
-                                   <img id="field_img_2" style="display:inline-block;width: 20rem;height: 20rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
+                                   <img id="field_img_1" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/work.png">
+                                   <img id="field_img_2" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
                                </div>
                                <div style="margin: 20px auto;text-align:center">
-                                   <input id="field_btn_1" type="button" style="display:inline-block;width: 20rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
-                                   <input id="field_btn_2" type="button" style="display:inline-block;width: 20rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
+                                   <input id="field_btn_1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
+                                   <input id="field_btn_2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
                                    <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                                </div>`
                             );
