@@ -9,6 +9,7 @@ class My_contro extends CI_Controller {
         parent::__construct();
         $this->load->helper(array("form", "url"));
         $this->load->model("user_model");
+        $this->load->model("manager_model");
         header('content-type:application:json;charset=utf8');
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods:GET,POST');
@@ -25,6 +26,11 @@ class My_contro extends CI_Controller {
     //退出
     public function index2(){
         $this->load->view("index2");
+    }
+    //主页打开次数
+    public function index_times(){
+        $row = $this->manager_model->index_times();
+        echo $row->times;
     }
     //注册页面
     public function register(){

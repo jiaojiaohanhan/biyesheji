@@ -33,6 +33,22 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.get("http://localhost/bishe/project/My_contro/index_times",{
+
+            }, function(res) {
+                if(res=="1"){
+                    $.get("http://localhost/bishe/project/My_contro5/action1",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action2",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action3",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action4",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action5",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action6",{}, function(res) {},"text");
+                }
+            },"text");
+        })
+    </script>
     <!-- //js -->
     <link href="css/mislider.css" rel="stylesheet" type="text/css" />
     <link href="css/mislider-custom.css" rel="stylesheet" type="text/css" />

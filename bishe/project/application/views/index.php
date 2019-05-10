@@ -47,6 +47,18 @@
 
                 }
             });
+            $.get("http://localhost/bishe/project/My_contro/index_times",{
+
+            }, function(res) {
+                if(res=="1"){
+                    $.get("http://localhost/bishe/project/My_contro5/action1",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action2",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action3",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action4",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action5",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action6",{}, function(res) {},"text");
+                }
+            },"text");
             $.get("http://localhost/bishe/project/My_contro/user_info",{
                 id:storage.key(0)
             }, function(res) {

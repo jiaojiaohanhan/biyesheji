@@ -7,6 +7,15 @@ class Manager_model extends CI_Model {
         parent::__construct();
         ini_set("date.timezone","Asia/Shanghai");
     }
+    public function index_times(){
+        $this->db->where(array("id" => 1));
+        $this->db->set("times", "times+1", FALSE);
+        $this->db->update("index");
+        $query = $this->db->get_where("index",array(
+            "id" => 1
+        ));
+        return $query->row();
+    }
     public function manager_save($identity,$name,$password){
         $query = $this->db->insert("manager",array(
             "name" => $name,
