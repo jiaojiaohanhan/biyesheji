@@ -79,11 +79,16 @@ class Field_model extends CI_Model {
             "money" => $money
         ));
     }
-    public function my_field_info($user_id){
-        $query = $this->db->get_where("user_field",array(
+    public function my_field_info($user_id,$pages){
+        $query = $this->db->limit(10,$pages)->get_where("user_field",array(
             "user_id" => $user_id
         ));
         return $query->result();
+    }
+    public function my_field_info1($user_id){
+        return $this->db->where(array(
+            "user_id" => $user_id
+        ))->count_all_results('user_field');
     }
     public function my_field_info2($id){
         $query = $this->db->get_where("user_field",array(
@@ -227,10 +232,16 @@ class Field_model extends CI_Model {
         return $this->db->affected_rows();
     }
     public function field_action4($id){
-        $this->db->where(array("id"=>$id));
-        $this->db->set("weeding","weeding+1",FALSE);
-        $this->db->update("user_field");
-        return $this->db->affected_rows();
+        $row = $this->db->get_where("user_field",array("id"=>$id))->row();
+        $name = $row->plant_name;
+        $user_id = $row->user_id;
+        $field_id = $row->field_id;
+        $this->db->insert("user_harvest",array(
+            "user_id" => $user_id,
+            "field_id" => $field_id,
+            "name" => $name
+        ));
+        return $this->db->where(array("id"=>$id))->set("weeding","weeding+1",FALSE)->update("user_field")->affected_rows();
     }
     public function field_action5($id){
         $this->db->where(array("id"=>$id));
@@ -331,5 +342,28 @@ class Field_model extends CI_Model {
         }else{
             return "该地块的该时间段已被选中，请选择其他的时间段";
         }
+    }
+    public function my_harvest($user_id){
+        $query = $this->db->get_where("user_harvest",array(
+            "user_id" => $user_id
+        ));
+        return $query->result();
+    }
+    public function my_harvest2($user_id,$address){
+        $this->db->update("user",array(
+            "address" => $address,
+        ),array(
+            "id" => $user_id
+        ));
+        $query = $this->db->get_where("user",array(
+            "id" => $user_id
+        ))->row();
+        $phone1 = $query->phone;
+        $name = $query->username;
+        $query2 = $this->db->get_where("manager",array(
+            "type" => 1
+        ))->row();
+        $phone2 = $query2->phone;
+        return $phone1." ".$name." ".$phone2;
     }
 }

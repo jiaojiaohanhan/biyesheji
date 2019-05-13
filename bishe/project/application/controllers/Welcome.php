@@ -9,8 +9,9 @@ class Welcome extends CI_Controller {
 	public function test()
 	{
 		$this->load->model("test_model");
+//		$this->test_model->test();
 		$username = $this->input->get("username");
 		$row = $this->test_model->get_by_name($username);
-		print_r((Array)$row);
+		echo $row->time;
 	}
 }

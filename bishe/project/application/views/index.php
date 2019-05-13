@@ -57,6 +57,7 @@
                     $.get("http://localhost/bishe/project/My_contro5/action4",{}, function(res) {},"text");
                     $.get("http://localhost/bishe/project/My_contro5/action5",{}, function(res) {},"text");
                     $.get("http://localhost/bishe/project/My_contro5/action6",{}, function(res) {},"text");
+                    $.get("http://localhost/bishe/project/My_contro5/action7",{}, function(res) {},"text");
                 }
             },"text");
             $.get("http://localhost/bishe/project/My_contro/user_info",{

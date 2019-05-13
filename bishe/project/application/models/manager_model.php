@@ -8,6 +8,9 @@ class Manager_model extends CI_Model {
         ini_set("date.timezone","Asia/Shanghai");
     }
     public function index_times(){
+        $this->db->where(array("date" => date("Y-m-d")));
+        $this->db->set("theIndex", "theIndex+1", FALSE);
+        $this->db->update("flow");
         $this->db->where(array("id" => 1));
         $this->db->set("times", "times+1", FALSE);
         $this->db->update("index");
@@ -15,6 +18,16 @@ class Manager_model extends CI_Model {
             "id" => 1
         ));
         return $query->row();
+    }
+    public function regist_times(){
+        $this->db->where(array("date" => date("Y-m-d")));
+        $this->db->set("regist", "regist+1", FALSE);
+        $this->db->update("flow");
+    }
+    public function login_times(){
+        $this->db->where(array("date" => date("Y-m-d")));
+        $this->db->set("login", "login+1", FALSE);
+        $this->db->update("flow");
     }
     public function manager_save($identity,$name,$password){
         $query = $this->db->insert("manager",array(
@@ -65,12 +78,17 @@ class Manager_model extends CI_Model {
     }
     public function all_pay(){
         $pay1 = $this->db->get_where("tools",array("id" => 1))->row()->cost;
-        $rows = $this->db->get("manager")->result();
         $pay2 = 0;
-        foreach($rows as $row){
-            $pay2+=$row->sum;
+        $rows1 = $this->db->get("plant")->result();
+        foreach($rows1 as $row1){
+            $pay2 += $row1->cost;
         }
-        return $pay1." ".$pay2;
+        $rows2 = $this->db->get("manager")->result();
+        $pay3 = 0;
+        foreach($rows2 as $row2){
+            $pay3 += $row2->sum;
+        }
+        return $pay1." ".$pay2." ".$pay3;
     }
     public function all_income(){
         $query = $this->db->get("user_field2");
@@ -78,16 +96,21 @@ class Manager_model extends CI_Model {
     }
     public function all_money(){
         $pay1 = $this->db->get_where("tools",array("id" => 1))->row()->cost;
-        $rows1 = $this->db->get("manager")->result();
         $pay2 = 0;
-        foreach($rows1 as $row){
-            $pay2+=$row->sum;
+        $rows1 = $this->db->get("plant")->result();
+        foreach($rows1 as $row1){
+            $pay2 += ($row1->seed_price)/5*($row1->number);
         }
-        $pay = $pay1+$pay2;
-        $rows2 = $this->db->get("user_field2")->result();
+        $pay3 = 0;
+        $rows2 = $this->db->get("manager")->result();
+        foreach($rows2 as $row2){
+            $pay3 += $row2->sum;
+        }
+        $pay = $pay1+$pay2+$pay3;
+        $rows3 = $this->db->get("user_field2")->result();
         $income = 0;
-        foreach($rows2 as $row){
-            $income+=$row->money;
+        foreach($rows3 as $row3){
+            $income += $row3->money;
         }
         $profit = $income-$pay;
         return $pay." ".$income." ".$profit;
@@ -356,5 +379,78 @@ class Manager_model extends CI_Model {
         $this->db->where(array("id"=>1));
         $this->db->set($name,$num2,FALSE);
         $this->db->update("tools");
+    }
+    public function all_plants(){
+        $query = $this->db->get("plant");;
+        return  $query->result();
+    }
+    public function plant_add($name){
+        $row = $this->db->get_where("plant",array("english"=>$name))->row();
+        $num = $row->number;
+        if($num<100) {
+            $cost = $row->cost;
+            $cost += ($row->seed_price)/5;
+            $this->db->where(array("english" => $name));
+            $this->db->set("number", "number+1", FALSE);
+            $this->db->set("cost",$cost,FALSE);
+            $this->db->update("plant");
+        }
+    }
+    public function plant_sub($name){
+        $num = $this->db->get_where("plant",array("english"=>$name))->row()->number;
+        if($num>0){
+            $this->db->where(array("english"=>$name));
+            $this->db->set("number","number-1",FALSE);
+            $this->db->update("plant");
+        }
+    }
+    public function plant_change($arr){
+        $name = $arr[0];
+        $row = $this->db->get_where("plant",array("english" => $name))->row();
+        $num1 = $row->number;
+        $num2 = $arr[1];
+        $cost = $row->cost;
+        if($num1<$num2){
+            $cost += ($row->seed_price)/5*($num2-$num1);
+        }
+        $this->db->where(array("english"=>$name));
+        $this->db->set("number",$num2,FALSE);
+        $this->db->set("cost",$cost,FALSE);
+        $this->db->update("plant");
+    }
+    public function new_plant($name,$seed_price,$work_price,$english){
+        $data = array(
+            "name" => $name,
+            "seed_price" => $seed_price,
+            "work_price" => $work_price,
+            "number" => 10,
+            "english" => $english,
+            "cost" => $seed_price/5*10
+        );
+        $this->db->insert("plant",$data);
+        return $this->db->affected_rows();
+    }
+    public function all_harvest(){
+        return $this->db->get("user_harvest")->result();
+    }
+    public function the_field2($field_id){
+        return $this->db->get_where("field1",array("id" => $field_id))->row();
+    }
+    public function harvest_delete($id){
+        $this->db->where("id", $id);
+        $this->db->delete("user_harvest");
+        return $this->db->affected_rows();
+    }
+    public function all_flow1(){
+        return $this->db->limit(7)->order_by('id DESC')->select("date")->get("flow")->result();
+    }
+    public function all_flow2(){
+        return $this->db->limit(7)->order_by('id DESC')->select("theIndex")->get("flow")->result();
+    }
+    public function all_flow3(){
+        return $this->db->limit(7)->order_by('id DESC')->select("login")->get("flow")->result();
+    }
+    public function all_flow4(){
+        return $this->db->limit(7)->order_by('id DESC')->select("regist")->get("flow")->result();
     }
 }

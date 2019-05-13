@@ -14,6 +14,15 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.get("http://localhost/bishe/project/My_contro/regist_times",{
+
+            }, function(res) {
+
+            },"text");
+        })
+    </script>
     <!-- font-awesome-icons -->
     <link href="css/font-awesome.css" rel="stylesheet">
     <!-- //font-awesome-icons -->
@@ -317,7 +326,7 @@
                 // 2.4 进行截取字符，最终拿到发给用户的验证码
                 var tpl_value = decodeURIComponent(tpl_val);;
                 var chenkNum = tpl_value.slice(7);
-                console.log(chenkNum); // 这个就是发给用户的验证码
+//                console.log(chenkNum); // 这个就是发给用户的验证码
                 // 2.4.1 调用发送短信验证码的接口
                 check(phoneNum,chenkNum);
                 count($(this));
@@ -327,7 +336,7 @@
 
         // 2.1 根据接口文档，封装函数
         function check(mobile,chenkNum){
-            console.log(mobile,chenkNum);
+//            console.log(mobile,chenkNum);
             $.get("http://localhost/bishe/project/My_contro/SMS",{
                 message:chenkNum,
                 number:mobile

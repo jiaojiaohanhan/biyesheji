@@ -17,6 +17,11 @@
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/oldie.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script>
         window.onload = function(){
@@ -30,14 +35,20 @@
                               <img id="field_img_2" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/worker.jpg">
                               <img id="field_img_3" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/key.jpg">
                               <img id="field_img_4" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/hoe.jpg">
-                              <img id="field_img_5" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/gloves.jpg">
+                              <img id="field_img_5" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/seed.jpg">
+                              <img id="field_img_6" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
+                              <img id="field_img_7" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/flow.jpg">
+                              <img id="field_img_8" style="display:inline-block;width: 8rem;height: 8rem;border-radius: 50%;cursor: pointer" src="images/gloves.jpg">
                 </div>
                 <div style="margin: 20px auto;text-align:center">
                               <input id="field_btn_1" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="收支结余管理">
                               <input id="field_btn_2" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="工作人员管理">
                               <input id="field_btn_3" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="地块钥匙管理">
                               <input id="field_btn_4" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="农资工具管理">
-                              <input id="field_btn_5" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="返回">
+                              <input id="field_btn_5" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="作物种子管理">
+                              <input id="field_btn_6" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物管理">
+                              <input id="field_btn_7" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="流量统计">
+                              <input id="field_btn_8" type="button" style="display:inline-block;width: 8rem;height: 3rem;background-color: #a0d034;color: #fff" value="返回">
                 </div>`
             );
             $("#field_img_1,#field_btn_1").on("click",function(){
@@ -49,16 +60,16 @@
                              <img id="field_img_3" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/money.png">
                     </div>
                     <div style="margin: 20px auto;text-align:center">
-                             <input id="field_btn_6" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看支出">
-                             <input id="field_btn_7" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看收入">
-                             <input id="field_btn_8" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="总览">
+                             <input id="field_btn_1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看支出">
+                             <input id="field_btn_2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="查看收入">
+                             <input id="field_btn_3" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="总览">
                              <input id="the_back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                     </div>`
                 );
                 $("#the_back").on("click",function(){
                     window.location.reload();
                 });
-                $("#field_img_1,#field_btn_6").on("click",function() {
+                $("#field_img_1,#field_btn_1").on("click",function() {
                     $("#field").html("").css("height", "auto");
                     $.get("http://localhost/bishe/project/My_contro4/pay",{
 
@@ -66,6 +77,7 @@
                         var arr = res.split(" ");
                         var cont = `<tr>
                                 <th>农资工具费用</th>
+                                <th>种子费用支出</th>
                                 <th>工人工资支出</th>
                             </tr>`;
                         cont+=`<tr>`;
@@ -83,7 +95,7 @@
                         $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
                         $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
                         $("#sum").on("click",function(){
-                            var sum = parseInt(arr[0])+parseInt(arr[1]);
+                            var sum = parseInt(arr[0])+parseInt(arr[1])+parseInt(arr[2]);
                             alert("合计支出为"+sum);
                         });
                         $("#back").on("click",function(){
@@ -91,7 +103,7 @@
                         })
                     },"text");
                 });
-                $("#field_img_2,#field_btn_7").on("click",function(){
+                $("#field_img_2,#field_btn_2").on("click",function(){
                     $("#field").html("").css("height","auto");
                     $.get("http://localhost/bishe/project/My_contro4/income",{
 
@@ -134,7 +146,7 @@
                         })
                     },"text");
                 });
-                $("#field_img_3,#field_btn_9").on("click",function() {
+                $("#field_img_3,#field_btn_3").on("click",function() {
                     $("#field").html("").css("height", "auto");
                     $.get("http://localhost/bishe/project/My_contro4/money",{
 
@@ -938,6 +950,304 @@
                 },"text")
             });
             $("#field_img_5,#field_btn_5").on("click",function(){
+                $("#field").html("").css("height","auto");
+                $.get("http://localhost/bishe/project/My_contro4/plants",{
+
+                },function(res){
+                    var arr = res.split(" ");
+                    var cont = `<tr>
+                                <th>作物名称</th>
+                                <th>种子数量</th>
+                                <th>有关操作</th>
+                            </tr>`;
+                    for(var i=0;i<arr.length-1;i+=3){
+                        cont+=`<tr>`;
+                        cont+=(`<td>${arr[i]}</td>`);
+                        cont+=(`<td>可直接输入新值<input name=${arr[i+2]} size="15" value="${arr[i+1]}"></td>`);
+                        cont+=(`<td>
+                             <button id=${arr[i+2]} style="background-color:#a0d034;color:#fff">减一</button>
+                             <button value=${arr[i+2]} style="background-color:#a0d034;color:#fff">加一</button>
+                        </td>`);
+                        cont+=`</tr>`;
+                    }
+                    $("#field").append(`
+                        <table id="field-info" style="margin: 0 auto 10px"></table>
+                        <input id="add" type="button" style="margin-left:99%;margin-bottom:5px;width:6rem;background-color:#a0d034;color:#fff" value="添加">
+                        <input id="yes" type="button" style="margin-left:99%;margin-bottom:5px;width:6rem;background-color:#a0d034;color:#fff" value="确定">
+                        <input id="back" type="button" style="margin-left:99%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
+                    `);
+                    $("#field-info").html(cont);
+                    $("#field-info th").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
+                    $("#field-info td").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
+                    $("#field-info button").css("width","3rem").each(function(){
+                        $(this).on("click",function(){
+                            if($(this).attr("id")==undefined){
+                                var name = $(this).attr("value");
+                                $.get("http://localhost/bishe/project/My_contro4/plant_add",{
+                                    name:name
+                                },function(res) {
+                                    var value = $(`input[name=${res}]`).val();
+                                    if(value!=100){
+                                        $(`input[name=${res}]`).val(++value);
+                                    }
+                                },"text")
+                            }else {
+                                var name = $(this).attr("id");
+                                $.get("http://localhost/bishe/project/My_contro4/plant_sub",{
+                                    name:name
+                                },function(res) {
+                                    var value = $(`input[name=${res}]`).val();
+                                    if(value!=0){
+                                        $(`input[name=${res}]`).val(--value);
+                                    }
+                                },"text")
+                            }
+                        })
+                    });
+                    $("#add").on("click",function(){
+                        $("#field").html("");
+                        $("#field").append(`
+                                <div style="width: 60%;margin: 0 auto">
+                                    <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
+                                        <div id="form">
+                                            <span>
+                                                    <i>作物名称</i>
+                                                    <input type="text" name="Name" placeholder=" " required="">
+                                                    <span id="alert1" style="font-size: 12px;float: right;color: #a4dd25">作物的名称</span>
+                                            </span>
+                                            <span>
+                                                    <i>作物价格</i>
+                                                    <input type="text" name="Price" placeholder=" " required="">
+                                                    <span id="alert2" style="font-size: 12px;float: right;color: #a4dd25">作物种子价格</span>
+                                            </span>
+                                            <span>
+                                                    <i>人工价格</i>
+                                                    <input type="text" name="Price2" placeholder=" " required="">
+                                                    <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25">作物人工价格</span>
+                                            </span>
+                                            <span>
+                                                    <i>英文名称</i>
+                                                    <input type="text" name="English" placeholder=" " required="">
+                                                    <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25"></span>
+                                            </span>
+                                            <br>
+                                            <div class="w3_submit">
+                                                <input name="submit1" type="button" value="提 交" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
+                                </div>
+                        `);
+                        var $flag1 = false,$flag2 = false,$flag3 = false;
+                        $("[name='Price']").on('input propertychange',function () {
+                            var $pri = $(this).val();
+                            if(!(/^[+]{0,1}(\d+)$/.test($pri))){
+                                $("#alert2").text("请输入数字").css("color","red");
+                                $flag1 = false;
+                            }else {
+                                $("#alert2").text("");
+                                $flag1 = true;
+                            }
+                            if($flag1==true&&$flag2==true&&$flag3==true){
+                                $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
+                        $("[name='Price2']").on('input propertychange',function () {
+                            var $pri2 = $(this).val();
+                            if(!(/^[+]{0,1}(\d+)$/.test($pri2))){
+                                    $("#alert3").text("请输入数字").css("color","red");
+                                    $flag2 = false;
+                            }else {
+                                    $("#alert3").text("");
+                                    $flag2 = true;
+                            }
+                            if($flag1==true&&$flag2==true&&$flag3==true){
+                                    $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                    $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
+                        $("[name='English']").on('input propertychange',function () {
+                            var $eng = $(this).val();
+                            if(!(/^[A-Za-z]+$/.test($eng))){
+                                $("#alert4").text("英文名称有误，请重填").css("color","red");
+                                $flag3 = false;
+                            }else {
+                                $("#alert4").text("");
+                                $flag3 = true;
+                            }
+                            if($flag1==true&&$flag2==true&&$flag3==true){
+                                $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
+                        $("[name='submit1']").on("click",function(){
+                            $.post("http://localhost/bishe/project/My_contro4/new_plant",{
+                                name:$("[name='Name']").val(),
+                                seed_price:parseInt($("[name='Price']").val()),
+                                work_price:parseInt($("[name='Price2']").val()),
+                                english:$("[name='English']").val()
+                            },function(res){
+                                alert(res);
+                                window.location.reload();
+                            },"text")
+                        });
+                        $("#the_back").on("click",function(){
+                            window.location.reload()
+                        })
+                    });
+                    $("#yes").on("click",function(){
+                        var arr= [];
+                        for(var i=0;i<$("#field-info td input").length;i++){
+                            var arr2 = [];
+                            arr2[0] = $("#field-info td input").eq(i).attr("name");
+                            arr2[1] = $("#field-info td input").eq(i).val();
+                            if(arr2[1]<0){
+                                arr2[1]=0
+                            }else if(arr2[1]>100){
+                                arr2[1]=100
+                            }
+                            arr.push(arr2);
+                        }
+                        $.post("http://localhost/bishe/project/My_contro4/plant_change",{
+                            arr:arr
+                        },function(res){
+                            alert("修改成功");
+                            $.get("http://localhost/bishe/project/My_contro4/plants",{
+
+                            },function(res){
+                                var arr2 = res.split(" ");
+                                for(var i=0;i<arr2.length-1;i+=3){
+                                    $("#field-info td input").eq(i).val(arr2[i+1])
+                                }
+                            },"text")
+                        },"text")
+                    });
+                    $("#back").on("click",function(){
+                        window.location.reload();
+                    })
+                },"text")
+            });
+            $("#field_img_6,#field_btn_6").on("click",function(){
+                $("#field").html("").css("height","auto");
+                $.get("http://localhost/bishe/project/My_contro4/harvest",{
+
+                },function(res){
+                    var arr = res.split(" ");
+                    var cont = `<tr>
+                                <th>地块名称</th>
+                                <th>用户姓名</th>
+                                <th>作物名称</th>
+                                <th>用户地址</th>
+                                <th>有关操作</th>
+                            </tr>`;
+                    for(var i=0;i<arr.length-1;i+=5){
+                        cont+=`<tr>`;
+                        cont+=(`<td>${arr[i]}</td>`);
+                        cont+=(`<td>${arr[i+1]}</td>`);
+                        cont+=(`<td>${arr[i+2]}</td>`);
+                        cont+=(`<td>${arr[i+3]}</td>`);
+                        cont+=(`<td><button id="${arr[i+4]}" style="background-color:#f00;color:#fff">删除</button></td>`);
+                        cont+=`</tr>`;
+                    }
+                    $("#field").append(`
+                        <table id="field-info" style="margin: 0 auto"></table>
+                        <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                    `);
+                    $("#field-info").html(cont);
+                    $("#field-info th").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
+                    $("#field-info td").css({"border":"1px solid #a0d034","width":"7rem","height":"2rem"});
+                    $("#field-info button").each(function(){
+                        $(this).on("click",function(){
+                            var $theId = $(this).attr("id");
+                            $.get("http://localhost/bishe/project/My_contro4/harvest_delete",{
+                                id:$theId
+                            },function(res){
+                                alert(res);
+                                window.location.reload();
+                            },"text")
+                        })
+                    });
+                    $("#back").on("click",function(){
+                        window.location.reload();
+                    })
+                },"text")
+            });
+            $("#field_img_7,#field_btn_7").on("click",function(){
+                $("#field").html("").css("height","auto");
+                $("#field").append(`
+                <div id="container" style="max-width:800px;height:400px;margin: 0 auto"></div>
+                <input id="the_back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                `);
+                $.get("http://localhost/bishe/project/My_contro4/flow",{
+
+                },function(res){
+                    var arr = res.split(",");
+                    for(var i=7;i<arr.length-1;i++){
+                        arr[i] = parseInt(arr[i])
+                    }
+                    var chart = Highcharts.chart('container', {
+                        title: {
+                            text: '最近7天小菜园线上系统访问情况'
+                        },
+                        yAxis: {
+                            title: {
+                                text: '访问次数'
+                            }
+                        },
+                        xAxis: {
+                            labels: {
+                                align: 'right'
+                            },
+                            categories: [arr[0],arr[1],arr[2],arr[3],arr[4],arr[5],arr[6]]
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle'
+                        },
+                        plotOptions: {
+                            series: {
+                                label: {
+                                    connectorAllowed: false
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '主页访问量',
+                            data: [arr[7],arr[8],arr[9],arr[10],arr[11],arr[12],arr[13]]
+                        }, {
+                            name: '登录页访问量',
+                            data: [arr[14],arr[15],arr[16],arr[17],arr[18],arr[19],arr[20]]
+                        }, {
+                            name: '注册页访问量',
+                            data: [arr[21],arr[22],arr[23],arr[24],arr[25],arr[26],arr[27]]
+                        }],
+                        responsive: {
+                            rules: [{
+                                condition: {
+                                    maxWidth: 500
+                                },
+                                chartOptions: {
+                                    legend: {
+                                        layout: 'horizontal',
+                                        align: 'center',
+                                        verticalAlign: 'bottom'
+                                    }
+                                }
+                            }]
+                        }
+                    });
+                },"text");
+                $("#the_back").on("click",function(){
+                    window.location.reload();
+                });
+            });
+            $("#field_img_8,#field_btn_8").on("click",function(){
                 window.location = "My_contro/manager_login";
             });
     }

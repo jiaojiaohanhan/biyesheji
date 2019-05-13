@@ -214,4 +214,79 @@ class My_contro4 extends CI_Controller {
             $this->manager_model->tool_change($arr2);
         }
     }
+    //种子管理
+    public function plants(){
+        $rows = $this->manager_model->all_plants();
+        foreach($rows as $row){
+            echo $row->name." ";
+            echo $row->number." ";
+            echo $row->english." ";
+        }
+    }
+    public function plant_add(){
+        $name = $this->input->get("name");
+        $this->manager_model->plant_add($name);
+        echo $name;
+    }
+    public function plant_sub(){
+        $name = $this->input->get("name");
+        $this->manager_model->plant_sub($name);
+        echo $name;
+    }
+    public function plant_change(){
+        $arr = $this->input->post("arr");
+        foreach($arr as $arr2){
+            $this->manager_model->plant_change($arr2);
+        }
+    }
+    public function new_plant(){
+        $name = $this->input->post("name");
+        $seed_price = $this->input->post("seed_price");
+        $work_price = $this->input->post("work_price");
+        $english = $this->input->post("english");
+        $row = $this->manager_model->new_plant($name,$seed_price,$work_price,$english);
+        if($row==1){
+            echo "添加成功";
+        }else{
+            echo "fail";
+        }
+    }
+    //已收获作物管理
+    public function harvest(){
+        $rows = $this->manager_model->all_harvest();
+        foreach($rows as $row){
+            $user_name = $this->manager_model->the_user($row->user_id)->username;
+            $address = $this->manager_model->the_user($row->user_id)->address;
+            $field_name = $this->manager_model->the_field2($row->field_id)->name;
+            echo $field_name." ".$user_name." ".$row->name." ".$address." ".$row->id." ";
+        }
+    }
+    public function harvest_delete(){
+        $id = $this->input->get("id");
+        $row = $this->manager_model->harvest_delete($id);
+        if($row==1){
+            echo "删除成功";
+        }else{
+            echo "删除失败";
+        }
+    }
+    //流量统计
+    public function flow(){
+        $rows1 = $this->manager_model->all_flow1();
+        foreach($rows1 as $row){
+            echo $row->date.",";
+        }
+        $rows2 = $this->manager_model->all_flow2();
+        foreach($rows2 as $row){
+            echo $row->theIndex.",";
+        }
+        $rows3 = $this->manager_model->all_flow3();
+        foreach($rows3 as $row){
+            echo $row->login.",";
+        }
+        $rows4 = $this->manager_model->all_flow4();
+        foreach($rows4 as $row){
+            echo $row->regist.",";
+        }
+    }
 }

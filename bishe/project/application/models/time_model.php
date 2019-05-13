@@ -24,6 +24,19 @@ class Time_model extends CI_Model {
                 "field_id" => $field_id,
                 "type" => 1
             ));
+            $num = $this->db->where(array(
+                "field_id" => $field_id,
+            ))->count_all_results("user_field");
+            $sum = $this->db->get_where("user_field",array(
+                "field_id" => $field_id,
+            ))->row()->sum;
+            if($num<$sum){
+                $this->db->update("field1",array(
+                    "sur" => $sum-$num
+                ),array(
+                    "id" => $field_id,
+                ));
+            }
         }
     }
     public function get_plant(){
@@ -88,5 +101,13 @@ class Time_model extends CI_Model {
                 "id" => $id,
             ));
         }
+    }
+    public function manager_flow(){
+        return $this->db->limit(1)->order_by('id DESC')->get("flow")->row();
+    }
+    public function manager_flow2($date){
+        $this->db->insert("flow",array(
+            "date" => $date
+        ));
     }
 }

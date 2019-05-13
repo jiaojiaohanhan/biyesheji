@@ -36,11 +36,19 @@ class My_contro extends CI_Controller {
     public function register(){
         $this->load->view("regist");
     }
+    //注册页打开次数
+    public function regist_times(){
+        $this->manager_model->regist_times();
+    }
     //登录页面
     public function login(){
         $this->load->view("login",array(
             "msg" => ""
         ));
+    }
+    //登录页打开次数
+    public function login_times(){
+        $this->manager_model->login_times();
     }
     //注册
     public function regist()

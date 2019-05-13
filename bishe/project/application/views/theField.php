@@ -851,7 +851,7 @@
                         var date = $("#date").val();
                         var time = "";
                         arr3 = [];
-                        $("input[type='checkbox']:checked").each(function (index, item) {
+                        $("input[type='checkbox']:checked").each(function () {
                             arr3.push($(this).val());
                         });
                         tools = arr3.join(",");

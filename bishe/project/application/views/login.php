@@ -26,6 +26,11 @@
             if($msg!=""){
                 alert($msg);
             }
+            $.get("http://localhost/bishe/project/My_contro/login_times",{
+
+            }, function(res) {
+
+            },"text");
         })
     </script>
     <!-- font-awesome-icons -->

@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once('unit/ZhenziSmsClient.php');
 
 class My_contro2 extends CI_Controller{
     public function __construct()
@@ -30,7 +31,8 @@ class My_contro2 extends CI_Controller{
     }
     public function my_field_info(){
         $user_id = $this->input->get("user_id");
-        $rows = $this->field_model->my_field_info($user_id);
+        $pages = $this->input->get("pages");
+        $rows = $this->field_model->my_field_info($user_id,$pages);
         foreach($rows as $row){
             echo $row->field_id." ";
             echo $row->plant_name." ";
@@ -41,6 +43,15 @@ class My_contro2 extends CI_Controller{
             echo $row->can_harvest." ";
             echo $row->harvest." ";
             echo $row->id." ";
+        }
+    }
+    public function my_field_info1(){
+        $user_id = $this->input->get("user_id");
+        $row = $this->field_model->my_field_info1($user_id);
+        if($row%10==0){
+            print_r($row/10);
+        }else{
+            print_r($row/10+1);
         }
     }
     public function my_field_info2(){
@@ -163,5 +174,28 @@ class My_contro2 extends CI_Controller{
         $date = $this->input->get("arr1");
         $time = $this->input->get("arr2");
         $this->field_model->user_field4($user_id,$field_id,$tools,$money,$date,$time);
+    }
+    //我的收获
+    public function my_harvest(){
+        $user_id = $this->input->get("user_id");
+        $rows = $this->field_model->my_harvest($user_id);
+        foreach($rows as $row){
+            $field_id = $row->field_id;
+            echo $this->field_model->field_info($field_id)->name." ";
+            echo $row->name." ";
+        }
+    }
+    public function my_harvest2(){
+        $user_id = $this->input->post("user_id");
+        $address = $this->input->post("address");
+        $row = $this->field_model->my_harvest2($user_id,$address);
+        $arr = explode(" ",$row);
+        if($address!=""){
+            echo "申请成功";
+            $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
+            $client->send($arr[2], "手机号为".$arr[0]."的用户".$arr[1]."要求配送，"."地址为".$address);
+        }else{
+            echo "申请失败";
+        }
     }
 }

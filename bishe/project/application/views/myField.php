@@ -16,9 +16,12 @@
     <!-- //custom-theme -->
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/cssreset-min.css" rel="stylesheet" type="text/css">
+    <link href="css/common.css" rel="stylesheet" type="text/css">
     <!-- js -->
     <script type="text/javascript" src="js/laydate.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.citys.js"></script>
     <script>
         window.onload = function(){
             var storage=window.localStorage;
@@ -49,7 +52,8 @@
             });
             var user_id = localStorage.key(0);
             $.get("http://localhost/bishe/project/My_contro2/my_field_info",{
-                user_id:user_id
+                user_id:user_id,
+                pages:0
             }, function(res) {
                 var arr = res.split(" ");
                 var cont = `<tr>
@@ -97,8 +101,13 @@
                 $("#field-info").html(cont);
                 $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
                 $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
-            },"text").then(
-                function(){
+                $("#field").append(`
+                <div id="changePages" style="width: 300px;margin: 5px auto 0">
+                        <button style="margin: 0 auto;width:5rem;height:2rem;background-color:#a0d034;color:#fff">前一页</button>
+                        <select id="pages" style="margin: 0 auto"></select>
+                        <button style="margin: 0 auto;;width:5rem;height:2rem;background-color:#a0d034;color:#fff">后一页</button>
+                <div>
+                `);
                 $("#field-info button").each(function(){
                     $(this).on("click",function(){
                         var id = $(this).attr("id");
@@ -108,6 +117,7 @@
                         }, function(res) {
                             arr = res.split("");
                             $("#field-info").hide();
+                            $("#changePages").hide();
                             $("#field").css("height","300px");
                             $("#field").append(
                                 `<div style="margin: 0 auto;text-align: center">
@@ -350,9 +360,981 @@
                             }
                         )
                     })
-                })
-            }
-            )
+                });
+                $.get("http://localhost/bishe/project/My_contro2/my_field_info1",{
+                    user_id:user_id
+                }, function(res) {
+                    for(var i=0;i<parseInt(res);i++){
+                        if(i==0){
+                            $("#pages").append(`
+                            <option value=${i} selected="selected">第${i+1}页</option>
+                            `)
+                        }else {
+                            $("#pages").append(`
+                            <option value=${i}>第${i+1}页</option>
+                            `)
+                        }
+                    }
+                    $("#pages").on("change",function(){
+                        $("#changePages button").hide();
+                        $("#changePages").css("width","200px");
+                        $(this).css({"width":"100%","text-align-last":"center"});
+                        var index = parseInt($(this).val());
+                        $("option").eq(index).attr("selected","selected").siblings().removeAttr("selected");
+                        $("#field-info").html("");
+                        $.get("http://localhost/bishe/project/My_contro2/my_field_info",{
+                            user_id:user_id,
+                            pages:index*10
+                        }, function(res) {
+                            var arr = res.split(" ");
+                            var cont = `<tr>
+                                <th>地块号</th>
+                                <th>种植作物</th>
+                                <th>是否播种</th>
+                                <th>灌溉次数</th>
+                                <th>施肥次数</th>
+                                <th>除草次数</th>
+                                <th>可否收获</th>
+                                <th>是否已收获</th>
+                                <th>地块活动</th>
+                                </tr>`;
+                            for (var i = 0; i < arr.length - 1; i += 9) {
+                                cont += `<tr>`;
+                                if (arr[i] > 3) {
+                                    arr[i] -= 3
+                                }
+                                cont += (`<td>${arr[i]}</td>`);
+                                cont += (`<td>${arr[i + 1]}</td>`);
+                                if (arr[i + 2] == 0) {
+                                    arr[i + 2] = "未播种"
+                                } else {
+                                    arr[i + 2] = "已播种"
+                                }
+                                cont += (`<td>${arr[i + 2]}</td>`);
+                                cont += (`<td>${arr[i + 3]}</td>`);
+                                cont += (`<td>${arr[i + 4]}</td>`);
+                                cont += (`<td>${arr[i + 5]}</td>`);
+                                if (arr[i + 6] == 0) {
+                                    arr[i + 6] = "不可收获"
+                                } else {
+                                    arr[i + 6] = "可收获"
+                                }
+                                cont += (`<td>${arr[i + 6]}</td>`);
+                                if (arr[i + 7] == 0) {
+                                    arr[i + 7] = "未收获"
+                                } else {
+                                    arr[i + 7] = "已收获"
+                                }
+                                cont += (`<td>${arr[i + 7]}</td>`);
+                                cont += (`<td><button id="${arr[i + 8]}" style="background-color:#a0d034;color:#fff">地块活动选择</button></td>`);
+                                cont += `</tr>`;
+                            }
+                            $("#field-info").html(cont);
+                            $("#field-info th").css({
+                                "border": "1px solid #a0d034",
+                                "width": "6rem",
+                                "height": "2rem"
+                            });
+                            $("#field-info td").css({
+                                "border": "1px solid #a0d034",
+                                "width": "6rem",
+                                "height": "2rem"
+                            });
+                            $("#field-info button").each(function(){
+                                $(this).on("click",function(){
+                                    var id = $(this).attr("id");
+                                    var arr;
+                                    $.get("http://localhost/bishe/project/My_contro2/my_field_info2",{
+                                        id:id
+                                    }, function(res) {
+                                        arr = res.split("");
+                                        $("#field-info").hide();
+                                        $("#changePages").hide();
+                                        $("#field").css("height","300px");
+                                        $("#field").append(
+                                            `<div style="margin: 0 auto;text-align: center">
+                                               <img id="field_img_1" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/work.png">
+                                               <img id="field_img_2" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
+                                               </div>
+                                            <div style="margin: 20px auto;text-align:center">
+                                                   <input id="field_btn_1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
+                                                   <input id="field_btn_2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
+                                                   <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                            </div>`
+                                        );
+                                        $("#back").on("click",function(){
+                                            window.location.reload();
+                                        })
+                                    },"text").then(
+                                        function(){
+                                            $("#field_img_1,#field_btn_1").on("click",function(){
+                                                $("#field").css("height","auto");
+                                                $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                    id:id
+                                                },function(res){
+                                                    if(parseInt(res)==1){
+                                                        $("#field div").hide();
+                                                        $("#field").append(`
+                                                             <div style="margin: 0 35%;text-align: center">
+                                                                  <div style="text-align: left">
+                                                                      <label for="manure"><img style="width: 10rem;height: 10rem" src="images/manure.jpg"></label>
+                                                                      <label for="hoe"><img style="width: 10rem;height: 10rem" src="images/hoe.jpg"></label>
+                                                                      <br>
+                                                                      <label for="manure">有机肥(5kg)</label>
+                                                                      <input type="checkbox" id="manure" value="manure" style="margin-right: 3.5rem"/>
+                                                                      <label for="hoe">锄头</label>
+                                                                      <input type="checkbox" id="hoe" value="hoe" />
+                                                                  </div>
+                                                                  <div style="text-align: left">
+                                                                      <label for="shovel"><img style="width: 10rem;height: 10rem" src="images/shovel.jpg"></label>
+                                                                      <label for="bucket"><img style="width: 10rem;height: 10rem" src="images/bucket.jpg"></label>
+                                                                      <br>
+                                                                      <label for="shovel">铲子</label>
+                                                                      <input type="checkbox" id="shovel" value="shovel" style="margin-right: 7rem"/>
+                                                                      <label for="bucket">水桶</label>
+                                                                      <input type="checkbox" id="bucket" value="bucket" />
+                                                                  </div>
+                                                                  日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                                  时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                                  <input id="btn-yes1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                                  <input id="btn-back1" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                             <div>
+                                                        `);
+                                                        //前后若干天可选，这里以30天为例
+                                                        laydate.render({
+                                                            elem: '#date'
+                                                            ,min: 1
+                                                            ,max: 30
+                                                        });
+                                                        //限定可选时间
+                                                        laydate.render({
+                                                            elem: '#time'
+                                                            ,type: 'time'
+                                                            ,min: '08:30:00'
+                                                            ,max: '18:30:00'
+                                                            ,btns: ['clear', 'confirm']
+                                                        });
+                                                        $("#btn-back1").on("click",function(){
+                                                            window.location.reload();
+                                                        });
+                                                        $.get("http://localhost/bishe/project/My_contro2/check_tools1",{
+
+                                                        },function(res){
+                                                            if(res!=""){
+                                                                var arr = res.split(" ");
+                                                                var msg = ``;
+                                                                for(var i=0;i<arr.length;i++){
+                                                                    msg+= `
+                                                    ${arr[i]}`;
+                                                                    $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                }
+                                                                alert(msg);
+                                                            }
+                                                        },"text");
+                                                        $("#btn-yes1").on("click",function(){
+                                                            var arr = [],tools = "";
+                                                            $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                arr.push($(this).val());
+                                                            });
+                                                            tools = arr.join(",");
+                                                            var date = $("#date").val();
+                                                            var time = $("#time").val();
+                                                            var arr1 = date.split("-");
+                                                            var arr2 = time.split(":");
+                                                            if(date!=""&&time!=""){
+                                                                $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
+                                                                    arr:arr,
+                                                                    tools:tools,
+                                                                    id:id
+                                                                },function(res){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                        id:id,
+                                                                        arr1:arr1,
+                                                                        arr2:arr2
+                                                                    },function(res){
+                                                                        alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                        window.location = "My_contro2/my_field";
+                                                                    },"text");
+                                                                },"text")
+                                                            }else {
+                                                                alert("您还没有选好时间，请选择时间");
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            });
+                                            $("#field_img_2,#field_btn_2").on("click",function(){
+                                                $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                    id:id
+                                                },function(res){
+                                                    if(parseInt(res)==1){
+                                                        $("#field div").hide();
+                                                        $("#field").append(`
+                                                         <div style="margin: 0 35%;text-align: center">
+                                                              <div style="text-align: left">
+                                                                  <label for="basket"><img style="width: 10rem;height: 10rem" src="images/basket.jpg"></label>
+                                                                  <label for="gloves"><img style="width: 10rem;height: 10rem" src="images/gloves.jpg"></label>
+                                                                  <br>
+                                                                  <label for="basket">篮子</label>
+                                                                  <input type="checkbox" id="basket" value="basket" style="margin-right: 7rem"/>
+                                                                  <label for="gloves">手套</label>
+                                                                  <input type="checkbox" id="gloves" value="gloves" />
+                                                              </div>
+                                                              日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                              时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                              <input id="btn-yes2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                              <input id="btn-back2" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                         <div>
+                                                        `);
+                                                        //前后若干天可选，这里以30天为例
+                                                        laydate.render({
+                                                            elem: '#date'
+                                                            ,min: 1
+                                                            ,max: 30
+                                                        });
+                                                        //限定可选时间
+                                                        laydate.render({
+                                                            elem: '#time'
+                                                            ,type: 'time'
+                                                            ,min: '08:30:00'
+                                                            ,max: '18:30:00'
+                                                            ,btns: ['clear', 'confirm']
+                                                        });
+                                                        $("#btn-back2").on("click",function(){
+                                                            window.location.reload();
+                                                        });
+                                                        $.get("http://localhost/bishe/project/My_contro2/check_tools2",{
+
+                                                        },function(res){
+                                                            if(res!=""){
+                                                                var arr = res.split(" ");
+                                                                var msg = ``;
+                                                                for(var i=0;i<arr.length;i++){
+                                                                    msg+= `
+                                                    ${arr[i]}`;
+                                                                    $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                }
+                                                                alert(msg);
+                                                            }
+                                                        },"text");
+                                                        $("#btn-yes2").on("click",function(){
+                                                            var arr = [],tools = "";
+                                                            $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                arr.push($(this).val());
+                                                            });
+                                                            tools = arr.join(",");
+                                                            var date = $("#date").val();
+                                                            var time = $("#time").val();
+                                                            var arr1 = date.split("-");
+                                                            var arr2 = time.split(":");
+                                                            if(date!=""&&time!=""){
+                                                                $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
+                                                                    arr:arr,
+                                                                    tools:tools,
+                                                                    id:id
+                                                                },function(res){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                        id:id,
+                                                                        arr1:arr1,
+                                                                        arr2:arr2
+                                                                    },function(res){
+                                                                        alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                        window.location = "My_contro2/my_field";
+                                                                    },"text");
+                                                                },"text")
+                                                            }else {
+                                                                alert("您还没有选好时间，请选择时间");
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            });
+                                            if(arr[0]==0&&arr[1]==0){
+                                                if(arr[2]!=0){
+                                                    alert("现在作物未成熟，不能收获");
+                                                    $("#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                    $("#field_img_2").unbind("click")
+                                                }else {
+                                                    alert("现在作物未成熟，不能收获");
+                                                    alert("您的照料地块活动次数已用完");
+                                                    $("#field_btn_1,#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                    $("#field_img_1,#field_img_2").unbind("click")
+                                                }
+                                            }else if(arr[0]==1&&arr[1]==0){
+                                                if(arr[2]!=0){
+                                                    alert("作物可以收获了");
+                                                }else {
+                                                    alert("作物可以收获了");
+                                                    alert("您的照料地块活动次数已用完");
+                                                    $("#field_btn_1").attr("disabled", "disabled").css({"background-color":"#999"});
+                                                    $("#field_img_1").unbind("click")
+                                                }
+                                            }else if(arr[0]==0&&arr[1]==1) {
+                                                if (arr[2] != 0) {
+                                                    alert("作物已经收获了");
+                                                    $("#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                    $("#field_img_2").unbind("click")
+                                                } else {
+                                                    alert("作物已经收获了");
+                                                    alert("您的照料地块活动次数已用完");
+                                                    $("#field_btn_1,#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                    $("#field_img_1,#field_img_2").unbind("click")
+                                                }
+                                            }else {
+                                                if (arr[2] != 0) {
+
+                                                } else {
+                                                    alert("您的照料地块活动次数已用完");
+                                                    $("#field_btn_1").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                    $("#field_img_1").unbind("click")
+                                                }
+                                            }
+                                        }
+                                    )
+                                })
+                            });
+                        },"text");
+                    });
+                    $("#changePages button").eq(0).on("click",function(){
+                        var index = parseInt($("option[selected='selected']").val());
+                        if(index!=0){
+                            $("option").eq(index-1).attr("selected","selected").siblings().removeAttr("selected");
+                            $("#field-info").html("");
+                            $.get("http://localhost/bishe/project/My_contro2/my_field_info",{
+                                user_id:user_id,
+                                pages:(index-1)*10
+                            }, function(res) {
+                                var arr = res.split(" ");
+                                var cont = `<tr>
+                                <th>地块号</th>
+                                <th>种植作物</th>
+                                <th>是否播种</th>
+                                <th>灌溉次数</th>
+                                <th>施肥次数</th>
+                                <th>除草次数</th>
+                                <th>可否收获</th>
+                                <th>是否已收获</th>
+                                <th>地块活动</th>
+                                </tr>`;
+                                for (var i = 0; i < arr.length - 1; i += 9) {
+                                    cont += `<tr>`;
+                                    if (arr[i] > 3) {
+                                        arr[i] -= 3
+                                    }
+                                    cont += (`<td>${arr[i]}</td>`);
+                                    cont += (`<td>${arr[i + 1]}</td>`);
+                                    if (arr[i + 2] == 0) {
+                                        arr[i + 2] = "未播种"
+                                    } else {
+                                        arr[i + 2] = "已播种"
+                                    }
+                                    cont += (`<td>${arr[i + 2]}</td>`);
+                                    cont += (`<td>${arr[i + 3]}</td>`);
+                                    cont += (`<td>${arr[i + 4]}</td>`);
+                                    cont += (`<td>${arr[i + 5]}</td>`);
+                                    if (arr[i + 6] == 0) {
+                                        arr[i + 6] = "不可收获"
+                                    } else {
+                                        arr[i + 6] = "可收获"
+                                    }
+                                    cont += (`<td>${arr[i + 6]}</td>`);
+                                    if (arr[i + 7] == 0) {
+                                        arr[i + 7] = "未收获"
+                                    } else {
+                                        arr[i + 7] = "已收获"
+                                    }
+                                    cont += (`<td>${arr[i + 7]}</td>`);
+                                    cont += (`<td><button id="${arr[i + 8]}" style="background-color:#a0d034;color:#fff">地块活动选择</button></td>`);
+                                    cont += `</tr>`;
+                                }
+                                $("#field-info").html(cont);
+                                $("#field-info th").css({
+                                    "border": "1px solid #a0d034",
+                                    "width": "6rem",
+                                    "height": "2rem"
+                                });
+                                $("#field-info td").css({
+                                    "border": "1px solid #a0d034",
+                                    "width": "6rem",
+                                    "height": "2rem"
+                                });
+                                $("#field-info button").each(function(){
+                                    $(this).on("click",function(){
+                                        var id = $(this).attr("id");
+                                        var arr;
+                                        $.get("http://localhost/bishe/project/My_contro2/my_field_info2",{
+                                            id:id
+                                        }, function(res) {
+                                            arr = res.split("");
+                                            $("#field-info").hide();
+                                            $("#changePages").hide();
+                                            $("#field").css("height","300px");
+                                            $("#field").append(
+                                                `<div style="margin: 0 auto;text-align: center">
+                                               <img id="field_img_1" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/work.png">
+                                               <img id="field_img_2" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
+                                           </div>
+                                           <div style="margin: 20px auto;text-align:center">
+                                               <input id="field_btn_1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
+                                               <input id="field_btn_2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
+                                               <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                           </div>`
+                                            );
+                                            $("#back").on("click",function(){
+                                                window.location.reload();
+                                            })
+                                        },"text").then(
+                                            function(){
+                                                $("#field_img_1,#field_btn_1").on("click",function(){
+                                                    $("#field").css("height","auto");
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                        id:id
+                                                    },function(res){
+                                                        if(parseInt(res)==1){
+                                                            $("#field div").hide();
+                                                            $("#field").append(`
+                                                 <div style="margin: 0 35%;text-align: center">
+                                                      <div style="text-align: left">
+                                                          <label for="manure"><img style="width: 10rem;height: 10rem" src="images/manure.jpg"></label>
+                                                          <label for="hoe"><img style="width: 10rem;height: 10rem" src="images/hoe.jpg"></label>
+                                                          <br>
+                                                          <label for="manure">有机肥(5kg)</label>
+                                                          <input type="checkbox" id="manure" value="manure" style="margin-right: 3.5rem"/>
+                                                          <label for="hoe">锄头</label>
+                                                          <input type="checkbox" id="hoe" value="hoe" />
+                                                      </div>
+                                                      <div style="text-align: left">
+                                                          <label for="shovel"><img style="width: 10rem;height: 10rem" src="images/shovel.jpg"></label>
+                                                          <label for="bucket"><img style="width: 10rem;height: 10rem" src="images/bucket.jpg"></label>
+                                                          <br>
+                                                          <label for="shovel">铲子</label>
+                                                          <input type="checkbox" id="shovel" value="shovel" style="margin-right: 7rem"/>
+                                                          <label for="bucket">水桶</label>
+                                                          <input type="checkbox" id="bucket" value="bucket" />
+                                                      </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                      <input id="btn-yes1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back1" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                 <div>
+                                                        `);
+                                                            //前后若干天可选，这里以30天为例
+                                                            laydate.render({
+                                                                elem: '#date'
+                                                                ,min: 1
+                                                                ,max: 30
+                                                            });
+                                                            //限定可选时间
+                                                            laydate.render({
+                                                                elem: '#time'
+                                                                ,type: 'time'
+                                                                ,min: '08:30:00'
+                                                                ,max: '18:30:00'
+                                                                ,btns: ['clear', 'confirm']
+                                                            });
+                                                            $("#btn-back1").on("click",function(){
+                                                                window.location.reload();
+                                                            });
+                                                            $.get("http://localhost/bishe/project/My_contro2/check_tools1",{
+
+                                                            },function(res){
+                                                                if(res!=""){
+                                                                    var arr = res.split(" ");
+                                                                    var msg = ``;
+                                                                    for(var i=0;i<arr.length;i++){
+                                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                    }
+                                                                    alert(msg);
+                                                                }
+                                                            },"text");
+                                                            $("#btn-yes1").on("click",function(){
+                                                                var arr = [],tools = "";
+                                                                $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                    arr.push($(this).val());
+                                                                });
+                                                                tools = arr.join(",");
+                                                                var date = $("#date").val();
+                                                                var time = $("#time").val();
+                                                                var arr1 = date.split("-");
+                                                                var arr2 = time.split(":");
+                                                                if(date!=""&&time!=""){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
+                                                                        arr:arr,
+                                                                        tools:tools,
+                                                                        id:id
+                                                                    },function(res){
+                                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                            id:id,
+                                                                            arr1:arr1,
+                                                                            arr2:arr2
+                                                                        },function(res){
+                                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                            window.location = "My_contro2/my_field";
+                                                                        },"text");
+                                                                    },"text")
+                                                                }else {
+                                                                    alert("您还没有选好时间，请选择时间");
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                });
+                                                $("#field_img_2,#field_btn_2").on("click",function(){
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                        id:id
+                                                    },function(res){
+                                                        if(parseInt(res)==1){
+                                                            $("#field div").hide();
+                                                            $("#field").append(`
+                                                 <div style="margin: 0 35%;text-align: center">
+                                                      <div style="text-align: left">
+                                                          <label for="basket"><img style="width: 10rem;height: 10rem" src="images/basket.jpg"></label>
+                                                          <label for="gloves"><img style="width: 10rem;height: 10rem" src="images/gloves.jpg"></label>
+                                                          <br>
+                                                          <label for="basket">篮子</label>
+                                                          <input type="checkbox" id="basket" value="basket" style="margin-right: 7rem"/>
+                                                          <label for="gloves">手套</label>
+                                                          <input type="checkbox" id="gloves" value="gloves" />
+                                                      </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                      <input id="btn-yes2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back2" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                 <div>
+                                                         `);
+                                                            //前后若干天可选，这里以30天为例
+                                                            laydate.render({
+                                                                elem: '#date'
+                                                                ,min: 1
+                                                                ,max: 30
+                                                            });
+                                                            //限定可选时间
+                                                            laydate.render({
+                                                                elem: '#time'
+                                                                ,type: 'time'
+                                                                ,min: '08:30:00'
+                                                                ,max: '18:30:00'
+                                                                ,btns: ['clear', 'confirm']
+                                                            });
+                                                            $("#btn-back2").on("click",function(){
+                                                                window.location.reload();
+                                                            });
+                                                            $.get("http://localhost/bishe/project/My_contro2/check_tools2",{
+
+                                                            },function(res){
+                                                                if(res!=""){
+                                                                    var arr = res.split(" ");
+                                                                    var msg = ``;
+                                                                    for(var i=0;i<arr.length;i++){
+                                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                    }
+                                                                    alert(msg);
+                                                                }
+                                                            },"text");
+                                                            $("#btn-yes2").on("click",function(){
+                                                                var arr = [],tools = "";
+                                                                $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                    arr.push($(this).val());
+                                                                });
+                                                                tools = arr.join(",");
+                                                                var date = $("#date").val();
+                                                                var time = $("#time").val();
+                                                                var arr1 = date.split("-");
+                                                                var arr2 = time.split(":");
+                                                                if(date!=""&&time!=""){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
+                                                                        arr:arr,
+                                                                        tools:tools,
+                                                                        id:id
+                                                                    },function(res){
+                                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                            id:id,
+                                                                            arr1:arr1,
+                                                                            arr2:arr2
+                                                                        },function(res){
+                                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                            window.location = "My_contro2/my_field";
+                                                                        },"text");
+                                                                    },"text")
+                                                                }else {
+                                                                    alert("您还没有选好时间，请选择时间");
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                });
+                                                if(arr[0]==0&&arr[1]==0){
+                                                    if(arr[2]!=0){
+                                                        alert("现在作物未成熟，不能收获");
+                                                        $("#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                        $("#field_img_2").unbind("click")
+                                                    }else {
+                                                        alert("现在作物未成熟，不能收获");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1,#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                        $("#field_img_1,#field_img_2").unbind("click")
+                                                    }
+                                                }else if(arr[0]==1&&arr[1]==0){
+                                                    if(arr[2]!=0){
+                                                        alert("作物可以收获了");
+                                                    }else {
+                                                        alert("作物可以收获了");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1").attr("disabled", "disabled").css({"background-color":"#999"});
+                                                        $("#field_img_1").unbind("click")
+                                                    }
+                                                }else if(arr[0]==0&&arr[1]==1) {
+                                                    if (arr[2] != 0) {
+                                                        alert("作物已经收获了");
+                                                        $("#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_2").unbind("click")
+                                                    } else {
+                                                        alert("作物已经收获了");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1,#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_1,#field_img_2").unbind("click")
+                                                    }
+                                                }else {
+                                                    if (arr[2] != 0) {
+
+                                                    } else {
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_1").unbind("click")
+                                                    }
+                                                }
+                                            }
+                                        )
+                                    })
+                                });
+                            },"text");
+                        }
+                    });
+                    $("#changePages button").eq(1).on("click",function(){
+                        var index = parseInt($("option[selected='selected']").val());
+                        if(index!=parseInt(res)-1){
+                            $("option").eq(index+1).attr("selected","selected").siblings().removeAttr("selected");
+                            $("#field-info").html("");
+                            $.get("http://localhost/bishe/project/My_contro2/my_field_info",{
+                                user_id:user_id,
+                                pages:(index+1)*10
+                            }, function(res) {
+                                var arr = res.split(" ");
+                                var cont = `<tr>
+                                <th>地块号</th>
+                                <th>种植作物</th>
+                                <th>是否播种</th>
+                                <th>灌溉次数</th>
+                                <th>施肥次数</th>
+                                <th>除草次数</th>
+                                <th>可否收获</th>
+                                <th>是否已收获</th>
+                                <th>地块活动</th>
+                                </tr>`;
+                                for (var i = 0; i < arr.length - 1; i += 9) {
+                                    cont += `<tr>`;
+                                    if (arr[i] > 3) {
+                                        arr[i] -= 3
+                                    }
+                                    cont += (`<td>${arr[i]}</td>`);
+                                    cont += (`<td>${arr[i + 1]}</td>`);
+                                    if (arr[i + 2] == 0) {
+                                        arr[i + 2] = "未播种"
+                                    } else {
+                                        arr[i + 2] = "已播种"
+                                    }
+                                    cont += (`<td>${arr[i + 2]}</td>`);
+                                    cont += (`<td>${arr[i + 3]}</td>`);
+                                    cont += (`<td>${arr[i + 4]}</td>`);
+                                    cont += (`<td>${arr[i + 5]}</td>`);
+                                    if (arr[i + 6] == 0) {
+                                        arr[i + 6] = "不可收获"
+                                    } else {
+                                        arr[i + 6] = "可收获"
+                                    }
+                                    cont += (`<td>${arr[i + 6]}</td>`);
+                                    if (arr[i + 7] == 0) {
+                                        arr[i + 7] = "未收获"
+                                    } else {
+                                        arr[i + 7] = "已收获"
+                                    }
+                                    cont += (`<td>${arr[i + 7]}</td>`);
+                                    cont += (`<td><button id="${arr[i + 8]}" style="background-color:#a0d034;color:#fff">地块活动选择</button></td>`);
+                                    cont += `</tr>`;
+                                }
+                                $("#field-info").html(cont);
+                                $("#field-info th").css({
+                                    "border": "1px solid #a0d034",
+                                    "width": "6rem",
+                                    "height": "2rem"
+                                });
+                                $("#field-info td").css({
+                                    "border": "1px solid #a0d034",
+                                    "width": "6rem",
+                                    "height": "2rem"
+                                });
+                                $("#field-info button").each(function(){
+                                    $(this).on("click",function(){
+                                        var id = $(this).attr("id");
+                                        var arr;
+                                        $.get("http://localhost/bishe/project/My_contro2/my_field_info2",{
+                                            id:id
+                                        }, function(res) {
+                                            arr = res.split("");
+                                            $("#field-info").hide();
+                                            $("#changePages").hide();
+                                            $("#field").css("height","300px");
+                                            $("#field").append(
+                                                `<div style="margin: 0 auto;text-align: center">
+                                               <img id="field_img_1" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/work.png">
+                                               <img id="field_img_2" style="display:inline-block;width: 10rem;height: 10rem;border-radius: 50%;cursor: pointer" src="images/harvest.png">
+                                           </div>
+                                           <div style="margin: 20px auto;text-align:center">
+                                               <input id="field_btn_1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="照料地块">
+                                               <input id="field_btn_2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff" value="收获作物">
+                                               <input id="back" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                           </div>`
+                                            );
+                                            $("#back").on("click",function(){
+                                                window.location.reload();
+                                            })
+                                        },"text").then(
+                                            function(){
+                                                $("#field_img_1,#field_btn_1").on("click",function(){
+                                                    $("#field").css("height","auto");
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                        id:id
+                                                    },function(res){
+                                                        if(parseInt(res)==1){
+                                                            $("#field div").hide();
+                                                            $("#field").append(`
+                                                 <div style="margin: 0 35%;text-align: center">
+                                                      <div style="text-align: left">
+                                                          <label for="manure"><img style="width: 10rem;height: 10rem" src="images/manure.jpg"></label>
+                                                          <label for="hoe"><img style="width: 10rem;height: 10rem" src="images/hoe.jpg"></label>
+                                                          <br>
+                                                          <label for="manure">有机肥(5kg)</label>
+                                                          <input type="checkbox" id="manure" value="manure" style="margin-right: 3.5rem"/>
+                                                          <label for="hoe">锄头</label>
+                                                          <input type="checkbox" id="hoe" value="hoe" />
+                                                      </div>
+                                                      <div style="text-align: left">
+                                                          <label for="shovel"><img style="width: 10rem;height: 10rem" src="images/shovel.jpg"></label>
+                                                          <label for="bucket"><img style="width: 10rem;height: 10rem" src="images/bucket.jpg"></label>
+                                                          <br>
+                                                          <label for="shovel">铲子</label>
+                                                          <input type="checkbox" id="shovel" value="shovel" style="margin-right: 7rem"/>
+                                                          <label for="bucket">水桶</label>
+                                                          <input type="checkbox" id="bucket" value="bucket" />
+                                                      </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                      <input id="btn-yes1" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back1" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                 <div>
+                                                        `);
+                                                            //前后若干天可选，这里以30天为例
+                                                            laydate.render({
+                                                                elem: '#date'
+                                                                ,min: 1
+                                                                ,max: 30
+                                                            });
+                                                            //限定可选时间
+                                                            laydate.render({
+                                                                elem: '#time'
+                                                                ,type: 'time'
+                                                                ,min: '08:30:00'
+                                                                ,max: '18:30:00'
+                                                                ,btns: ['clear', 'confirm']
+                                                            });
+                                                            $("#btn-back1").on("click",function(){
+                                                                window.location.reload();
+                                                            });
+                                                            $.get("http://localhost/bishe/project/My_contro2/check_tools1",{
+
+                                                            },function(res){
+                                                                if(res!=""){
+                                                                    var arr = res.split(" ");
+                                                                    var msg = ``;
+                                                                    for(var i=0;i<arr.length;i++){
+                                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                    }
+                                                                    alert(msg);
+                                                                }
+                                                            },"text");
+                                                            $("#btn-yes1").on("click",function(){
+                                                                var arr = [],tools = "";
+                                                                $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                    arr.push($(this).val());
+                                                                });
+                                                                tools = arr.join(",");
+                                                                var date = $("#date").val();
+                                                                var time = $("#time").val();
+                                                                var arr1 = date.split("-");
+                                                                var arr2 = time.split(":");
+                                                                if(date!=""&&time!=""){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools1",{
+                                                                        arr:arr,
+                                                                        tools:tools,
+                                                                        id:id
+                                                                    },function(res){
+                                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                            id:id,
+                                                                            arr1:arr1,
+                                                                            arr2:arr2
+                                                                        },function(res){
+                                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                            window.location = "My_contro2/my_field";
+                                                                        },"text");
+                                                                    },"text")
+                                                                }else {
+                                                                    alert("您还没有选好时间，请选择时间");
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                });
+                                                $("#field_img_2,#field_btn_2").on("click",function(){
+                                                    $.get("http://localhost/bishe/project/My_contro2/field_activity",{
+                                                        id:id
+                                                    },function(res){
+                                                        if(parseInt(res)==1){
+                                                            $("#field div").hide();
+                                                            $("#field").append(`
+                                                 <div style="margin: 0 35%;text-align: center">
+                                                      <div style="text-align: left">
+                                                          <label for="basket"><img style="width: 10rem;height: 10rem" src="images/basket.jpg"></label>
+                                                          <label for="gloves"><img style="width: 10rem;height: 10rem" src="images/gloves.jpg"></label>
+                                                          <br>
+                                                          <label for="basket">篮子</label>
+                                                          <input type="checkbox" id="basket" value="basket" style="margin-right: 7rem"/>
+                                                          <label for="gloves">手套</label>
+                                                          <input type="checkbox" id="gloves" value="gloves" />
+                                                      </div>
+                                                      日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required><br>
+                                                      时间：<input type="text" class="demo-input" placeholder="请选择时间" id="time" required>
+                                                      <input id="btn-yes2" type="button" style="display:inline-block;width: 10rem;height: 3rem;background-color: #a0d034;color: #fff;margin-top: 3rem" value="确定">
+                                                      <input id="btn-back2" type="button" style="margin-left:100%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                                                 <div>
+                                                         `);
+                                                            //前后若干天可选，这里以30天为例
+                                                            laydate.render({
+                                                                elem: '#date'
+                                                                ,min: 1
+                                                                ,max: 30
+                                                            });
+                                                            //限定可选时间
+                                                            laydate.render({
+                                                                elem: '#time'
+                                                                ,type: 'time'
+                                                                ,min: '08:30:00'
+                                                                ,max: '18:30:00'
+                                                                ,btns: ['clear', 'confirm']
+                                                            });
+                                                            $("#btn-back2").on("click",function(){
+                                                                window.location.reload();
+                                                            });
+                                                            $.get("http://localhost/bishe/project/My_contro2/check_tools2",{
+
+                                                            },function(res){
+                                                                if(res!=""){
+                                                                    var arr = res.split(" ");
+                                                                    var msg = ``;
+                                                                    for(var i=0;i<arr.length;i++){
+                                                                        msg+= `
+                                                    ${arr[i]}`;
+                                                                        $("input[type='checkbox']").eq(i).attr("disabled","disabled");
+                                                                    }
+                                                                    alert(msg);
+                                                                }
+                                                            },"text");
+                                                            $("#btn-yes2").on("click",function(){
+                                                                var arr = [],tools = "";
+                                                                $("input[type='checkbox']:checked").each(function (index, item) {
+                                                                    arr.push($(this).val());
+                                                                });
+                                                                tools = arr.join(",");
+                                                                var date = $("#date").val();
+                                                                var time = $("#time").val();
+                                                                var arr1 = date.split("-");
+                                                                var arr2 = time.split(":");
+                                                                if(date!=""&&time!=""){
+                                                                    $.get("http://localhost/bishe/project/My_contro2/field_tools2",{
+                                                                        arr:arr,
+                                                                        tools:tools,
+                                                                        id:id
+                                                                    },function(res){
+                                                                        $.get("http://localhost/bishe/project/My_contro2/field_datetime",{
+                                                                            id:id,
+                                                                            arr1:arr1,
+                                                                            arr2:arr2
+                                                                        },function(res){
+                                                                            alert("您已经选好了工具和时间，祝您活动愉快");
+                                                                            window.location = "My_contro2/my_field";
+                                                                        },"text");
+                                                                    },"text")
+                                                                }else {
+                                                                    alert("您还没有选好时间，请选择时间");
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                });
+                                                if(arr[0]==0&&arr[1]==0){
+                                                    if(arr[2]!=0){
+                                                        alert("现在作物未成熟，不能收获");
+                                                        $("#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                        $("#field_img_2").unbind("click")
+                                                    }else {
+                                                        alert("现在作物未成熟，不能收获");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1,#field_btn_2").attr("disabled","disabled").css({"background-color":"#999"});
+                                                        $("#field_img_1,#field_img_2").unbind("click")
+                                                    }
+                                                }else if(arr[0]==1&&arr[1]==0){
+                                                    if(arr[2]!=0){
+                                                        alert("作物可以收获了");
+                                                    }else {
+                                                        alert("作物可以收获了");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1").attr("disabled", "disabled").css({"background-color":"#999"});
+                                                        $("#field_img_1").unbind("click")
+                                                    }
+                                                }else if(arr[0]==0&&arr[1]==1) {
+                                                    if (arr[2] != 0) {
+                                                        alert("作物已经收获了");
+                                                        $("#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_2").unbind("click")
+                                                    } else {
+                                                        alert("作物已经收获了");
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1,#field_btn_2").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_1,#field_img_2").unbind("click")
+                                                    }
+                                                }else {
+                                                    if (arr[2] != 0) {
+
+                                                    } else {
+                                                        alert("您的照料地块活动次数已用完");
+                                                        $("#field_btn_1").attr("disabled", "disabled").css({"background-color": "#999"});
+                                                        $("#field_img_1").unbind("click")
+                                                    }
+                                                }
+                                            }
+                                        )
+                                    })
+                                });
+                            },"text");
+                        }
+                    })
+                },"text")
+            },"text")
         }
     </script>
     <!-- font-awesome-icons -->
@@ -411,6 +1393,7 @@
                         <table id="field-info" style="margin: 0 auto">
 
                         </table>
+                        <button id="myHarvest" style="margin-left:90%;width:8rem;height:2rem;background-color:#a0d034;color:#fff">查看已有收获</button>
                     </div>
                 </div>
             </section>
@@ -475,7 +1458,103 @@
 </div>
 <!-- //footer -->
 <script>
-
+    $("#myHarvest").on("click",function(){
+        $(this).hide();
+        var user_id = localStorage.key(0);
+        $.get("http://localhost/bishe/project/My_contro2/my_harvest",{
+            user_id:user_id
+        },function(res){
+            var arr = res.split(" ");
+            $("#field-info").html("");
+            $("#changePages").hide();
+            var cont = `<tr>
+                               <th>地块名称</th>
+                               <th>种植作物</th>
+                            </tr>`;
+            for(var i=0;i<arr.length-1;i+=2){
+                cont+=`<tr>`;
+                cont+=(`<td>${arr[i]}</td>`);
+                cont+=(`<td>${arr[i+1]}</td>`);
+                cont+=`</tr>`;
+            }
+            $("#field-info").html(cont);
+            $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+            $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+            $("#field").append(`
+            <button id="myHarvest2" style="margin-left:90%;background-color:#a0d034;color:#fff">申请配送</button>
+            <button id="back" style="margin-left:90%;background-color:#a0d034;color:#fff">返回</button>
+            `);
+            $("#myHarvest2").on("click",function(){
+                $(this).hide();
+                $("#back").hide();
+                $("#field-info").hide();
+                $("#changePages").hide();
+                $("#field").append(`
+                <div id="demo3" class="citys" style="width:70%;margin: 0 auto">
+                                <p>
+                                请选择和输入您的地址
+                                    <select name="province"></select>
+                                    <select name="city"></select>
+                                    <select name="area"></select>
+                                    <select name="town"></select>
+                                    <input type="text" name="address">
+                                </p>
+                                <p>
+                                    <button id="the_yes" style="margin-left:95%;width:3rem;background-color:#a0d034;color:#fff">确定</button>
+                                    <button id="the_back" style="margin-left:95%;width:3rem;background-color:#a0d034;color:#fff">返回</button>
+                                </p>
+                </div>
+                `);
+                var $town = $('#demo3 select[name="town"]');
+                var townFormat = function(info){
+                    $town.hide().empty();
+                    if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
+                        $.ajax({
+                            url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
+                            dataType:'json',
+                            success:function(town){
+                                $town.show();
+                                for(i in town){
+                                    $town.append('<option value="'+i+'">'+town[i]+'</option>');
+                                }
+                            }
+                        });
+                    }
+                };
+                $('#demo3').citys({
+                    province:' ',
+                    city:' ',
+                    area:' ',
+                    onChange:function(info){
+                        townFormat(info);
+                    }
+                },function(api){
+                    var info = api.getInfo();
+                    townFormat(info);
+                });
+                var address = "";
+                $('#demo3 select').on("change",function(){
+                    address = $("option:selected").text();
+                });
+                $("#the_yes").on("click",function(){
+                    address+=$("input[name='address']").val();
+                    $.post("http://localhost/bishe/project/My_contro2/my_harvest2",{
+                        user_id:user_id,
+                        address:address.substr(3)
+                    },function(res){
+                        alert(res.substr(0,4));
+                        window.location.reload();
+                    },"text")
+                });
+                $("#the_back").on("click",function(){
+                    window.location.reload();
+                })
+            });
+            $("#back").on("click",function(){
+                window.location.reload();
+            })
+        },"text")
+    })
 </script>
 <!-- menu -->
 <script>

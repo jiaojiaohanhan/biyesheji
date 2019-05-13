@@ -8,8 +8,8 @@ class Test_model extends CI_Model {
         ini_set("date.timezone","Asia/Shanghai");
     }
     public function get_by_name($name){
-        $query = $this->db->get_where("user",array(
-            "username" => $name,
+        $query = $this->db->get_where("test",array(
+            "name" => $name,
         ));
         return $query->row();
     }
