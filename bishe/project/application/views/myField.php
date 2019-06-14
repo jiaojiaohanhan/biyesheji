@@ -118,6 +118,8 @@
                             arr = res.split("");
                             $("#field-info").hide();
                             $("#changePages").hide();
+                            $("#myHarvest").hide();
+                            $("#myActivity").hide();
                             $("#field").css("height","300px");
                             $("#field").append(
                                 `<div style="margin: 0 auto;text-align: center">
@@ -450,6 +452,8 @@
                                         arr = res.split("");
                                         $("#field-info").hide();
                                         $("#changePages").hide();
+                                        $("#myHarvest").hide();
+                                        $("#myActivity").hide();
                                         $("#field").css("height","300px");
                                         $("#field").append(
                                             `<div style="margin: 0 auto;text-align: center">
@@ -768,6 +772,8 @@
                                             arr = res.split("");
                                             $("#field-info").hide();
                                             $("#changePages").hide();
+                                            $("#myHarvest").hide();
+                                            $("#myActivity").hide();
                                             $("#field").css("height","300px");
                                             $("#field").append(
                                                 `<div style="margin: 0 auto;text-align: center">
@@ -1087,6 +1093,8 @@
                                             arr = res.split("");
                                             $("#field-info").hide();
                                             $("#changePages").hide();
+                                            $("#myHarvest").hide();
+                                            $("#myActivity").hide();
                                             $("#field").css("height","300px");
                                             $("#field").append(
                                                 `<div style="margin: 0 auto;text-align: center">
@@ -1393,6 +1401,7 @@
                         <table id="field-info" style="margin: 0 auto">
 
                         </table>
+                        <button id="myActivity" style="margin-left:90%;width:8rem;height:2rem;background-color:#a0d034;color:#fff;margin-bottom:10px">查看已选活动</button>
                         <button id="myHarvest" style="margin-left:90%;width:8rem;height:2rem;background-color:#a0d034;color:#fff">查看已有收获</button>
                     </div>
                 </div>
@@ -1458,8 +1467,44 @@
 </div>
 <!-- //footer -->
 <script>
+    $("#myActivity").on("click",function() {
+        $(this).hide();
+        $("#myHarvest").hide();
+        var user_id = localStorage.key(0);
+        $.get("http://localhost/bishe/project/My_contro2/my_activity", {
+            user_id: user_id
+        }, function (res) {
+            var arr = res.split("_");
+            $("#field-info").html("");
+            $("#changePages").hide();
+            var cont = `<tr>
+                               <th>地块名称</th>
+                               <th>已选工具</th>
+                               <th>开始时间</th>
+                               <th>结束时间</th>
+                            </tr>`;
+            for(var i=0;i<arr.length-1;i+=4){
+                cont+=`<tr>`;
+                cont+=(`<td>${arr[i]}</td>`);
+                cont+=(`<td>${arr[i+1]}</td>`);
+                cont+=(`<td>${arr[i+2]}</td>`);
+                cont+=(`<td>${arr[i+3]}</td>`);
+                cont+=`</tr>`;
+            }
+            $("#field-info").html(cont);
+            $("#field-info th").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+            $("#field-info td").css({"border":"1px solid #a0d034","width":"6rem","height":"2rem"});
+            $("#field").append(`
+                    <button id="back" style="margin-left:90%;background-color:#a0d034;color:#fff">返回</button>
+                `);
+            $("#back").on("click",function(){
+                window.location.reload();
+            })
+        }, "text")
+    });
     $("#myHarvest").on("click",function(){
         $(this).hide();
+        $("#myActivity").hide();
         var user_id = localStorage.key(0);
         $.get("http://localhost/bishe/project/My_contro2/my_harvest",{
             user_id:user_id
@@ -1469,7 +1514,7 @@
             $("#changePages").hide();
             var cont = `<tr>
                                <th>地块名称</th>
-                               <th>种植作物</th>
+                               <th>已收获作物</th>
                             </tr>`;
             for(var i=0;i<arr.length-1;i+=2){
                 cont+=`<tr>`;
@@ -1554,7 +1599,7 @@
                 window.location.reload();
             })
         },"text")
-    })
+    });
 </script>
 <!-- menu -->
 <script>

@@ -31,15 +31,19 @@ class My_contro4 extends CI_Controller {
         $field_id = $this->input->get("field_id");
         $rows = $this->field_model->the_field_info1($field_id);
         foreach($rows as $row){
-            echo $row->user_id." ";
-            echo $row->plant_name." ";
-            echo $row->seeding." ";
-            echo $row->watering." ";
-            echo $row->manure." ";
-            echo $row->weeding." ";
-            echo $row->can_harvest." ";
-            echo $row->harvest." ";
-            echo $row->id." ";
+            echo $row->user_id."_";
+            echo $row->plant_name."_";
+            echo $row->type."_";
+            echo $row->seeding."_";
+            echo $row->watering."_";
+            echo $row->manure."_";
+            echo $row->weeding."_";
+            echo $row->can_harvest."_";
+            echo $row->harvest."_";
+            echo $row->tools."_";
+            echo $row->start_time."_";
+            echo $row->end_time."_";
+            echo $row->id."_";
         }
     }
     public function the_field_info2(){
@@ -61,8 +65,8 @@ class My_contro4 extends CI_Controller {
         foreach($rows as $row){
             echo $row->user_id."_";
             echo $row->tools."_";
-            echo $row->datetime2."_";
-            echo $row->datetime."_";
+            echo $row->start_time."_";
+            echo $row->end_time."_";
 //            echo $row->id." ";
         }
     }
@@ -85,7 +89,7 @@ class My_contro4 extends CI_Controller {
     public function field_action4(){
         $id = $this->input->get("id");
         $row = $this->field_model->field_action4($id);
-        echo $row;
+        print_r($row);
     }
     public function field_action5(){
         $id = $this->input->get("id");
@@ -102,7 +106,7 @@ class My_contro4 extends CI_Controller {
         foreach($rows as $row){
             $field_id = $row->field_id;
             $row2 = $this->manager_model->the_field($field_id);
-            echo $row2->name." ";
+            echo $row2->field_name." ";
             $user_id = $row->user_id;
             $row3 = $this->manager_model->the_user($user_id);
             echo $row3->username." ";
@@ -175,7 +179,7 @@ class My_contro4 extends CI_Controller {
     public function keys(){
         $rows = $this->manager_model->all_keys();
         foreach($rows as $row){
-            echo $row->name." ";
+            echo $row->field_name." ";
             echo $row->keys." ";
             echo $row->id." ";
         }
@@ -190,15 +194,10 @@ class My_contro4 extends CI_Controller {
     }
     //农资工具管理
     public function tools(){
-        $row = $this->manager_model->all_tools();
-        echo $row->manure." ";
-        echo $row->hoe." ";
-        echo $row->shovel." ";
-        echo $row->bucket." ";
-        echo $row->basket." ";
-        echo $row->gloves." ";
-        echo $row->barbecue." ";
-        echo $row->charcoal;
+        $rows = $this->manager_model->all_tools();
+        foreach($rows as $row){
+            echo $row->number." ";
+        }
     }
     public function tool_add(){
         $name = $this->input->get("name");
@@ -239,12 +238,22 @@ class My_contro4 extends CI_Controller {
             $this->manager_model->plant_change($arr2);
         }
     }
+    public function check_plant(){
+        $name = $this->input->get("name");
+        $row = $this->manager_model->check_plant($name);
+        if($row){
+            echo "fail";
+        }else{
+            echo "success";
+        }
+    }
     public function new_plant(){
         $name = $this->input->post("name");
         $seed_price = $this->input->post("seed_price");
         $work_price = $this->input->post("work_price");
         $english = $this->input->post("english");
-        $row = $this->manager_model->new_plant($name,$seed_price,$work_price,$english);
+        $days = $this->input->post("days");
+        $row = $this->manager_model->new_plant($name,$seed_price,$work_price,$english,$days);
         if($row==1){
             echo "添加成功";
         }else{
@@ -263,11 +272,17 @@ class My_contro4 extends CI_Controller {
     }
     public function harvest_delete(){
         $id = $this->input->get("id");
+        $row2 = $this->manager_model->the_harvest($id);
         $row = $this->manager_model->harvest_delete($id);
         if($row==1){
-            echo "删除成功";
+            $user_id = $row2->user_id;
+            $phone = $this->manager_model->the_user($user_id)->phone;
+            $plant = $row2->name;
+            $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
+            $client->send($phone,"您的".$plant."已经发送");
+            echo "发送成功";
         }else{
-            echo "删除失败";
+            echo "发送失败";
         }
     }
     //流量统计

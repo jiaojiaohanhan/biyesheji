@@ -720,7 +720,7 @@
                                 <th>木炭数量</th>
                             </tr>`;
                     cont+=`<tr>`;
-                    for(var i=0;i<arr.length;i++){
+                    for(var i=0;i<arr.length-1;i++){
                         cont+=(`<td>可直接在下面输入新值<input size="18" value="${arr[i]}"></td>`);
                     }
                     cont+=`</tr>`;
@@ -1028,7 +1028,12 @@
                                             <span>
                                                     <i>英文名称</i>
                                                     <input type="text" name="English" placeholder=" " required="">
-                                                    <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25"></span>
+                                                    <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25">作物英文名称</span>
+                                            </span>
+                                            <span>
+                                                    <i>作物生长周期</i>
+                                                    <input type="text" name="Days" placeholder=" " required="">
+                                                    <span id="alert5" style="font-size: 12px;float: right;color: #a4dd25">作物生长周期</span>
                                             </span>
                                             <br>
                                             <div class="w3_submit">
@@ -1039,17 +1044,36 @@
                                     <input id="the_back" type="button" style="margin-left:100%;width:6rem;background-color:#a0d034;color:#fff" value="返回">
                                 </div>
                         `);
-                        var $flag1 = false,$flag2 = false,$flag3 = false;
+                        var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$flag5 = false;
+                        $("[name='Name']").on('input propertychange',function () {
+                            var $name = $(this).val();
+                            $.get("http://localhost/bishe/project/My_contro4/check_plant",{
+                                name:$name
+                            },function(res){
+                                if(res=="success"){
+                                    $("#alert2").text("");
+                                    $flag1 = true;
+                                }else {
+                                    $("#alert2").text("请输入数字").css("color","red");
+                                    $flag1 = false;
+                                }
+                            },"text");
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+                                $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
                         $("[name='Price']").on('input propertychange',function () {
                             var $pri = $(this).val();
                             if(!(/^[+]{0,1}(\d+)$/.test($pri))){
                                 $("#alert2").text("请输入数字").css("color","red");
-                                $flag1 = false;
+                                $flag2 = false;
                             }else {
                                 $("#alert2").text("");
-                                $flag1 = true;
+                                $flag2 = true;
                             }
-                            if($flag1==true&&$flag2==true&&$flag3==true){
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
                                 $("[name='submit1']").removeAttr("disabled")
                             }else {
                                 $("[name='submit1']").attr("disabled","disabled")
@@ -1059,12 +1083,12 @@
                             var $pri2 = $(this).val();
                             if(!(/^[+]{0,1}(\d+)$/.test($pri2))){
                                     $("#alert3").text("请输入数字").css("color","red");
-                                    $flag2 = false;
+                                    $flag3 = false;
                             }else {
                                     $("#alert3").text("");
-                                    $flag2 = true;
+                                    $flag3 = true;
                             }
-                            if($flag1==true&&$flag2==true&&$flag3==true){
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
                                     $("[name='submit1']").removeAttr("disabled")
                             }else {
                                     $("[name='submit1']").attr("disabled","disabled")
@@ -1074,12 +1098,27 @@
                             var $eng = $(this).val();
                             if(!(/^[A-Za-z]+$/.test($eng))){
                                 $("#alert4").text("英文名称有误，请重填").css("color","red");
-                                $flag3 = false;
+                                $flag4 = false;
                             }else {
                                 $("#alert4").text("");
-                                $flag3 = true;
+                                $flag4 = true;
                             }
-                            if($flag1==true&&$flag2==true&&$flag3==true){
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
+                                $("[name='submit1']").removeAttr("disabled")
+                            }else {
+                                $("[name='submit1']").attr("disabled","disabled")
+                            }
+                        });
+                        $("[name='Days']").on('input propertychange',function () {
+                            var $day = $(this).val();
+                            if(!(/^[+]{0,1}(\d+)$/.test($day))){
+                                $("#alert5").text("请输入数字").css("color","red");
+                                $flag5 = false;
+                            }else {
+                                $("#alert5").text("");
+                                $flag5 = true;
+                            }
+                            if($flag1==true&&$flag2==true&&$flag3==true&&$flag4==true&&$flag5==true){
                                 $("[name='submit1']").removeAttr("disabled")
                             }else {
                                 $("[name='submit1']").attr("disabled","disabled")
@@ -1090,7 +1129,8 @@
                                 name:$("[name='Name']").val(),
                                 seed_price:parseInt($("[name='Price']").val()),
                                 work_price:parseInt($("[name='Price2']").val()),
-                                english:$("[name='English']").val()
+                                english:$("[name='English']").val(),
+                                days:parseInt($("[name='Days']").val())
                             },function(res){
                                 alert(res);
                                 window.location.reload();
@@ -1151,7 +1191,7 @@
                         cont+=(`<td>${arr[i+1]}</td>`);
                         cont+=(`<td>${arr[i+2]}</td>`);
                         cont+=(`<td>${arr[i+3]}</td>`);
-                        cont+=(`<td><button id="${arr[i+4]}" style="background-color:#f00;color:#fff">删除</button></td>`);
+                        cont+=(`<td><button id="${arr[i+4]}" style="background-color:#a0d034;color:#fff">已发送</button></td>`);
                         cont+=`</tr>`;
                     }
                     $("#field").append(`
@@ -1296,7 +1336,7 @@
 <!-- contact -->
 <div class="welcome">
     <div class="container">
-        <h3 class="agileits_w3layouts_head"><span>业务总管理</span></h3>
+        <h3 class="agileits_w3layouts_head"><span>业务综合管理</span></h3>
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>

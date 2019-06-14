@@ -104,18 +104,18 @@
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>
-        <p class="agile_para">请 填 写 有 关 您 的 信 息</p>
+        <p class="agile_para">请 填 写 您 的 有 关 信 息</p>
         <div class="w3ls_news_grids user_form" >
             <div class="col-md-8 w3_agile_mail_left">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
                     <form action="http://localhost/bishe/project/My_contro/login_phone" method="post">
                         <span>
 								<i>手机号</i>
-								<input type="text" name="Phone" placeholder=" " required="">
+								<input type="text" name="Phone" placeholder=" " required="" autocomplete="off">
 							</span>
                         <span>
 								<i>密码</i>
-								<input type="password" name="Password" placeholder=" " required="">
+								<input type="password" name="Password" placeholder=" " required="" autocomplete="off">
 							</span>
                         <div class="w3_submit">
                             <input type="submit" value="现 在 登 录">
@@ -125,7 +125,7 @@
                     <form action="http://localhost/bishe/project/My_contro/login_wechat" method="post">
                         <span>
                                     <i>微信号</i>
-                                    <input type="text" name="Wechat" placeholder=" " required="">
+                                    <input type="text" name="Wechat" placeholder=" " required="" autocomplete="off">
                                 </span>
                         <span>
                                     <i>密码</i>

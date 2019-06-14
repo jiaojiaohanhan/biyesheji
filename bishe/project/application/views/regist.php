@@ -94,14 +94,14 @@
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>
-        <p class="agile_para">请 填 写 有 关 您 的 信 息</p>
+        <p class="agile_para">请 填 写 您 的 有 关 信 息</p>
         <div class="w3ls_news_grids user_form">
             <div class="col-md-8 w3_agile_mail_left">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
                     <form action="http://localhost/bishe/project/My_contro/regist" method="post" enctype="multipart/form-data">
                         <span>
 								<i>姓名</i>
-								<input type="text" name="Name" placeholder=" " required="">
+								<input type="text" name="Name" placeholder=" " required="" autocomplete="off">
 							</span>
                         <span>
 								<i>头像</i>
@@ -111,28 +111,28 @@
 							</span>
                         <span>
 								<i>微信号</i>
-								<input type="text" name="Wechat" placeholder=" " required="">
+								<input type="text" name="Wechat" placeholder=" " required="" autocomplete="off">
                                 <span id="alert5" style="font-size: 12px;float: right;color: #a4dd25">您的微信号</span>
 							</span>
                         <span>
 								<i>手机号</i>
-								<input type="text" name="Phone" placeholder=" " required="">
+								<input type="text" name="Phone" placeholder=" " required="" autocomplete="off">
                                 <span id="alert1" style="font-size: 12px;float: right;color: #a4dd25">11位的手机号码</span>
 							</span>
                         <span>
 								<i>验证码</i>
-								<input type="text" name="Verify" placeholder=" " required="">
+								<input type="text" name="Verify" placeholder=" " required="" autocomplete="off">
                                 <span style="font-size: 12px;float: right;"><button id="getNum" style="background-color: #a4dd25;color: #fff">获取验证码</button></span>
                                 <span id="alert4" style="font-size: 12px;float: right;color: #a4dd25"></span>
 							</span>
                         <span>
 								<i>密码</i>
-								<input type="password" name="Password" placeholder=" " required="">
+								<input type="password" name="Password" placeholder=" " required="" autocomplete="off">
                                 <span id="alert2" style="font-size: 12px;float: right;color: #a4dd25">最小6位，最大16位</span>
 							</span>
                         <span>
 								<i>确认密码</i>
-								<input type="password" name="Re_password" placeholder=" " required="">
+								<input type="password" name="Re_password" placeholder=" " required="" autocomplete="off">
                                 <span id="alert3" style="font-size: 12px;float: right;color: #a4dd25"></span>
 							</span>
                         <br>
@@ -227,7 +227,7 @@
     }
 </script>
 <script>
-    var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$flag5 = false,$flag6 = true;
+    var $flag1 = false,$flag2 = false,$flag3 = false,$flag4 = false,$flag5 = false,$flag6 = false;
     $("[name='Phone']").on('input propertychange',function () {
         var $phone = $(this).val();
         if(!(/^1[34578]\d{9}$/.test($phone))){
@@ -324,7 +324,7 @@
                 alert("请输入正确手机号");
             }else{
                 // 2.4 进行截取字符，最终拿到发给用户的验证码
-                var tpl_value = decodeURIComponent(tpl_val);;
+                var tpl_value = decodeURIComponent(tpl_val);
                 var chenkNum = tpl_value.slice(7);
 //                console.log(chenkNum); // 这个就是发给用户的验证码
                 // 2.4.1 调用发送短信验证码的接口

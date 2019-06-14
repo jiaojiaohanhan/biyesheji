@@ -21,11 +21,11 @@ class My_contro5 extends CI_Controller{
         $phone = $manager->phone;
         $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
         if(date("m")<=3&&date("m")>=1){
-            $client->send($phone, "本月是春季，适合草莓、橘子、石榴、柠檬、猕猴桃、苹果、菠菜、黄瓜、番茄、茄子等的播种或接种");
+            $client->send($phone, "本月是春季，适合草莓、橘子、柠檬、菠菜、黄瓜、番茄、茄子等的播种");
         }else if(date("m")<=6&&date("m")>=4){
-            $client->send($phone, "本月是夏季，适合黄瓜、豌豆等的播种或接种");
+            $client->send($phone, "本月是夏季，适合黄瓜、豌豆等的播种");
         }else if(date("m")<=9&&date("m")>=7){
-            $client->send($phone, "本月是秋季，适合番茄、黄瓜、菠菜、白菜等的播种或接种");
+            $client->send($phone, "本月是秋季，适合番茄、黄瓜、菠菜、白菜等的播种");
         }
     }
     public function do_plant_seeding(){
@@ -187,7 +187,7 @@ class My_contro5 extends CI_Controller{
         }
     }
     public function do_flow_date(){
-        sleep(600);//以秒计数
+        sleep(10);//以秒计数
         self::flow_date();
     }
     public function action7()

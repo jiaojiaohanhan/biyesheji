@@ -8,14 +8,14 @@ class User_model extends CI_Model {
         ini_set("date.timezone","Asia/Shanghai");
     }
     public function user_save($name,$wechat,$phone,$password,$img_name){
-        $query = $this->db->insert("user",array(
+        $this->db->insert("user",array(
             "username" => $name,
             "password" => $password,
             "wechat" => $wechat,
             "phone" => $phone,
             "image" => $img_name
         ));
-//        return $query->row();
+        return $this->db->affected_rows();
     }
     public function user_phone($phone,$password,$token){
         $query = $this->db->get_where("user",array(
@@ -74,7 +74,7 @@ class User_model extends CI_Model {
         return $this->db->get_where("user",array("id" => $id))->row();
     }
     public function user_email($name,$email){
-        $this->db->insert("user2",array(
+        $this->db->insert("user_subscribe",array(
             "name" => $name,
             "email" => $email,
         ));

@@ -8,17 +8,17 @@ class Time_model extends CI_Model {
         ini_set("date.timezone","Asia/Shanghai");
     }
     public function change_field(){
-        $rows = $this->db->get_where("user_field",array(
+        $rows = $this->db->get_where("user_field1",array(
             "can_harvest" => 0,
             "harvest" => 1
         ))->result();
         $this->db->where(array(
             "can_harvest" => 0,
             "harvest" => 1
-        ))->delete("user_field");
+        ))->delete("user_field1");
         foreach($rows as $row){
             $field_id = $row->field_id;
-            $this->db->limit(1)->update("user_field",array(
+            $this->db->limit(1)->update("user_field1",array(
                 "type" => 0
             ),array(
                 "field_id" => $field_id,
@@ -26,8 +26,8 @@ class Time_model extends CI_Model {
             ));
             $num = $this->db->where(array(
                 "field_id" => $field_id,
-            ))->count_all_results("user_field");
-            $sum = $this->db->get_where("user_field",array(
+            ))->count_all_results("user_field1");
+            $sum = $this->db->get_where("user_field1",array(
                 "field_id" => $field_id,
             ))->row()->sum;
             if($num<$sum){
@@ -40,23 +40,23 @@ class Time_model extends CI_Model {
         }
     }
     public function get_plant(){
-        return $this->db->get_where("user_field",array(
+        return $this->db->get_where("user_field1",array(
             "type" => 0,
             "seeding" => 1
         ))->result();
     }
     public function set_plant_harvest($id){
-        $this->db->update("user_field",array(
+        $this->db->update("user_field1",array(
             "can_harvest" => 1
         ),array(
             "id" => $id
         ));
     }
     public function user_active(){
-        return $this->db->get("user_field1")->result();
+        return $this->db->get("user_field2")->result();
     }
     public function set_user_time($id){
-        $this->db->update("user_field",array(
+        $this->db->update("user_field1",array(
             "start_time" => null,
             "end_time" => null
         ),array(
@@ -64,15 +64,12 @@ class Time_model extends CI_Model {
         ));
     }
     public function set_user_time2($id){
-        $this->db->update("user_field1",array(
-            "datetime2" => null,
-            "datetime" => null
-        ),array(
+        $this->db->where(array(
             "id" => $id,
-        ));
+        ))->delete("user_field2");
     }
     public function get_plant2(){
-        return $this->db->get_where("user_field",array(
+        return $this->db->get_where("user_field1",array(
             "type" => 0,
             "seeding" => 1,
             "can_harvest" => 0

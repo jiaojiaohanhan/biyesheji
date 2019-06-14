@@ -671,12 +671,13 @@ figure.agileits_effect_moses:hover img {
 /*-- //welcome-bottom --*/
 /*-- news --*/
 .w3ls_news_grids{
-	margin:3em 0 0;
-}
+     margin:0 auto;
+ }
 .user_form{
-    margin:3em 0 0 18rem;
+    width: 100%;
+    margin:3em 0 0 18%;
 }
-.user_field{
+.usser_field{
     margin: 0;
 }
 .agileits_w3layouts_news_grid{

@@ -51,11 +51,11 @@
 
                 }
             });
-            $("#field").show().siblings().hide();
+            $("#field").show().siblings().hide().css("height","auto");
             if(index==1){
                 $("#field div").eq(index-1).css({"float":"left","left":"0","top":"0","display":"inline-block"}).show().siblings().hide();
             }else {
-                $("#field div").eq(index-1).css({"position":"relative","left":"0","top":"0","display":"inline-block"}).show().siblings().hide();
+                $("#field div").eq(index-1).css({"position":"relative","left":"23%","top":"0","display":"inline-block"}).show().siblings().hide();
             }
             $.get("http://localhost/bishe/project/My_contro2/field_info",{
                 index:index
@@ -66,30 +66,37 @@
                 num = sur;
                 var the_sur = "，剩余<span style='color:#a0d034'>"+sur+"</span>列";
                 if(index==1){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长800米，宽240米，共有四列"+the_sur+"</div>");
+                    $("#field").css("height","800px").append("<div style='position: relative;font-size:2em'>该地块长800米，宽240米，共有四列"+the_sur+"</div>");
                 }else if(index==2){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长660米，宽250米，共有五列"+the_sur+"</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长660米，宽250米，共有五列"+the_sur+"</div>");
                 }else if(index==3){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长400米，宽300米，共有三列"+the_sur+"</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长400米，宽300米，共有三列"+the_sur+"</div>");
                 }else if(index==4){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长600米，宽150米，为公共区域，消费者可以自主开展规划活动</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长600米，宽150米，为公共区域，消费者可以自主开展规划活动</div>");
                 }else if(index==5){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长540米，宽200米，为游戏区，为少年儿童提供了充足的游戏娱乐设施</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长540米，宽200米，为游戏区，为少年儿童提供了充足的游戏娱乐设施</div>");
                 }else if(index==6){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长420米，宽200米，为烧烤区，消费者可以开展自主烧烤活动</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长420米，宽200米，为烧烤区，消费者可以开展自主烧烤活动</div>");
                 }else if(index==7){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长360米，宽200米，共有四列"+the_sur+"</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长360米，宽200米，共有四列"+the_sur+"</div>");
                 }else if(index==8){
-                    $("#field").append("<div style='position: relative;font-size:2em'>该地块长600米，宽200米，共有四列"+the_sur+"</div>");
+                    $("#field").append("<div style='text-align:center;font-size:2em;margin-bottom:30px'>该地块长600米，宽200米，共有四列"+the_sur+"</div>");
                 }
                 if(sur==0){
                     $.get("http://localhost/bishe/project/My_contro2/field_info2",{
                         index:index
                     },function(res){
-                        $("#field").append(`
+                        if(index==1){
+                            $("#field").append(`
                             <div style='position: relative;font-size:1.5em'>该地块现在种植区域已满，您可以预订以后的种植区域</div>
                             <div style='position: relative;font-size:1.5em'>目前您前方还有<span style="color:#f00">${res}</span>个用户选择的作物正在等待种植</div>
                         `)
+                        }else {
+                            $("#field").append(`
+                            <div style='text-align:center;font-size:1.5em'>该地块现在种植区域已满，您可以预订以后的种植区域</div>
+                            <div style='text-align:center;font-size:1.5em'>目前您前方还有<span style="color:#f00">${res}</span>个用户选择的作物正在等待种植</div>
+                        `)
+                        }
                     },"text");
                 }
             },"text");
@@ -150,7 +157,7 @@
         <div class="w3ls_news_grids user_field" >
                 <section>
                     <div class="modal-body">
-                        <div id="field" style="position: relative;width:72rem;height:800px;background-color: #fff">
+                        <div id="field" style="position: relative;width:72rem;background-color: #fff">
                             <div style="position: relative;left:80%;top:0;height:800px;line-height:800px;width: 20%;background-color: #2e6da4;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px">种植区一</div>
                             <div style="position: absolute;left:25%;top:0;height:250px;line-height:250px;width: 55%;background-color: #6adcfa;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px">种植区二</div>
                             <div style="position: absolute;left:0;top:0;height:400px;line-height:400px;width:25%;background-color: #ea4c89;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px">种植区三</div>
@@ -171,8 +178,8 @@
                             <div style="position: absolute;left:30%;top:600px;height:200px;line-height:200px;width: 50%;background-color: #a4dd25;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px">种植区五</div>
                         </div>
                     </div>
-                    <input style="position: relative;left: 0;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="返回">
-                    <input style="position: relative;left: 70%;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="下一页">
+                    <input style="position: relative;left: 0;margin-top:2%;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="返回">
+                    <input style="position: relative;left: 70%;margin-top:2%;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="下一页">
                 </section>
         </div>
     </div>
@@ -250,49 +257,42 @@
                 $(this).css("display","none");
                 var that = $(this);
                 $("#field2").show().siblings().hide();
-                if (index == 1) {
-                    $("#field2 div").eq(index - 1).css({
-                        "float": "left",
-                        "left": "0",
-                        "top": "0",
-                        "display": "inline-block"
-                    }).show().siblings().hide();
-                } else {
-                    $("#field2 div").eq(index - 1).css({
-                        "position": "relative",
-                        "left": "0",
-                        "top": "0",
-                        "display": "inline-block"
-                    }).show().siblings().hide();
-                }
-                $("#field2").append(`<div>请选择您想订购的列数
+                $("#field2 div").eq(index - 1).css({
+                    "position": "relative",
+                    "left": "23%",
+                    "top": "0",
+                    "margin-bottom": "30px",
+                    "display": "inline-block"
+                }).show().siblings().hide();
+                $("#field2").append(`
+                    <div style="text-align: center">
+                            <div>请选择您想订购的列数
                             <button style="position: relative;left: 0;width:2rem;height:2rem;background-color:#a0d034;color:#fff">-</button>
                             <span>${sur}</span>
                             <button style="position: relative;left: 0;width:2rem;height:2rem;background-color:#a0d034;color:#fff">+</button></div>
                             请选择您想种植的作物，一列可种一种作物
                             <div id="choose_plant"><button style="position: relative;left: 0;width:4rem;height:2rem;background-color:#a0d034;color:#fff">确定</button></div>
+                    </div>
                 `);
-                for (var i = 0; i < sur; i++) {
-                    $("#choose_plant").prepend(`
+                $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                },function(res){
+                    var arr = res.split(" ");
+                    for (var i = 0; i < sur; i++) {
+                        var html = "";
+                        for(var j=0;j<arr.length-1;j++){
+                            html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                        }
+                        $("#choose_plant").prepend(`
                          <div style="margin-bottom: 5px">
                          第${i + 1}列:
                              <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
+                                ${html}
+                             </select>
                          </div>
-                `)
-                }
+                        `);
+                    }
+                },"text");
                 $("#field2 button").eq(0).on("click", function () {
                     num = parseInt($("#field2 span").text());
                     if (num == 0) {
@@ -303,27 +303,25 @@
                         $(this).removeAttr("disabled");
                         $("#field2 span").text(num);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div style="margin-bottom: 5px">
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     }
                 });
                 $("#field2 button").eq(1).on("click", function () {
@@ -331,53 +329,49 @@
                     if (num == sur) {
                         $("#field2 span").text(sur);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div style="margin-bottom: 5px">
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     } else {
                         num++;
                         $(this).removeAttr("disabled");
                         $("#field2 span").text(num);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div style="margin-bottom: 5px">
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     }
                 });
                 $("#field2 button").eq(2).on("click", function () {
@@ -387,12 +381,13 @@
                     $("div[name=choose3]").remove();
                     $("div[name=choose4]").remove();
                     that.css("display","inline");
+                    vals = [];
                     for(var i=0;i<num;i++){
                         vals.push($(`option[name=plant${i+1}]:selected`).val());
                     }
                     $("#field2").append(`
-                <div name="choose1">您选择的是${vals}</div>
-                `);
+                        <div name="choose1" style="text-align:center">您选择的是${vals}</div>
+                    `);
                     ajax1 = $.get("http://localhost/bishe/project/My_contro2/field_price",{
                         index:index
                     }, function(res) {
@@ -400,7 +395,7 @@
                         var worker_price = res.worker_price;
                         price1 = (parseFloat(field_price)+parseFloat(worker_price))*num;
                         $("#field2").append(`
-                        <div name="choose2">您需要付款的租地金额是${price1}元</div>
+                        <div name="choose2" style="text-align:center">您需要付款的租地金额是${price1}元</div>
                     `);
                     },"json");
                     ajax2 = $.get("http://localhost/bishe/project/My_contro2/plant_price",{
@@ -411,15 +406,16 @@
                             price2+=parseFloat(arr[i])
                         }
                         $("#field2").append(`
-                        <div name="choose3">您需要付款的作物金额是${price2}元</div>
+                        <div name="choose3"  style="text-align:center">您需要付款的作物金额是${price2}元</div>
                     `);
                     },"text");
+                    price = 0;
                     $.when(ajax1).done(function(){
                         price += price1
                     }).then($.when(ajax2).done(function(){
                         price += price2;
                         $("#field2").append(`
-                    <div name="choose4">您需要付款的金额是${price}元</div>
+                    <div name="choose4"  style="text-align:center">您需要付款的金额是${price}元</div>
                 `)
                     }));
                 });
@@ -432,7 +428,7 @@
                   <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/alibaba.jpg"></div>
                   <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/wechat.png"></div>
                   <div style="text-align: center;font-size: 35px;">您需要付款的金额是<span style="color: #a0d034">${price}</span>元</div>
-                  <input id="pay" style="position: relative;left: 30rem;top:12rem;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
+                  <input id="pay" style="position: relative;left: 30rem;top:70px;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
             `);
                 $("#pay").on("click",function(){
                     $.get("http://localhost/bishe/project/My_contro2/pay_field",{
@@ -450,50 +446,43 @@
                 $(this).css("display","none");
                 var that = $(this);
                 $("#field2").show().siblings().hide();
-                if (index == 1) {
-                    $("#field2 div").eq(index - 1).css({
-                        "float": "left",
-                        "left": "0",
-                        "top": "0",
-                        "display": "inline-block"
-                    }).show().siblings().hide();
-                } else {
-                    $("#field2 div").eq(index - 1).css({
-                        "position": "relative",
-                        "left": "0",
-                        "top": "0",
-                        "display": "inline-block"
-                    }).show().siblings().hide();
-                }
+                $("#field2 div").eq(index - 1).css({
+                    "position": "relative",
+                    "left": "23%",
+                    "top": "0",
+                    "margin-bottom": "30px",
+                    "display": "inline-block"
+                }).show().siblings().hide();
                 num = sum;
-                $("#field2").append(`<div>请选择您想订购的列数
+                $("#field2").append(`
+                <div style="text-align: center">
+                            <div>请选择您想订购的列数
                             <button style="position: relative;left: 0;width:2rem;height:2rem;background-color:#a0d034;color:#fff">-</button>
                             <span>${sum}</span>
                             <button style="position: relative;left: 0;width:2rem;height:2rem;background-color:#a0d034;color:#fff">+</button></div>
                             请选择您想种植的作物，一列可种一种作物
                             <div id="choose_plant"><button style="position: relative;left: 0;width:4rem;height:2rem;background-color:#a0d034;color:#fff">确定</button></div>
-            `);
-                for (var i = 0; i < sum; i++) {
-                    $("#choose_plant").prepend(`
-                         <div>
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                `)
-                }
+                </div>
+                `);
+                $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                },function(res){
+                    var arr = res.split(" ");
+                    for (var i = 0; i < sum; i++) {
+                        var html = "";
+                        for(var j=0;j<arr.length-1;j++){
+                            html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                        }
+                        $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                    }
+                },"text");
                 $("#field2 button").eq(0).on("click", function () {
                     num = parseInt($("#field2 span").text());
                     if (num == 0) {
@@ -504,27 +493,25 @@
                         $(this).removeAttr("disabled");
                         $("#field2 span").text(num);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div>
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     }
                 });
                 $("#field2 button").eq(1).on("click", function () {
@@ -532,53 +519,49 @@
                     if (num == sum) {
                         $("#field2 span").text(sum);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div>
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     } else {
                         num++;
                         $(this).removeAttr("disabled");
                         $("#field2 span").text(num);
                         $("#choose_plant div").remove();
-                        for (var i = 0; i < num; i++) {
-                            $("#choose_plant").prepend(`
-                         <div>
-                         第${i + 1}列:
-                             <select>
-                                 <option name="plant${i + 1}" value ="草莓">草莓</option>
-                                 <option name="plant${i + 1}" value ="橘子">橘子</option>
-                                 <option name="plant${i + 1}" value="石榴">石榴</option>
-                                 <option name="plant${i + 1}" value="柠檬">柠檬</option>
-                                 <option name="plant${i + 1}" value ="苹果">苹果</option>
-                                 <option name="plant${i + 1}" value ="白菜">白菜</option>
-                                 <option name="plant${i + 1}" value="菠菜">菠菜</option>
-                                 <option name="plant${i + 1}" value="猕猴桃">猕猴桃</option>
-                                 <option name="plant${i + 1}" value ="黄瓜">黄瓜</option>
-                                 <option name="plant${i + 1}" value ="番茄">番茄</option>
-                                 <option name="plant${i + 1}" value="茄子">茄子</option>
-                                 <option name="plant${i + 1}" value="豌豆">豌豆</option>
-                            </select>
-                         </div>
-                       `)
-                        }
+                        $.get("http://localhost/bishe/project/My_contro2/the_plants",{
+
+                        },function(res){
+                            var arr = res.split(" ");
+                            for (var i = 0; i < num; i++) {
+                                var html = "";
+                                for(var j=0;j<arr.length-1;j++){
+                                    html+=(`<option name="plant${i+1}" value ="${arr[j]}">${arr[j]}</option>`);
+                                }
+                                $("#choose_plant").prepend(`
+                                 <div style="margin-bottom: 5px">
+                                 第${i + 1}列:
+                                     <select>
+                                        ${html}
+                                     </select>
+                                 </div>
+                                `);
+                            }
+                        },"text");
                     }
                 });
                 $("#field2 button").eq(2).on("click", function () {
@@ -588,12 +571,13 @@
                     $("div[name=choose3]").remove();
                     $("div[name=choose4]").remove();
                     that.css("display","inline");
+                    vals = [];
                     for(var i=0;i<num;i++){
                         vals.push($(`option[name=plant${i+1}]:selected`).val());
                     }
                     $("#field2").append(`
-                <div name="choose1">您选择的是${vals}</div>
-                `);
+                    <div name="choose1" style="text-align: center">您选择的是${vals}</div>
+                    `);
                     ajax1 = $.get("http://localhost/bishe/project/My_contro2/field_price",{
                         index:index
                     }, function(res) {
@@ -601,7 +585,7 @@
                         var worker_price = res.worker_price;
                         price1 = (parseFloat(field_price)+parseFloat(worker_price))*num;
                         $("#field2").append(`
-                        <div name="choose2">您需要付款的租地金额是${price1}元</div>
+                        <div name="choose2" style="text-align: center">您需要付款的租地金额是${price1}元</div>
                     `);
                     },"json");
                     ajax2 = $.get("http://localhost/bishe/project/My_contro2/plant_price",{
@@ -612,15 +596,16 @@
                             price2+=parseFloat(arr[i])
                         }
                         $("#field2").append(`
-                        <div name="choose3">您需要付款的作物金额是${price2}元</div>
+                        <div name="choose3" style="text-align: center">您需要付款的作物金额是${price2}元</div>
                     `);
                     },"text");
+                    price = 0;
                     $.when(ajax1).done(function(){
                         price += price1
                     }).then($.when(ajax2).done(function(){
                         price += price2;
                         $("#field2").append(`
-                    <div name="choose4">您需要付款的金额是${price}元</div>
+                    <div name="choose4" style="text-align: center">您需要付款的金额是${price}元</div>
                 `)
                     }));
                 });
@@ -633,7 +618,7 @@
                   <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/alibaba.jpg"></div>
                   <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/wechat.png"></div>
                   <div style="text-align: center;font-size: 35px;">您需要付款的金额是<span style="color: #a0d034">${price}</span>元</div>
-                  <input id="pay" style="position: relative;left: 30rem;top:12rem;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
+                  <input id="pay" style="position: relative;left: 30rem;top:70px;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
             `);
                 $("#pay").on("click",function(){
                     $.get("http://localhost/bishe/project/My_contro2/pay_field2",{
@@ -653,12 +638,13 @@
                 $("#field2").show().siblings().hide();
                 $("#field2 div").eq(index - 1).css({
                     "position": "relative",
-                    "left": "0",
+                    "left": "23%",
                     "top": "0",
                     "display": "inline-block"
                 }).show().siblings().hide();
                 if(index==4){
-                    $("#field2").append(`<div>请选择您想选订的时间段
+                    $("#field2").append(`
+                            <div style="text-align: center">请选择您想选订的时间段
                                 <br>
                                 日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required>
                                 时间：<select>
@@ -694,7 +680,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 09:00:00-12:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 09:00:00-12:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -711,7 +697,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 13:00:00-16:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 13:00:00-16:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -728,7 +714,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 18:00:00-21:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 18:00:00-21:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -739,7 +725,8 @@
                     });
                 }
                 else if(index==5){
-                    $("#field2").append(`<div>请选择您想选订的时间段
+                    $("#field2").append(`
+                            <div style="text-align: center">请选择您想选订的时间段
                                 <br>
                                 日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required>
                                 时间：<select>
@@ -775,7 +762,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 09:00:00-12:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 09:00:00-12:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -792,7 +779,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 13:00:00-16:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 13:00:00-16:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -809,7 +796,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 18:00:00-21:00:00</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 18:00:00-21:00:00</div>
                                         `);
                                     }
                                 },"text");
@@ -820,7 +807,7 @@
                     });
                 }
                 else if(index==6){
-                    $("#field2").append(`<div>请选择您想选订的时间段
+                    $("#field2").append(`<div style="text-align: center">请选择您想选订的时间段
                                 <br>
                                 日期：<input type="text" class="demo-input" placeholder="请选择日期" id="date" required>
                                 时间：<select>
@@ -870,7 +857,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 09:00:00-12:00:00，${tools}</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 09:00:00-12:00:00，${tools}</div>
                                         `);
                                     }
                                 },"text");
@@ -887,7 +874,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 13:00:00-16:00:00，${tools}</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 13:00:00-16:00:00，${tools}</div>
                                         `);
                                     }
                                 },"text");
@@ -904,7 +891,7 @@
                                         alert(res);
                                     }else {
                                         $("#field2").append(`
-                                            <div name="choose">您选择的是${date} 18:00:00-21:00:00，${tools}</div>
+                                            <div name="choose" style="text-align: center">您选择的是${date} 18:00:00-21:00:00，${tools}</div>
                                         `);
                                     }
                                 },"text");
@@ -928,7 +915,7 @@
                       <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/alibaba.jpg"></div>
                       <div><img style="display: inline-block;width: 50%;height: 35rem;float: left" src="images/wechat.png"></div>
                       <div style="text-align: center;font-size: 35px;">您需要付款的金额是<span style="color: #a0d034">${price}</span>元</div>
-                      <input id="pay" style="position: relative;left: 30rem;top:12rem;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
+                      <input id="pay" style="position: relative;left: 30rem;top:70px;width:10rem;height:3rem;background-color:#a0d034;color:#fff" type="button" value="确定">
                     `);
                     $("#pay").on("click",function(){
                         $.get("http://localhost/bishe/project/My_contro2/pay_field4",{

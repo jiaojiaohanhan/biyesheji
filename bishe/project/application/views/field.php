@@ -68,29 +68,6 @@
                     <li><a href="My_contro/index" class="w3_agile_user"><i class="fa fa-home" aria-hidden="true"></i> 返回主页</a></li>
                 </ul>
             </div>
-<!--            <div class="agileits_w3layouts_menu">-->
-<!--                <div class="shy-menu">-->
-<!--                    <a class="shy-menu-hamburger">-->
-<!--                        <span class="layer top"></span>-->
-<!--                        <span class="layer mid"></span>-->
-<!--                        <span class="layer btm"></span>-->
-<!--                    </a>-->
-<!--                    <div class="shy-menu-panel">-->
-<!--                        <nav class="menu menu--horatio link-effect-8" id="link-effect-8">-->
-<!--                            <ul class="w3layouts_menu__list">-->
-<!--                                <li><a href="index.html">Home</a></li>-->
-<!--                                <li><a href="regist.html">Regist</a></li>-->
-<!--                                <li class="active"><a href="login.html">Login</a></li>-->
-<!--                                <li><a href="about.html">About Us</a></li>-->
-<!--                                <li><a href="services.html">Services</a></li>-->
-<!--                                <li><a href="gallery.html">Gallery</a></li>-->
-<!--                                <li><a href="contact.html">Contact Us</a></li>-->
-<!--                            </ul>-->
-<!--                        </nav>-->
-<!--                    </div>-->
-<!--                    <div class="clearfix"> </div>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="clearfix"> </div>
         </div>
     </div>

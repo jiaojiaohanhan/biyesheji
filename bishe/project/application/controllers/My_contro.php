@@ -68,7 +68,7 @@ class My_contro extends CI_Controller {
         $config["file_name"] = $img_name;
         $this->load->library("upload", $config);
         $this->upload->do_upload("Userfile");
-        $row = $this->user_model->user_save($username,$wechat,$phone,$password,$img_name);
+        $row = $this->user_model->user_save($username,$wechat,$phone,$password,"uploads/".$img_name);
         redirect("My_contro/login");
     }
     //手机登录
@@ -175,7 +175,7 @@ class My_contro extends CI_Controller {
         $phone = $this->input->get("number");
         $message = $this->input->get("message");
         $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
-        $result = $client->send($phone, "您的验证码为".$message."，有效时间为5分钟");
+        $result = $client->send($phone, "您的验证码为".$message);
         $json = json_decode($result);
         echo $json;
     }

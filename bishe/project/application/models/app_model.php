@@ -13,7 +13,25 @@ class App_model extends CI_Model {
         ));
         return $query->row();
     }
-    public function get_by_phone($phone){
-        return $this->db->get_where("user",array("phone" => $phone))->row();
+    public function get_by_phone($phone,$avatarUrl,$openid){
+        $query = $this->db->get_where("user",array("phone" => $phone))->row();
+        if($query!=""){
+            $this->db->update("user",array(
+                "image" => $avatarUrl,
+                "openid" => $openid
+            ),array(
+                "phone" => $phone
+            ));
+        }
+        return $query;
+    }
+    public function get_by_openId($openid){
+        $user_id = $this->db->get_where("user",array("openid" => $openid))->row()->id;
+        $query = $this->db->get_where("user_field1",array("user_id" => $user_id));
+        return $query->result();
+    }
+    public function field_name($field_id){
+        $query = $this->db->get_where("field_keys",array("id" => $field_id));
+        return $query->row();
     }
 }

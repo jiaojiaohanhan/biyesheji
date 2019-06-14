@@ -24,44 +24,57 @@
             $.get("http://localhost/bishe/project/My_contro4/the_field_info1",{
                 field_id:index
             }, function(res) {
-                var arr = res.split(" ");
+                var arr = res.split("_");
                 var cont = `<tr>
                                 <th>用户编号</th>
                                 <th>种植作物</th>
+                                <th>作物状态</th>
                                 <th>是否播种</th>
                                 <th>灌溉次数</th>
                                 <th>施肥次数</th>
                                 <th>除草次数</th>
                                 <th>可否收获</th>
                                 <th>是否已收获</th>
+                                <th>用户活动工具</th>
+                                <th>用户活动开始时间</th>
+                                <th>用户活动结束时间</th>
                                 <th>地块活动</th>
                             </tr>`;
-                for(var i=0;i<arr.length-1;i+=9){
+                for(var i=0;i<arr.length-1;i+=13){
                     cont+=`<tr>`;
                     cont+=(`<td>${arr[i]}</td>`);
                     cont+=(`<td>${arr[i+1]}</td>`);
                     if(arr[i+2]==0){
-                        arr[i+2] = "未播种"
+                        arr[i+2] = "可以种植"
                     }else {
-                        arr[i+2] = "已播种"
+                        arr[i+2] = "排队中"
                     }
                     cont+=(`<td>${arr[i+2]}</td>`);
+                    if(arr[i+3]==0){
+                        arr[i+3] = "未播种"
+                    }else {
+                        arr[i+3] = "已播种"
+                    }
                     cont+=(`<td>${arr[i+3]}</td>`);
                     cont+=(`<td>${arr[i+4]}</td>`);
                     cont+=(`<td>${arr[i+5]}</td>`);
-                    if(arr[i+6]==0){
-                        arr[i+6] = "不可收获"
-                    }else {
-                        arr[i+6] = "可收获"
-                    }
                     cont+=(`<td>${arr[i+6]}</td>`);
                     if(arr[i+7]==0){
-                        arr[i+7] = "未收获"
+                        arr[i+7] = "不可收获"
                     }else {
-                        arr[i+7] = "已收获"
+                        arr[i+7] = "可收获"
                     }
                     cont+=(`<td>${arr[i+7]}</td>`);
-                    cont+=(`<td><button id="${arr[i+8]}" style="background-color:#a0d034;color:#fff">地块活动选择</button></td>`);
+                    if(arr[i+8]==0){
+                        arr[i+8] = "未收获"
+                    }else {
+                        arr[i+8] = "已收获"
+                    }
+                    cont+=(`<td>${arr[i+8]}</td>`);
+                    cont+=(`<td>${arr[i+9]}</td>`);
+                    cont+=(`<td>${arr[i+10]}</td>`);
+                    cont+=(`<td>${arr[i+11]}</td>`);
+                    cont+=(`<td><button id="${arr[i+12]}" style="background-color:#a0d034;color:#fff">地块活动选择</button></td>`);
                     cont+=`</tr>`;
                 }
                 $("#field-info").html(cont);
@@ -166,7 +179,7 @@
                                         })
                                     });
                                     $("#field_img_5,#field_btn_5").on("click",function(){
-                                        $.get("http://localhost/bishe/project/My_contro4/field_action4",{
+                                        $.get("http://localhost/bishe/project/My_contro4/field_action5",{
                                             id:id
                                         },function(res){
                                             if(parseInt(res)==1){

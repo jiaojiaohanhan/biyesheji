@@ -25,6 +25,12 @@ class My_contro2 extends CI_Controller{
             "index" => $index
         ));
     }
+    public function the_plants(){
+        $rows =  $this->plant_model->all_plants();
+        foreach($rows as $row){
+            echo $row->name." ";
+        }
+    }
     //我的地块
     public function my_field(){
         $this->load->view("myField");
@@ -68,27 +74,31 @@ class My_contro2 extends CI_Controller{
         echo $row;
     }
     public function check_tools1(){
-        $row = $this->field_model->check_tools();
-        if($row->manure==0){
-            echo "有机肥数量不足，请稍后再选"." ";
-        }
-        if($row->hoe==0){
-            echo "锄头数量不足，请稍后再选"." ";
-        }
-        if($row->shovel==0){
-            echo "铲子数量不足，请稍后再选"." ";
-        }
-        if($row->bucket==0){
-            echo "水桶数量不足，请稍后再选";
+        $rows = $this->field_model->check_tools();
+        foreach($rows as $row){
+            if($row->name=="manure"&&$row->number<=0){
+                echo "有机肥数量不足，请稍后再选"." ";
+            }
+            if($row->name=="hoe"&&$row->number<=0){
+                echo "锄头数量不足，请稍后再选"." ";
+            }
+            if($row->name=="shovel"&&$row->number<=0){
+                echo "铲子数量不足，请稍后再选"." ";
+            }
+            if($row->name=="bucket"&&$row->number<=0){
+                echo "水桶数量不足，请稍后再选";
+            }
         }
     }
     public function check_tools2(){
-        $row = $this->field_model->check_tools();
-        if($row->basket==0){
-            echo "篮子数量不足，请稍后再选"." ";
-        }
-        if($row->gloves==0){
-            echo "手套数量不足，请稍后再选";
+        $rows = $this->field_model->check_tools();
+        foreach($rows as $row){
+            if($row->name=="basket"&&$row->number<=0){
+                echo "篮子数量不足，请稍后再选"." ";
+            }
+            if($row->name=="gloves"&&$row->number<=0){
+                echo "手套数量不足，请稍后再选";
+            }
         }
     }
     public function field_tools1(){
@@ -138,8 +148,19 @@ class My_contro2 extends CI_Controller{
     //查询作物价格
     public function plant_price(){
         $plant_names = $this->input->get("plant_names");
-        $rows = $this->plant_model->plant_info($plant_names);
-        foreach($rows as $row){
+        if(is_string($plant_names)){
+            $plant_names = rtrim($plant_names,"]");
+            $plant_names = ltrim($plant_names,"[");
+            $plant_names = explode(",", $plant_names);
+            $plant_names2 = $plant_names;
+            $plant_names = array();
+            foreach($plant_names2 as $plant_name2){
+                $plant_name2 = trim($plant_name2,'"');
+                array_push($plant_names,$plant_name2);
+            }
+        }
+        foreach($plant_names as $plant_name){
+            $row = $this->plant_model->plant_info($plant_name);
             echo $row->seed_price." ";
             echo $row->work_price." ";
         }
@@ -181,7 +202,7 @@ class My_contro2 extends CI_Controller{
         $rows = $this->field_model->my_harvest($user_id);
         foreach($rows as $row){
             $field_id = $row->field_id;
-            echo $this->field_model->field_info($field_id)->name." ";
+            echo $this->field_model->field_info1($field_id)->field_name." ";
             echo $row->name." ";
         }
     }
@@ -196,6 +217,20 @@ class My_contro2 extends CI_Controller{
             $client->send($arr[2], "手机号为".$arr[0]."的用户".$arr[1]."要求配送，"."地址为".$address);
         }else{
             echo "申请失败";
+        }
+    }
+    //我的活动
+    public function my_activity(){
+        $user_id = $this->input->get("user_id");
+        $rows = $this->field_model->my_activity($user_id);
+        foreach($rows as $row){
+            if($row->start_time!=""){
+                $field_id = $row->field_id;
+                echo $this->field_model->field_info1($field_id)->field_name."_";
+                echo $row->tools."_";
+                echo $row->start_time."_";
+                echo $row->end_time."_";
+            }
         }
     }
 }

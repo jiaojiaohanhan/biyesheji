@@ -105,8 +105,8 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-8 wthree_banner_bottom_grid_right">
-                                            <h4>业务总管理</h4>
-                                            <p>进 入 小 菜 园 业 务 总 管 理 页 面</p>
+                                            <h4>业务综合管理</h4>
+                                            <p>进 入 小 菜 园 业 务 综 合 管 理 页 面</p>
                                         </div>
                                         <div class="clearfix"> </div>
                                     </div>
@@ -121,8 +121,8 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-8 wthree_banner_bottom_grid_right">
-                                            <h4>特殊地块管理</h4>
-                                            <p>进 入 特 殊 地 块 管 理 页 面</p>
+                                            <h4>租赁区域管理</h4>
+                                            <p>进 入 租 赁 区 域 管 理 页 面</p>
                                         </div>
                                         <div class="clearfix"> </div>
                                     </div>
@@ -211,7 +211,6 @@
                                 </span>
                             <div class="w3_submit">
                                 <input type="submit" value="现 在 登 录">
-                                <input type="button" value="忘记/修改密码">
                             </div>
                         </form>
                 </div>
@@ -265,7 +264,6 @@
                             </span>
                             <div class="w3_submit">
                                 <input name="submit2" type="submit" value="现 在 登 录">
-                                <input name="submit3" type="button" value="忘记/修改密码">
                             </div>
                         </form>
                 </div>
@@ -389,7 +387,6 @@
                                 </span>
                             <div class="w3_submit">
                                 <input type="submit" value="现 在 登 录">
-                                <input type="button" value="忘记/修改密码">
                             </div>
                         </form>
                 </div>

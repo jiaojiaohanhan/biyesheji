@@ -70,11 +70,11 @@
         <div class="w3ls_news_grids user_field" >
             <section>
                 <div class="modal-body">
-                    <div id="field" style="position: relative;height:800px;width: 100%;">
-                        <div style="position: absolute;left:25%;top:250px;height:150px;line-height:150px;width: 55%;background-color: #5a0099;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=4">公共区域</a></div>
-                        <div style="position: absolute;left:0;top:400px;height:200px;line-height:200px;width: 45%;background-color: #2b542c;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=5">游戏区</a></div>
-                        <div style="position: absolute;left:45%;top:400px;height:200px;line-height:200px;width: 35%;background-color: #c7254e;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=6">烧烤区</a></div>
-                        <input id="back" type="button" style="margin-left:100%;margin-top:53%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
+                    <div id="field" style="position: relative;height:auto;width: 100%;">
+                        <div style="position: absolute;left:25%;top:50px;height:150px;line-height:150px;width: 55%;background-color: #5a0099;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=4">公共区域</a></div>
+                        <div style="position: absolute;left:0;top:200px;height:200px;line-height:200px;width: 45%;background-color: #2b542c;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=5">游戏区</a></div>
+                        <div style="position: absolute;left:45%;top:200px;height:200px;line-height:200px;width: 35%;background-color: #c7254e;opacity:0.5;cursor: pointer;text-align: center;color: #fff;font-weight: bold;font-size: 24px"><a style="text-decoration:none;color:#fff;display:block;width:100%;height:100%" href="My_contro4/the_field2?index=6">烧烤区</a></div>
+                        <input id="back" type="button" style="margin-left:100%;margin-top:40%;width:5rem;background-color:#a0d034;color:#fff" value="返回">
                     </div>
                 </div>
             </section>

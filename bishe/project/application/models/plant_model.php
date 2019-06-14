@@ -7,8 +7,14 @@ class Plant_model extends CI_Model {
         parent::__construct();
         ini_set("date.timezone","Asia/Shanghai");
     }
-    public function plant_info($plant_names){
-        $query = $this->db->where_in("name",$plant_names)->get("plant");
+    public function all_plants(){
+        $query = $this->db->get("plant");
         return $query->result();
+    }
+    public function plant_info($plant_name){
+        $query = $this->db->get_where("plant",array(
+            "name" => $plant_name
+        ));
+        return $query->row();
     }
 }

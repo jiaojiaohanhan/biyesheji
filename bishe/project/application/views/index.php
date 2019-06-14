@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +68,7 @@
             }, function(res) {
                 var arr = res.split(" ");
                 $("#exit").append(`
-                    <img style="width:2rem;height:2rem;border-radius:50%" src="uploads/${arr[1]}">用户${arr[0]}(点击退出)
+                    <img style="width:2rem;height:2rem;border-radius:50%" src="${arr[1]}">用户${arr[0]}(点击退出)
                 `);
             },"text")
         })
@@ -132,14 +135,12 @@
         <div class="w3_banner_info">
             <div class="w3_banner_info_grid">
                 <h3 class="test">I'm Planting A Tree To Teach Me To Gather Strength From My Deepest Roots</h3>
-                <p>Aenean congue vitae mauris sed tristique. Mauris quis nulla at sapien blandit
-                    sollicitudin. Nunc tortor lorem, viverra sed diam ut, blandit efficitur leo.</p>
+                <p>Looking back at the end of the flower, a touch of fragrant red.</p>
                 <ul>
                     <li><a href="#" class="w3l_contact" data-toggle="modal" data-target="#myModal">地块预览</a></li>
                     <li><a href="My_contro2/choose_field" class="w3l_contact">地块选订</a></li>
                     <li><a href="My_contro2/my_field" class="w3l_contact">我的地块</a></li>
                     <li><a href="My_contro/contact_us" class="w3l_contact">联系我们</a></li>
-                    <!--<li><a href="#" class="w3ls_more" data-toggle="modal" data-target="#myModal">地块选订</a></li>-->
                 </ul>
             </div>
         </div>
@@ -257,26 +258,8 @@
             </li>
             <li class="mis-slide">
                 <figure>
-                    <img src="images/Pomegranates.png" alt=" " class="img-responsive" />
-                    <figcaption>石榴</figcaption>
-                </figure>
-            </li>
-            <li class="mis-slide">
-                <figure>
                     <img src="images/Lemon.png" alt=" " class="img-responsive" />
                     <figcaption>柠檬</figcaption>
-                </figure>
-            </li>
-            <li class="mis-slide">
-                <figure>
-                    <img src="images/Kiwi%20Fruits.png" alt=" " class="img-responsive" />
-                    <figcaption>猕猴桃</figcaption>
-                </figure>
-            </li>
-            <li class="mis-slide">
-                <figure>
-                    <img src="images/Apples.png" alt=" " class="img-responsive" />
-                    <figcaption>苹果</figcaption>
                 </figure>
             </li>
             <li class="mis-slide">

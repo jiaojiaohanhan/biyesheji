@@ -135,52 +135,52 @@
 <!-- contact -->
 <div class="welcome">
     <div class="container">
-        <h3 class="agileits_w3layouts_head">Get in<span> touch</span> with us</h3>
+        <h3 class="agileits_w3layouts_head"><span>联 系 我 们</span></h3>
         <div class="w3_agile_image">
             <img src="images/1.png" alt=" " class="img-responsive" />
         </div>
-        <p class="agile_para">Morbi viverra lacus commodo felis semper, eu iaculis lectus nulla at sapien blandit sollicitudin.</p>
+        <p class="agile_para">请 填 写 您 想 发 送 给 我 们 的 信 息</p>
         <div class="w3ls_news_grids">
             <div class="col-md-8 w3_agile_mail_left">
                 <div class="agileits_mail_grid_right1 agile_mail_grid_right1">
                     <form action="http://localhost/bishe/project/My_contro/send_email" method="post">
 							<span>
-								<i>Name</i>
+								<i>用户名</i>
 								<input type="text" name="Name" placeholder="请填写您的用户名" required="">
 							</span>
 							<span>
-								<i>Email</i>
+								<i>目标邮箱</i>
 								<input type="email" name="Email" placeholder="870303709@qq.com" required="" readonly="readonly" value="870303709@qq.com">
 							</span>
 							<span>
-								<i>Subject</i>
+								<i>主题</i>
 								<input type="text" name="Subject" placeholder="请填写您的手机号或微信号" required="">
 							</span>
 							<span>
-								<i>Message</i>
+								<i>内容</i>
 								<textarea name="Message" placeholder="" required=""></textarea>
 							</span>
                         <div class="w3_submit">
-                            <input type="submit" value="Submit Now">
+                            <input type="submit" value="现 在 发 送">
                         </div>
                     </form>
                 </div>
             </div>
             <div class="col-md-4 w3_agile_mail_right">
-                <div class="w3_agileits_mail_right_grid">
-                    <h4>About Plantation</h4>
-                    <p>Donec libero lectus, feugiat vel elit nec, mattis tempor mi ante.</p>
-                    <h5>Follow Us On</h5>
-                    <ul class="agileits_social_list">
-                        <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                        <li><a href="#" class="w3_agile_vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
-                    </ul>
-                    <div class="w3_agileits_mail_right_grid_pos">
-                        <img src="images/12.jpg" alt=" " class="img-responsive" />
-                    </div>
-                </div>
+<!--                <div class="w3_agileits_mail_right_grid">-->
+<!--                    <h4>About Plantation</h4>-->
+<!--                    <p>Donec libero lectus, feugiat vel elit nec, mattis tempor mi ante.</p>-->
+<!--                    <h5>Follow Us On</h5>-->
+<!--                    <ul class="agileits_social_list">-->
+<!--                        <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>-->
+<!--                        <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>-->
+<!--                        <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>-->
+<!--                        <li><a href="#" class="w3_agile_vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>-->
+<!--                    </ul>-->
+<!--                    <div class="w3_agileits_mail_right_grid_pos">-->
+<!--                        <img src="images/12.jpg" alt=" " class="img-responsive" />-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="w3_agileits_mail_right_grid_main">
                     <div class="w3layouts_mail_grid_left">
                         <div class="w3layouts_mail_grid_left1 hvr-radial-out">
@@ -188,7 +188,7 @@
                         </div>
                         <div class="w3layouts_mail_grid_left2">
                             <h3>Mail Us</h3>
-                            <a href="mailto:info@example.com">info@example.com</a>
+                            <a href="mailto:info@example.com">870303709@qq.com</a>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -198,7 +198,7 @@
                         </div>
                         <div class="w3layouts_mail_grid_left2">
                             <h3>Address</h3>
-                            <p>My Company 8907 Ukraine.</p>
+                            <p>My Company 8907 Harbin.</p>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
@@ -208,7 +208,7 @@
                         </div>
                         <div class="w3layouts_mail_grid_left2">
                             <h3>Phone</h3>
-                            <p>+(0121) 121 121</p>
+                            <p>+(0451) 123 456</p>
                         </div>
                         <div class="clearfix"> </div>
                     </div>

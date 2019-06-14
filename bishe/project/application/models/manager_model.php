@@ -77,40 +77,48 @@ class Manager_model extends CI_Model {
         return $this->db->get_where("manager",array("number" => $number))->row();
     }
     public function all_pay(){
-        $pay1 = $this->db->get_where("tools",array("id" => 1))->row()->cost;
-        $pay2 = 0;
-        $rows1 = $this->db->get("plant")->result();
+        $pay1 = 0;
+        $rows1 = $this->db->get("tools")->result();
         foreach($rows1 as $row1){
-            $pay2 += $row1->cost;
+            $pay1 += $row1->cost;
         }
-        $rows2 = $this->db->get("manager")->result();
-        $pay3 = 0;
+        $pay2 = 0;
+        $rows2 = $this->db->get("plant")->result();
         foreach($rows2 as $row2){
-            $pay3 += $row2->sum;
+            $pay2 += $row2->cost;
+        }
+        $rows3 = $this->db->get("manager")->result();
+        $pay3 = 0;
+        foreach($rows3 as $row3){
+            $pay3 += $row3->sum;
         }
         return $pay1." ".$pay2." ".$pay3;
     }
     public function all_income(){
-        $query = $this->db->get("user_field2");
+        $query = $this->db->get("user_pay");
         return  $query->result();
     }
     public function all_money(){
-        $pay1 = $this->db->get_where("tools",array("id" => 1))->row()->cost;
-        $pay2 = 0;
-        $rows1 = $this->db->get("plant")->result();
+        $pay1 = 0;
+        $rows1 = $this->db->get("tools")->result();
         foreach($rows1 as $row1){
-            $pay2 += ($row1->seed_price)/5*($row1->number);
+            $pay1 += $row1->cost;
+        }
+        $pay2 = 0;
+        $rows2 = $this->db->get("plant")->result();
+        foreach($rows2 as $row2){
+            $pay2 += ($row2->seed_price)/5*($row2->number);
         }
         $pay3 = 0;
-        $rows2 = $this->db->get("manager")->result();
-        foreach($rows2 as $row2){
-            $pay3 += $row2->sum;
+        $rows3 = $this->db->get("manager")->result();
+        foreach($rows3 as $row3){
+            $pay3 += $row3->sum;
         }
         $pay = $pay1+$pay2+$pay3;
-        $rows3 = $this->db->get("user_field2")->result();
+        $rows4 = $this->db->get("user_pay")->result();
         $income = 0;
-        foreach($rows3 as $row3){
-            $income += $row3->money;
+        foreach($rows4 as $row4){
+            $income += $row4->money;
         }
         $profit = $income-$pay;
         return $pay." ".$income." ".$profit;
@@ -119,7 +127,7 @@ class Manager_model extends CI_Model {
         return $this->db->get_where("user",array("id" => $user_id))->row();
     }
     public function the_field($field_id){
-        return $this->db->get_where("field3",array("id" => $field_id))->row();
+        return $this->db->get_where("field_keys",array("id" => $field_id))->row();
     }
     public function all_workers(){
 //        $query = $this->db->where("type=","2")->or_where("type=","3")->get("manager");
@@ -160,14 +168,14 @@ class Manager_model extends CI_Model {
         return $this->db->affected_rows();
     }
     public function all_keys(){
-        $query = $this->db->get("field3");
+        $query = $this->db->get("field_keys");
         return  $query->result();
     }
     public function key_add($id){
-        $keys = $this->db->get_where("field3",array("id" => $id))->row()->keys;
-        $keys2 = $this->db->get_where("field3",array("id" => $id))->row()->allKeys;
+        $keys = $this->db->get_where("field_keys",array("id" => $id))->row()->keys;
+        $keys2 = $this->db->get_where("field_keys",array("id" => $id))->row()->allKeys;
         if($keys<$keys2){
-            $this->db->update("field3",array(
+            $this->db->update("field_keys",array(
                 "keys" => $keys+1
             ),array(
                 "id" => $id,
@@ -175,9 +183,9 @@ class Manager_model extends CI_Model {
         }
     }
     public function key_sub($id){
-        $keys = $this->db->get_where("field3",array("id" => $id))->row()->keys;
+        $keys = $this->db->get_where("field_keys",array("id" => $id))->row()->keys;
         if($keys>0){
-            $this->db->update("field3",array(
+            $this->db->update("field_keys",array(
                 "keys" => $keys-1
             ),array(
                 "id" => $id,
@@ -185,186 +193,35 @@ class Manager_model extends CI_Model {
         }
     }
     public function all_tools(){
-        $query = $this->db->get_where("tools",array(
-            "id" => 1
-        ));;
-        return  $query->row();
+        $query = $this->db->get("tools");
+        return  $query->result();
     }
     public function tool_add($name){
-        switch ($name) {
-            case "manure":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->manure;
-                if($num<10000){
-                    $this->db->where(array("id"=>1));
-                    $this->db->set("manure","manure+1",FALSE);
-                    $this->db->update("tools");
-                    $this->db->where(array("id"=>1));
-                    $this->db->set("cost","cost+100",FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "hoe":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->hoe;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("hoe", "hoe+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+30",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            case "shovel":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->shovel;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("shovel", "shovel+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+30",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            case "bucket":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->bucket;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("bucket", "bucket+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+20",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            case "basket":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->basket;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("basket", "basket+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+40",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            case "gloves":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("gloves", "gloves+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+20",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            case "barbecue":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("barbecue", "barbecue+1", FALSE);
-                    $this->db->update("tools");
-                    if($num>99){
-                        $this->db->where(array("id"=>1));
-                        $this->db->set("cost","cost+100",FALSE);
-                        $this->db->update("tools");
-                    }
-                }
-                break;
-            default:
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num<10000) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("charcoal", "charcoal+1", FALSE);
-                    $this->db->update("tools");
-                    $this->db->where(array("id"=>1));
-                    $this->db->set("cost","cost+50",FALSE);
-                    $this->db->update("tools");
-                }
+        $num = $this->db->get_where("tools",array("name" => $name))->row()->number;
+        $price = $this->db->get_where("tools",array("name" => $name))->row()->price;
+        if($num<10000){
+            $this->db->where(array("name"=>$name));
+            $this->db->set("number","number+1",FALSE);
+            $this->db->update("tools");
+            $this->db->where(array("name"=>$name));
+            $this->db->set("cost","cost+$price",FALSE);
+            $this->db->update("tools");
         }
     }
     public function tool_sub($name){
-        switch ($name) {
-            case "manure":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->manure;
-                if($num>0){
-                    $this->db->where(array("id"=>1));
-                    $this->db->set("manure","manure-1",FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "hoe":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->hoe;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("hoe", "hoe-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "shovel":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->shovel;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("shovel", "shovel-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "bucket":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->bucket;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("bucket", "bucket-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "basket":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->basket;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("basket", "basket-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "gloves":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("gloves", "gloves-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            case "barbecue":
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("barbecue", "barbecue-1", FALSE);
-                    $this->db->update("tools");
-                }
-                break;
-            default:
-                $num = $this->db->get_where("tools",array("id" => 1))->row()->gloves;
-                if($num>0) {
-                    $this->db->where(array("id" => 1));
-                    $this->db->set("charcoal", "charcoal-1", FALSE);
-                    $this->db->update("tools");
-                }
+        $num = $this->db->get_where("tools",array("name" => $name))->row()->number;
+        $price = $this->db->get_where("tools",array("name" => $name))->row()->price;
+        if($num>0){
+            $this->db->where(array("name"=>$name));
+            $this->db->set("number","number-1",FALSE);
+            $this->db->update("tools");
         }
     }
     public function tool_change($arr){
         $name = $arr[0];
-        $num1 = $this->db->get_where("tools",array("id" => 1))->row()->$name;
-        $cost1 = $this->db->get_where("tools",array("id" => 1))->row()->cost;
-        $price = $this->db->get_where("tools_price",array("name" => $name))->row()->price;
+        $num1 = $this->db->get_where("tools",array("name" => $name))->row()->number;
+        $cost1 = $this->db->get_where("tools",array("name" => $name))->row()->cost;
+        $price = $this->db->get_where("tools",array("name" => $name))->row()->price;
         $num2 = $arr[1];
         if($num1<$num2){
             if($name=="manure"||$name=="charcoal"){
@@ -372,12 +229,12 @@ class Manager_model extends CI_Model {
             }else{
                 $cost2 = ($num2-100)*$price+$cost1;
             }
-            $this->db->where(array("id"=>1));
+            $this->db->where(array("name" => $name));
             $this->db->set("cost",$cost2,FALSE);
             $this->db->update("tools");
         }
-        $this->db->where(array("id"=>1));
-        $this->db->set($name,$num2,FALSE);
+        $this->db->where(array("name" => $name));
+        $this->db->set("number",$num2,FALSE);
         $this->db->update("tools");
     }
     public function all_plants(){
@@ -418,14 +275,18 @@ class Manager_model extends CI_Model {
         $this->db->set("cost",$cost,FALSE);
         $this->db->update("plant");
     }
-    public function new_plant($name,$seed_price,$work_price,$english){
+    public function check_plant($name){
+        return $this->db->get_where("plant",array("name"=>$name))->row();
+    }
+    public function new_plant($name,$seed_price,$work_price,$english,$days){
         $data = array(
             "name" => $name,
             "seed_price" => $seed_price,
             "work_price" => $work_price,
             "number" => 10,
             "english" => $english,
-            "cost" => $seed_price/5*10
+            "cost" => $seed_price/5*10,
+            "days" => $days
         );
         $this->db->insert("plant",$data);
         return $this->db->affected_rows();
@@ -435,6 +296,9 @@ class Manager_model extends CI_Model {
     }
     public function the_field2($field_id){
         return $this->db->get_where("field1",array("id" => $field_id))->row();
+    }
+    public function the_harvest($id){
+        return $this->db->get_where("user_harvest",array("id" => $id))->row();
     }
     public function harvest_delete($id){
         $this->db->where("id", $id);
