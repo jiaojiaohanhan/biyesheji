@@ -53,5 +53,14 @@ class My_contro6 extends CI_Controller {
             echo $row->plant_name." ";
         }
     }
-
+    //支付
+    public function pay_field(){
+        $user_id = $this->input->get("openId");
+        $field_id = $this->input->get("field_id");
+        $plant_names = $this->input->get("plant_names");
+        $the_sur = $this->input->get("the_sur");
+        $money = $this->input->get("money");
+        echo $user_id,$field_id,$plant_names,$the_sur,$money;
+//        $rows = $this->field_model->user_field($user_id,$field_id,$plant_names,$the_sur,$money);
+    }
 }

@@ -138,14 +138,16 @@ class My_contro4 extends CI_Controller {
         $username = $this->input->post("Name");
         $type = $this->input->post("Type");
         $password = $this->input->post("Password");
-        $password = md5(md5($password));
+        $password2 = md5(md5($password));
         $phone = $this->input->post("Phone");
         $number = $this->input->post("Number");
         $salary = $this->input->post("Salary");
         $id = $this->input->post("theId");
-        $row = $this->manager_model->worker_change($identity,$username,$type,$password,$phone,$number,$salary,$id);
+        $row = $this->manager_model->worker_change($identity,$username,$type,$password2,$phone,$number,$salary,$id);
         if($row==1){
             echo "修改成功";
+            $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
+            $client->send($phone,"您的工作人员信息修改成功，您的工号是".$number."密码是".$password."薪水是".$salary."元");
         }else{
             echo "fail";
         }
@@ -164,13 +166,20 @@ class My_contro4 extends CI_Controller {
         $username = $this->input->post("Name");
         $type = $this->input->post("Type");
         $password = $this->input->post("Password");
-        $password = md5(md5($password));
+        $password2 = md5(md5($password));
         $phone = $this->input->post("Phone");
         $number = $this->input->post("Number");
         $salary = $this->input->post("Salary");
-        $row = $this->manager_model->worker_add($identity,$username,$type,$password,$phone,$number,$salary);
+        $row = $this->manager_model->worker_add($identity,$username,$type,$password2,$phone,$number,$salary);
         if($row==1){
             echo "添加成功";
+            if($type==2){
+                $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
+                $client->send($phone,"您已成为新的普通地块管理人员，您的工号是".$number."密码是".$password."薪水是".$salary."元");
+            }else{
+                $client = new  ZhenziSmsClient("https://sms_developer.zhenzikj.com", "101138", "879f1746-d7c1-4819-8c3c-ef538a6eb58d");
+                $client->send($phone,"您已成为新的租赁区域管理人员，您的工号是".$number."密码是".$password."薪水是".$salary."元");
+            }
         }else{
             echo "fail";
         }
